@@ -123,6 +123,8 @@ export default function FilterBar({
 }: Props) {
   const [openKey, setOpenKey] = useState<ProductFilterKey | null>(null);
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   const sortLabel = sortBy === "price-desc" ? "Price: High to Low" : "Price: Low to High";
@@ -142,6 +144,27 @@ export default function FilterBar({
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileFiltersOpen && !isMobileSortOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setIsMobileFiltersOpen(false);
+      setIsMobileSortOpen(false);
+      setOpenKey(null);
+      setIsSortOpen(false);
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMobileFiltersOpen, isMobileSortOpen]);
 
   const activeOptionFilterCount = PRODUCT_FILTER_KEYS.reduce(
     (count, key) => (hiddenFilterKeys.includes(key) ? count : (filters[key].length > 0 ? count + 1 : count)),
@@ -204,167 +227,354 @@ export default function FilterBar({
     return 500;
   }, [sliderMetrics.span]);
 
-  return (
-    <div className="filterbar" ref={rootRef}>
-      <div className="filterbar-left">
-        <button type="button" className="filter-btn-primary" aria-label="Filters">
-          <SlidersHorizontal size={15} />
-          Filters
-          {hasActiveFilters && <span className="filter-active-count">{activeFilterCount}</span>}
-        </button>
+  const closeMobileSheets = () => {
+    setIsMobileFiltersOpen(false);
+    setIsMobileSortOpen(false);
+  };
 
-        {FILTERS.map((filter) => (
-          hiddenFilterKeys.includes(filter.key)
-            ? null
-            : (
-          <div
-            key={filter.key}
-            className={`filter-select-wrap${filters[filter.key].length > 0 ? " active" : ""}`}
-          >
+  const mobileSortLabel = sortBy === "price-desc" ? "High to Low" : "Low to High";
+
+  return (
+    <>
+      <div className="filterbar filterbar-desktop" ref={rootRef}>
+        <div className="filterbar-left">
+          <button type="button" className="filter-btn-primary" aria-label="Filters">
+            <SlidersHorizontal size={15} />
+            Filters
+            {hasActiveFilters && <span className="filter-active-count">{activeFilterCount}</span>}
+          </button>
+
+          {FILTERS.map((filter) => (
+            hiddenFilterKeys.includes(filter.key)
+              ? null
+              : (
+            <div
+              key={filter.key}
+              className={`filter-select-wrap${filters[filter.key].length > 0 ? " active" : ""}`}
+            >
+              <button
+                type="button"
+                className="filter-dropdown-trigger"
+                onClick={() => {
+                  setIsSortOpen(false);
+                  setOpenKey((prev) => (prev === filter.key ? null : filter.key));
+                }}
+              >
+                <span className="filter-select-label">{filter.label}</span>
+                <span className="filter-select-value">
+                  {selectedCountMap[filter.key] ? `${selectedCountMap[filter.key]} selected` : "All"}
+                </span>
+              </button>
+
+              {openKey === filter.key && (
+                <div className="filter-dropdown-menu" role="menu" aria-label={filter.label}>
+                  <div className="filter-dropdown-actions">
+                    <button
+                      type="button"
+                      className="filter-dropdown-action"
+                      onClick={() => onFilterChange(filter.key, [...filter.options])}
+                    >
+                      Select all
+                    </button>
+                    <button
+                      type="button"
+                      className="filter-dropdown-action"
+                      onClick={() => onFilterChange(filter.key, [])}
+                    >
+                      Clear
+                    </button>
+                  </div>
+
+                  <div className="filter-dropdown-options">
+                    {filter.options.map((option) => {
+                      const checked = filters[filter.key].includes(option);
+                      return (
+                        <label key={option} className="filter-checkbox-option">
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => toggleValue(filter.key, option)}
+                          />
+                          <span>{option}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+              )
+          ))}
+
+          <div className={`filter-select-wrap filter-price-range-wrap${priceActive ? " active" : ""}`}>
+            <div className="filter-price-range-slider-row">
+              <span className="filter-select-label filter-price-title">Price</span>
+              <span className="filter-price-bound-label">
+                {priceRange.min.toLocaleString("en-IN")}
+              </span>
+              <div className="filter-price-range-slider" role="group" aria-label="Price range">
+                <div className="filter-price-range-track" />
+                <div
+                  className="filter-price-range-track active"
+                  style={{
+                    left: `${sliderMetrics.minPercent}%`,
+                    width: `${Math.max(0, sliderMetrics.maxPercent - sliderMetrics.minPercent)}%`,
+                  }}
+                />
+                <input
+                  className="filter-price-range-input min"
+                  type="range"
+                  min={priceBounds.min}
+                  max={priceBounds.max}
+                  step={sliderStep}
+                  value={priceRange.min}
+                  onChange={(event) => handleMinChange(Number(event.target.value))}
+                  aria-label="Minimum price"
+                />
+                <input
+                  className="filter-price-range-input max"
+                  type="range"
+                  min={priceBounds.min}
+                  max={priceBounds.max}
+                  step={sliderStep}
+                  value={priceRange.max}
+                  onChange={(event) => handleMaxChange(Number(event.target.value))}
+                  aria-label="Maximum price"
+                />
+              </div>
+              <span className="filter-price-bound-label">
+                {priceRange.max.toLocaleString("en-IN")}
+              </span>
+            </div>
+          </div>
+
+          {hasActiveFilters && (
+            <button type="button" className="filter-btn-reset" onClick={onResetFilters}>
+              Reset filters
+            </button>
+          )}
+        </div>
+
+        <div className="filterbar-right">
+          <div className={`filter-select-wrap filter-sort-wrap${isSortOpen ? " active" : ""}`}>
             <button
               type="button"
-              className="filter-dropdown-trigger"
+              className="filter-dropdown-trigger filter-sort-trigger"
               onClick={() => {
-                setIsSortOpen(false);
-                setOpenKey((prev) => (prev === filter.key ? null : filter.key));
+                setOpenKey(null);
+                setIsSortOpen((prev) => !prev);
               }}
             >
-              <span className="filter-select-label">{filter.label}</span>
-              <span className="filter-select-value">
-                {selectedCountMap[filter.key] ? `${selectedCountMap[filter.key]} selected` : "All"}
-              </span>
+              <span className="filter-select-label">Sort by: </span>
+              <span className="filter-select-value">{sortLabel}</span>
             </button>
 
-            {openKey === filter.key && (
-              <div className="filter-dropdown-menu" role="menu" aria-label={filter.label}>
-                <div className="filter-dropdown-actions">
-                  <button
-                    type="button"
-                    className="filter-dropdown-action"
-                    onClick={() => onFilterChange(filter.key, [...filter.options])}
-                  >
-                    Select all
-                  </button>
-                  <button
-                    type="button"
-                    className="filter-dropdown-action"
-                    onClick={() => onFilterChange(filter.key, [])}
-                  >
-                    Clear
-                  </button>
-                </div>
-
-                <div className="filter-dropdown-options">
-                  {filter.options.map((option) => {
-                    const checked = filters[filter.key].includes(option);
-                    return (
-                      <label key={option} className="filter-checkbox-option">
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleValue(filter.key, option)}
-                        />
-                        <span>{option}</span>
-                      </label>
-                    );
-                  })}
-                </div>
+            {isSortOpen && (
+              <div className="filter-dropdown-menu filter-sort-menu" role="menu" aria-label="Sort by">
+                <button
+                  type="button"
+                  className={`filter-sort-option${sortBy === "price-asc" ? " active" : ""}`}
+                  onClick={() => {
+                    onSortChange("price-asc");
+                    setIsSortOpen(false);
+                  }}
+                >
+                  Price: Low to High
+                </button>
+                <button
+                  type="button"
+                  className={`filter-sort-option${sortBy === "price-desc" ? " active" : ""}`}
+                  onClick={() => {
+                    onSortChange("price-desc");
+                    setIsSortOpen(false);
+                  }}
+                >
+                  Price: High to Low
+                </button>
               </div>
             )}
           </div>
-            )
-        ))}
+        </div>
+      </div>
 
-        <div className={`filter-select-wrap filter-price-range-wrap${priceActive ? " active" : ""}`}>
-          <div className="filter-price-range-slider-row">
-            <span className="filter-select-label filter-price-title">Price</span>
-            <span className="filter-price-bound-label">
-              {priceRange.min.toLocaleString("en-IN")}
-            </span>
-            <div className="filter-price-range-slider" role="group" aria-label="Price range">
-              <div className="filter-price-range-track" />
-              <div
-                className="filter-price-range-track active"
-                style={{
-                  left: `${sliderMetrics.minPercent}%`,
-                  width: `${Math.max(0, sliderMetrics.maxPercent - sliderMetrics.minPercent)}%`,
-                }}
-              />
-              <input
-                className="filter-price-range-input min"
-                type="range"
-                min={priceBounds.min}
-                max={priceBounds.max}
-                step={sliderStep}
-                value={priceRange.min}
-                onChange={(event) => handleMinChange(Number(event.target.value))}
-                aria-label="Minimum price"
-              />
-              <input
-                className="filter-price-range-input max"
-                type="range"
-                min={priceBounds.min}
-                max={priceBounds.max}
-                step={sliderStep}
-                value={priceRange.max}
-                onChange={(event) => handleMaxChange(Number(event.target.value))}
-                aria-label="Maximum price"
-              />
-            </div>
-            <span className="filter-price-bound-label">
-              {priceRange.max.toLocaleString("en-IN")}
-            </span>
+      <div className="mobile-filter-dock" role="toolbar" aria-label="Catalog controls">
+        <button
+          type="button"
+          className="mobile-filter-dock-btn"
+          onClick={() => {
+            setOpenKey(null);
+            setIsSortOpen(false);
+            setIsMobileSortOpen(false);
+            setIsMobileFiltersOpen(true);
+          }}
+        >
+          <span className="mobile-filter-dock-label">Filters</span>
+          {hasActiveFilters && <span className="filter-active-count">{activeFilterCount}</span>}
+        </button>
+        <button
+          type="button"
+          className="mobile-filter-dock-btn"
+          onClick={() => {
+            setOpenKey(null);
+            setIsSortOpen(false);
+            setIsMobileFiltersOpen(false);
+            setIsMobileSortOpen(true);
+          }}
+        >
+          <span className="mobile-filter-dock-label">Sort</span>
+          <span className="mobile-filter-dock-value">{mobileSortLabel}</span>
+        </button>
+      </div>
+
+      {(isMobileFiltersOpen || isMobileSortOpen) && (
+        <button
+          type="button"
+          className="mobile-sheet-backdrop"
+          aria-label="Close panel"
+          onClick={closeMobileSheets}
+        />
+      )}
+
+      {isMobileFiltersOpen && (
+        <section className="mobile-sheet" role="dialog" aria-modal="true" aria-label="Filters">
+          <div className="mobile-sheet-handle" aria-hidden="true" />
+          <div className="mobile-sheet-header">
+            <h3>Filters</h3>
+            <button type="button" className="mobile-sheet-close" onClick={() => setIsMobileFiltersOpen(false)}>
+              Close
+            </button>
           </div>
-        </div>
+          <div className="mobile-sheet-body">
+            {FILTERS.map((filter) => {
+              if (hiddenFilterKeys.includes(filter.key)) return null;
 
-        {hasActiveFilters && (
-          <button type="button" className="filter-btn-reset" onClick={onResetFilters}>
-            Reset filters
-          </button>
-        )}
-      </div>
+              return (
+                <div key={filter.key} className="mobile-filter-section">
+                  <div className="mobile-filter-section-head">
+                    <p>{filter.label}</p>
+                    <div className="mobile-filter-section-actions">
+                      <button type="button" onClick={() => onFilterChange(filter.key, [...filter.options])}>
+                        All
+                      </button>
+                      <button type="button" onClick={() => onFilterChange(filter.key, [])}>
+                        Clear
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mobile-filter-options">
+                    {filter.options.map((option) => {
+                      const checked = filters[filter.key].includes(option);
+                      return (
+                        <label key={option} className="mobile-filter-option">
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => toggleValue(filter.key, option)}
+                          />
+                          <span>{option}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
 
-      <div className="filterbar-right">
-        <div className={`filter-select-wrap filter-sort-wrap${isSortOpen ? " active" : ""}`}>
-          <button
-            type="button"
-            className="filter-dropdown-trigger filter-sort-trigger"
-            onClick={() => {
-              setOpenKey(null);
-              setIsSortOpen((prev) => !prev);
-            }}
-          >
-            <span className="filter-select-label">Sort by: </span>
-            <span className="filter-select-value">{sortLabel}</span>
-          </button>
-
-          {isSortOpen && (
-            <div className="filter-dropdown-menu filter-sort-menu" role="menu" aria-label="Sort by">
-              <button
-                type="button"
-                className={`filter-sort-option${sortBy === "price-asc" ? " active" : ""}`}
-                onClick={() => {
-                  onSortChange("price-asc");
-                  setIsSortOpen(false);
-                }}
-              >
-                Price: Low to High
-              </button>
-              <button
-                type="button"
-                className={`filter-sort-option${sortBy === "price-desc" ? " active" : ""}`}
-                onClick={() => {
-                  onSortChange("price-desc");
-                  setIsSortOpen(false);
-                }}
-              >
-                Price: High to Low
-              </button>
+            <div className="mobile-filter-section">
+              <div className="mobile-filter-section-head">
+                <p>Price</p>
+              </div>
+              <div className="mobile-price-box">
+                <div className="filter-price-range-slider" role="group" aria-label="Price range">
+                  <div className="filter-price-range-track" />
+                  <div
+                    className="filter-price-range-track active"
+                    style={{
+                      left: `${sliderMetrics.minPercent}%`,
+                      width: `${Math.max(0, sliderMetrics.maxPercent - sliderMetrics.minPercent)}%`,
+                    }}
+                  />
+                  <input
+                    className="filter-price-range-input min"
+                    type="range"
+                    min={priceBounds.min}
+                    max={priceBounds.max}
+                    step={sliderStep}
+                    value={priceRange.min}
+                    onChange={(event) => handleMinChange(Number(event.target.value))}
+                    aria-label="Minimum price"
+                  />
+                  <input
+                    className="filter-price-range-input max"
+                    type="range"
+                    min={priceBounds.min}
+                    max={priceBounds.max}
+                    step={sliderStep}
+                    value={priceRange.max}
+                    onChange={(event) => handleMaxChange(Number(event.target.value))}
+                    aria-label="Maximum price"
+                  />
+                </div>
+                <div className="mobile-price-values">
+                  <span>{priceRange.min.toLocaleString("en-IN")}</span>
+                  <span>{priceRange.max.toLocaleString("en-IN")}</span>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      </div>
-    </div>
+          </div>
+          <div className="mobile-sheet-footer">
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="mobile-sheet-reset"
+                onClick={() => {
+                  onResetFilters();
+                }}
+              >
+                Reset filters
+              </button>
+            )}
+            <button type="button" className="mobile-sheet-apply" onClick={() => setIsMobileFiltersOpen(false)}>
+              Done
+            </button>
+          </div>
+        </section>
+      )}
+
+      {isMobileSortOpen && (
+        <section className="mobile-sheet mobile-sort-sheet" role="dialog" aria-modal="true" aria-label="Sort options">
+          <div className="mobile-sheet-handle" aria-hidden="true" />
+          <div className="mobile-sheet-header">
+            <h3>Sort</h3>
+            <button type="button" className="mobile-sheet-close" onClick={() => setIsMobileSortOpen(false)}>
+              Close
+            </button>
+          </div>
+          <div className="mobile-sheet-body mobile-sort-options">
+            <button
+              type="button"
+              className={`mobile-sort-option${sortBy === "price-asc" ? " active" : ""}`}
+              onClick={() => {
+                onSortChange("price-asc");
+                setIsMobileSortOpen(false);
+              }}
+            >
+              Price: Low to High
+            </button>
+            <button
+              type="button"
+              className={`mobile-sort-option${sortBy === "price-desc" ? " active" : ""}`}
+              onClick={() => {
+                onSortChange("price-desc");
+                setIsMobileSortOpen(false);
+              }}
+            >
+              Price: High to Low
+            </button>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
 
