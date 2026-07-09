@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
+    "dev:turbo": "next dev --turbo",
     "build": "next build",
     "start": "next dev",
-    "lint": "eslint"
+    "lint": "eslint",
+    "scrape": "npx tsx scraper/run.ts",
+    "scrape:caratlane": "npx tsx scraper/brands/caratlane.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.23.0",
     "next": "16.2.10",
+    "playwright": "^1.61.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -22,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }

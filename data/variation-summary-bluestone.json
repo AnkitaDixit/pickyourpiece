@@ -1,0 +1,109 @@
+{
+  "brand": {
+    "count": 1,
+    "values": [
+      "BlueStone"
+    ]
+  },
+  "category": {
+    "count": 1,
+    "values": [
+      "Ring"
+    ]
+  },
+  "metal": {
+    "count": 8,
+    "values": [
+      "14 KT Rose Gold",
+      "14 KT White Gold",
+      "14 KT Yellow Gold",
+      "18 KT Rose Gold",
+      "18 KT White Gold",
+      "18 KT Yellow Gold",
+      "22 KT Yellow Gold",
+      "Platinum"
+    ]
+  },
+  "gemstone": {
+    "count": 11,
+    "values": [
+      "Amethyst",
+      "Aquamarine",
+      "Citrine",
+      "Diamond",
+      "Emerald",
+      "Garnet",
+      "Opal",
+      "Pearl",
+      "Ruby",
+      "Sapphire",
+      "Topaz"
+    ]
+  },
+  "occasion": {
+    "count": 3,
+    "values": [
+      "Engagement",
+      "Everyday",
+      "Gifting"
+    ]
+  },
+  "style": {
+    "count": 15,
+    "values": [
+      "Band",
+      "Butterfly",
+      "Chevron",
+      "Cluster",
+      "Cocktail",
+      "Eternity",
+      "Everyday",
+      "Floral",
+      "Halo",
+      "Heart",
+      "Infinity",
+      "Stackable",
+      "Statement",
+      "Vanki",
+      "Vintage"
+    ]
+  },
+  "gender": {
+    "count": 2,
+    "values": [
+      "Men",
+      "Women"
+    ]
+  },
+  "availability": {
+    "count": 1,
+    "values": [
+      "true"
+    ]
+  },
+  "purity": {
+    "count": 3,
+    "values": [
+      "14 KT",
+      "18 KT",
+      "22 KT"
+    ]
+  },
+  "metalColor": {
+    "count": 4,
+    "values": [
+      "Platinum",
+      "Rose",
+      "White",
+      "Yellow"
+    ]
+  },
+  "diamondCarat": {
+    "count": 0,
+    "values": []
+  },
+  "diamondQuality": {
+    "count": 0,
+    "values": []
+  }
+}

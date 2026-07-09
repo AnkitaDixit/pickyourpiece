@@ -1,0 +1,338 @@
+import { cache } from "react";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import {
+  buildProductDetailSlug,
+  formatFieldLabel,
+  getBrandSegment,
+  getPrimaryProductId,
+  parseProductSlugCandidates,
+  toNameSlug,
+} from "@/lib/product-seo";
+
+type RouteParams = {
+  brand: string;
+  slug: string;
+};
+
+type SourceProduct = Record<string, unknown>;
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
+
+const BRAND_LOGOS: Record<string, string> = {
+  bluestone: "/brands/bluestone-logo.png?v=20260709-2338",
+  caratlane: "/brands/caratlane-logo.jpg?v=20260709-2338",
+  tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
+  giva: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdiZUsR4K1BJmDa422342XYCtccq7OfbR9RFdwOuWWAz8IN3bgLWRBLw-_&s=10",
+  miabytanishq: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
+  mia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
+  orra: "http://upload.wikimedia.org/wikipedia/commons/3/3e/ORRAJewellery.jpg",
+  candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
+};
+
+const readBrandProducts = cache(async (brandSegment: string): Promise<SourceProduct[]> => {
+  const filePath = path.join(process.cwd(), "scraper", "data", `${brandSegment}.json`);
+  const raw = await fs.readFile(filePath, "utf8");
+  const parsed = JSON.parse(raw) as unknown;
+  if (!Array.isArray(parsed)) return [];
+  return parsed.filter((entry): entry is SourceProduct => Boolean(entry) && typeof entry === "object");
+});
+
+const productToName = (product: SourceProduct): string => {
+  if (typeof product.name === "string" && product.name.trim()) return product.name;
+  return "Ring";
+};
+
+const productToBrand = (product: SourceProduct, routeBrand: string): string => {
+  if (typeof product.brand === "string" && product.brand.trim()) return product.brand;
+  return routeBrand;
+};
+
+const resolveProduct = async (brandParam: string, slugParam: string): Promise<{ product: SourceProduct; canonicalPath: string }> => {
+  const brandSegment = getBrandSegment(brandParam);
+  if (!brandSegment) notFound();
+
+  const slugCandidates = parseProductSlugCandidates(slugParam);
+  if (slugCandidates.length === 0) notFound();
+
+  let products: SourceProduct[] = [];
+  try {
+    products = await readBrandProducts(brandSegment);
+  } catch {
+    notFound();
+  }
+
+  const wantedIds = new Set(slugCandidates.map((candidate) => candidate.id.toLowerCase()));
+  const wantedNameSlugs = new Set(slugCandidates.map((candidate) => candidate.nameSlug));
+
+  let match = products.find((entry) => {
+    const id = getPrimaryProductId(entry);
+    return typeof id === "string" && wantedIds.has(id.toLowerCase());
+  });
+
+  if (!match) {
+    match = products.find((entry) => {
+      const name = productToName(entry);
+      return wantedNameSlugs.has(toNameSlug(name));
+    });
+  }
+
+  if (!match) notFound();
+
+  const canonicalId = getPrimaryProductId(match);
+  if (!canonicalId) notFound();
+
+  const canonicalBrand = getBrandSegment(productToBrand(match, brandSegment)) ?? brandSegment;
+  const canonicalSlug = buildProductDetailSlug(productToName(match), canonicalId);
+  const canonicalPath = `/product/${canonicalBrand}/${canonicalSlug}`;
+
+  return { product: match, canonicalPath };
+};
+
+const valueToNode = (key: string, value: unknown): React.ReactNode => {
+  if (value == null || value === "") return <span>-</span>;
+
+  if (key === "availability" && typeof value === "boolean") {
+    return (
+      <span className={`availability-badge ${value ? "in-stock" : "out-of-stock"}`}>
+        {value ? "🟢 In Stock" : "🔴 Out of Stock"}
+      </span>
+    );
+  }
+
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return <span>{String(value)}</span>;
+  }
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) return <span>[]</span>;
+    const primitive = value.every((entry) => ["string", "number", "boolean"].includes(typeof entry));
+    if (primitive) {
+      return <span>{value.map((entry) => String(entry)).join(", ")}</span>;
+    }
+    return <pre className="product-detail-json">{JSON.stringify(value, null, 2)}</pre>;
+  }
+
+  return <pre className="product-detail-json">{JSON.stringify(value, null, 2)}</pre>;
+};
+
+export async function generateMetadata({ params }: { params: Promise<RouteParams> }): Promise<Metadata> {
+  const { brand, slug } = await params;
+  const { product, canonicalPath } = await resolveProduct(brand, slug);
+
+  const name = productToName(product);
+  const brandName = productToBrand(product, brand);
+  const image = typeof product.image === "string" ? product.image : undefined;
+  const description =
+    typeof product.description === "string" && product.description.trim()
+      ? product.description
+      : `${name} by ${brandName}`;
+
+  return {
+    title: `${name} | ${brandName} | PickYourPiece`,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      title: `${name} | ${brandName}`,
+      description,
+      url: `${siteUrl}${canonicalPath}`,
+      images: image ? [{ url: image }] : undefined,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} | ${brandName}`,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
+export default async function ProductDetailPage({ params }: { params: Promise<RouteParams> }) {
+  const { brand, slug } = await params;
+  const { product, canonicalPath } = await resolveProduct(brand, slug);
+
+  if (`/product/${brand}/${slug}` !== canonicalPath) {
+    redirect(canonicalPath);
+  }
+
+  const name = productToName(product);
+  const brandName = productToBrand(product, brand);
+  const price = typeof product.price === "number" ? product.price : null;
+  const currency = typeof product.currency === "string" ? product.currency : "INR";
+  const image = typeof product.image === "string" ? product.image : "";
+  const productUrl = typeof product.productUrl === "string" ? product.productUrl : "";
+  const description = typeof product.description === "string" ? product.description : "";
+  const category = typeof product.category === "string" ? product.category : "";
+  const metal = typeof product.metal === "string" ? product.metal : "";
+  const purity = typeof product.purity === "string" ? product.purity : "";
+  const metalColor = typeof product.metalColor === "string" ? product.metalColor : "";
+  const gemstone = Array.isArray(product.gemstone)
+    ? product.gemstone.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim())).join(", ")
+    : "";
+  const availability = typeof product.availability === "boolean"
+    ? (product.availability ? "In Stock" : "Out of Stock")
+    : "";
+  const brandLogo = BRAND_LOGOS[(getBrandSegment(brandName) ?? "").toLowerCase()] ?? null;
+
+  const quickFacts = [
+    category ? `${category}` : "",
+    metal ? `${metal}${metalColor ? ` · ${metalColor}` : ""}` : "",
+    purity ? `${purity}` : "",
+    gemstone ? gemstone : "",
+    availability ? availability : "",
+  ].filter(Boolean);
+  const allImages = Array.isArray(product.allImages)
+    ? product.allImages.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim()))
+    : [];
+
+  const rows = Object.entries(product).sort(([a], [b]) => a.localeCompare(b));
+  const hasExternalLink = Boolean(productUrl);
+  const pageUrl = `${siteUrl}${canonicalPath}`;
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    image: allImages.length > 0 ? allImages : (image ? [image] : undefined),
+    description: description || undefined,
+    sku: typeof product.sku === "string" ? product.sku : undefined,
+    brand: {
+      "@type": "Brand",
+      name: brandName,
+    },
+    category: category || "Ring",
+    offers: {
+      "@type": "Offer",
+      url: productUrl || pageUrl,
+      priceCurrency: currency,
+      price: price ?? undefined,
+      availability:
+        typeof product.availability === "boolean"
+          ? (product.availability ? "https://schema.org/InStock" : "https://schema.org/OutOfStock")
+          : undefined,
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Rings",
+        item: `${siteUrl}/?category=Ring`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: brandName,
+        item: `${siteUrl}/?brand=${encodeURIComponent(brandName)}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name,
+        item: pageUrl,
+      },
+    ],
+  };
+
+  return (
+    <div className="product-detail-page">
+      <div className="product-detail-shell">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+
+        <nav className="product-detail-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/">Home</Link>
+          <span className="product-detail-breadcrumb-sep">&gt;</span>
+          <Link href="/?category=Ring">Rings</Link>
+          <span className="product-detail-breadcrumb-sep">&gt;</span>
+          <Link href={`/?brand=${encodeURIComponent(brandName)}`}>{brandName}</Link>
+          <span className="product-detail-breadcrumb-sep">&gt;</span>
+          <span className="current" aria-current="page">{name}</span>
+        </nav>
+
+        <article className="product-detail-card">
+          <section className="product-detail-hero">
+            {image ? <img src={image} alt={name} className="product-detail-image" /> : <div className="product-detail-image-fallback" />}
+
+            <div className="product-detail-headline">
+              <div className="product-detail-brand-row">
+                {brandLogo
+                  ? <img src={brandLogo} alt={`${brandName} logo`} className="product-detail-brand-logo-img" loading="lazy" />
+                  : <span className="product-detail-brand-fallback" aria-hidden="true">{brandName[0]}</span>}
+                <p className="product-detail-brand">{brandName}</p>
+              </div>
+              <h1 className="product-detail-name">{name}</h1>
+              <p className="product-detail-price">
+                {price != null ? `${currency} ${price.toLocaleString("en-IN")}` : "Price on request"}
+              </p>
+
+              {quickFacts.length > 0 && (
+                <ul className="product-detail-facts" aria-label="Key product highlights">
+                  {quickFacts.map((fact) => <li key={fact}>{fact}</li>)}
+                </ul>
+              )}
+
+              {description && <p className="product-detail-description">{description}</p>}
+
+              {hasExternalLink && (
+                <a
+                  href={productUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="product-detail-visit-btn"
+                >
+                  Visit Brand Website
+                </a>
+              )}
+            </div>
+          </section>
+
+          {allImages.length > 0 && (
+            <section className="product-detail-gallery">
+              <h2>More Images</h2>
+              <div className="product-detail-gallery-grid">
+                {allImages.slice(0, 12).map((url) => (
+                  <img key={url} src={url} alt={`${name} image`} className="product-detail-gallery-image" loading="lazy" />
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section className="product-detail-data">
+            <h2>Product Details</h2>
+            <dl className="product-detail-grid">
+              {rows.map(([key, value]) => (
+                <div key={key} className="product-detail-row">
+                  <dt>{formatFieldLabel(key)}</dt>
+                  <dd>{valueToNode(key, value)}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        </article>
+      </div>
+    </div>
+  );
+}
