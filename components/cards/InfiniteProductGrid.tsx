@@ -35,6 +35,8 @@ interface Props {
   forcedFilters?: Partial<ProductFilters>;
 }
 
+const EMPTY_FORCED_FILTERS: Partial<ProductFilters> = {};
+
 export default function InfiniteProductGrid({
   initialItems,
   initialNextCursor,
@@ -46,7 +48,7 @@ export default function InfiniteProductGrid({
   onResetFilters,
   onProductSelect,
   selectedProductId,
-  forcedFilters = {},
+  forcedFilters = EMPTY_FORCED_FILTERS,
 }: Props) {
   const MIN_FILTER_LOADER_MS = 550;
 
