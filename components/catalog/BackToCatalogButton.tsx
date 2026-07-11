@@ -11,7 +11,7 @@ interface Props {
 
 export default function BackToCatalogButton({
   className,
-  fallbackHref = "/",
+  fallbackHref="/",
   children,
 }: Props) {
   const router = useRouter();
