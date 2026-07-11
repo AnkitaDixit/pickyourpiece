@@ -50,7 +50,7 @@ export default function InfiniteProductGrid({
   selectedProductId,
   forcedFilters = EMPTY_FORCED_FILTERS,
 }: Props) {
-  const MIN_FILTER_LOADER_MS = 550;
+  const MIN_FILTER_LOADER_MS =550;
 
   const [items, setItems] = useState<Product[]>(initialItems);
   const [nextCursor, setNextCursor] = useState<number | null>(initialNextCursor);
