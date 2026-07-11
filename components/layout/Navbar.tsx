@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { UserRound } from "lucide-react";
 import SearchBar from "@/components/search/SearchBar";
 
@@ -26,7 +27,9 @@ export default function Navbar() {
 
       {/* Center — SearchBar */}
       <div className="navbar-center">
-        <SearchBar />
+        <Suspense fallback={<div className="searchbar-wrap" aria-hidden="true" />}>
+          <SearchBar />
+        </Suspense>
       </div>
 
       {/* Right — Heart, Bell, Avatar */}

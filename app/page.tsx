@@ -28,9 +28,14 @@ function sortByPrice(items: Product[]) {
   return copy;
 }
 
-export default function Home({ searchParams }: { searchParams?: Record<string, string | string[] | undefined> }) {
-  const keys = Object.keys(searchParams ?? {}).filter((key) => key !== "preview");
-  const brandRaw = searchParams?.brand;
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const keys = Object.keys(resolvedSearchParams).filter((key) => key !== "preview");
+  const brandRaw = resolvedSearchParams.brand;
   const brandValue = Array.isArray(brandRaw) ? brandRaw[0] : brandRaw;
 
   if (brandValue && keys.length === 1) {
