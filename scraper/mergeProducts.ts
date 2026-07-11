@@ -11,6 +11,12 @@ function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function normalizeMalformedSilverPurity(rawValue: string): string {
+  const normalized = rawValue.replace(/\s+/g, " ").trim();
+  if (/^93\s*KT$/i.test(normalized)) return "Silver925";
+  return normalized;
+}
+
 function normalizeBrand(rawBrand: string): string {
   if (!rawBrand) return "";
 
@@ -28,9 +34,7 @@ function normalizeBrand(rawBrand: string): string {
 function normalizePurity(rawPurity: string): string {
   if (!rawPurity) return "";
 
-  return rawPurity
-    .replace(/\s+/g, " ")
-    .trim()
+  return normalizeMalformedSilverPurity(rawPurity)
     .replace(/(\d+)\s*KT/gi, "$1KT")
     .replace(/Platinum\s*950/gi, "Platinum950")
     .replace(/Silver\s*925/gi, "Silver925")
@@ -49,8 +53,10 @@ function derivePurity(rawPurity: string, rawMetal: string): string {
 }
 
 function deriveBaseMetal(rawMetal: string): string {
-  const normalized = rawMetal.replace(/\s+/g, " ").trim();
+  const normalized = normalizeMalformedSilverPurity(rawMetal);
   if (!normalized) return "";
+
+  if (/silver925/i.test(normalized)) return "Silver";
 
   // Gold takes precedence for mixed strings like "Platinum 950, 14 KT Two Tone Gold"
   if (/gold/i.test(normalized)) return "Gold";
@@ -61,17 +67,35 @@ function deriveBaseMetal(rawMetal: string): string {
   return normalized;
 }
 
+function shouldForceSilverMetal(purity: string): boolean {
+  return /925/i.test(purity);
+}
+
 function deriveMetalColor(rawColor: string, rawMetal: string): string {
-  if (rawColor) return rawColor;
+  const normalizedColor = rawColor.replace(/\s+/g, " ").trim();
+
+  if (/^gold plated$/i.test(normalizedColor) || /^yellow$/i.test(normalizedColor) || /^yellow gold$/i.test(normalizedColor)) {
+    return "Gold";
+  }
+
+  if (/^oxidised silver$/i.test(normalizedColor) || /^silver$/i.test(normalizedColor)) {
+    return "Silver";
+  }
+
+  if (/^rose$/i.test(normalizedColor) || /^rose gold plated$/i.test(normalizedColor)) {
+    return "Rose Gold";
+  }
+
+  if (normalizedColor) return normalizedColor;
 
   const probes: [RegExp, string][] = [
     [/three\s*tone/i, "Three Tone"],
     [/two\s*tone/i, "Two Tone"],
     [/white/i, "White"],
-    [/yellow/i, "Yellow"],
-    [/rose/i, "Rose"],
+    [/yellow/i, "Gold"],
+    [/rose/i, "Rose Gold"],
     [/platinum/i, "Platinum"],
-    [/silver/i, "Silver"],
+    [/(oxidised\s+silver|silver)/i, "Silver"],
   ];
 
   for (const [pattern, label] of probes) {
@@ -135,10 +159,11 @@ export function mergeProducts(): JsonRecord[] {
       const rawMetal = asString(product.metal);
       const rawPurity = asString(product.purity);
       const rawMetalColor = asString(product.metalColor);
+      const normalizedPurity = derivePurity(rawPurity, rawMetal);
 
       normalized.brand = normalizeBrand(rawBrand);
-      normalized.purity = derivePurity(rawPurity, rawMetal);
-      normalized.metal = deriveBaseMetal(rawMetal);
+      normalized.purity = normalizedPurity;
+      normalized.metal = shouldForceSilverMetal(normalizedPurity) ? "Silver" : deriveBaseMetal(rawMetal);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal);
 
       return normalized;

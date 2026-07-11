@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SearchX } from "lucide-react";
 import ProductCard from "@/components/cards/ProductCard";
 import SkeletonCard from "@/components/cards/SkeletonCard";
@@ -19,6 +20,12 @@ interface ProductsResponse {
   items: Product[];
   nextCursor: number | null;
   total: number;
+  search: {
+    originalQuery: string;
+    appliedQuery: string;
+    suggestedQuery: string | null;
+    showingSuggestedResults: boolean;
+  } | null;
 }
 
 interface Props {
@@ -26,6 +33,7 @@ interface Props {
   initialNextCursor: number | null;
   pageSize?: number;
   filters: ProductFilters;
+  searchQuery: string;
   priceRange: PriceRange;
   priceBounds: PriceRange;
   sortBy: ProductSort;
@@ -42,6 +50,7 @@ export default function InfiniteProductGrid({
   initialNextCursor,
   pageSize = 48,
   filters,
+  searchQuery,
   priceRange,
   priceBounds,
   sortBy,
@@ -51,9 +60,13 @@ export default function InfiniteProductGrid({
   forcedFilters = EMPTY_FORCED_FILTERS,
 }: Props) {
   const MIN_FILTER_LOADER_MS =550;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const [items, setItems] = useState<Product[]>(initialItems);
   const [nextCursor, setNextCursor] = useState<number | null>(initialNextCursor);
+  const [searchMeta, setSearchMeta] = useState<ProductsResponse["search"]>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoadMoreError, setHasLoadMoreError] = useState(false);
   const [isBootstrapping, setIsBootstrapping] = useState(false);
@@ -75,10 +88,11 @@ export default function InfiniteProductGrid({
   }, [priceRange]);
 
   const filtersActive = hasActiveFilters(filters) || hasActivePriceRange(priceRange, priceBounds);
+  const queryActive = searchQuery.trim().length > 0;
   const sortActive = sortBy !== DEFAULT_PRODUCT_SORT;
-  const shouldShowFilterLoader = isBootstrapping && (filtersActive || sortActive);
+  const shouldShowFilterLoader = isBootstrapping && (filtersActive || sortActive || queryActive);
   const canLoadMore = nextCursor !== null && !isLoading && !isBootstrapping && !showFilterLoader;
-  const serializedFilters = JSON.stringify({ filters, priceRange: debouncedPriceRange });
+  const serializedFilters = JSON.stringify({ filters, priceRange: debouncedPriceRange, searchQuery });
 
   const loadingSkeletonCount = useMemo(() => Math.min(12, pageSize), [pageSize]);
 
@@ -99,13 +113,17 @@ export default function InfiniteProductGrid({
       params.set("minPrice", String(debouncedPriceRange.min));
       params.set("maxPrice", String(debouncedPriceRange.max));
 
+      if (searchQuery.trim()) {
+        params.set("q", searchQuery.trim());
+      }
+
       if (sortBy !== DEFAULT_PRODUCT_SORT) {
         params.set("sort", sortBy);
       }
 
       return `/api/products?${params.toString()}`;
     },
-    [debouncedPriceRange.max, debouncedPriceRange.min, filters, forcedFilters, pageSize, sortBy]
+    [debouncedPriceRange.max, debouncedPriceRange.min, filters, forcedFilters, pageSize, searchQuery, sortBy]
   );
 
   const loadMore = useCallback(async () => {
@@ -121,6 +139,7 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems((prev) => [...prev, ...payload.items]);
       setNextCursor(payload.nextCursor);
+      setSearchMeta(payload.search);
     } catch {
       setHasLoadMoreError(true);
     } finally {
@@ -129,9 +148,10 @@ export default function InfiniteProductGrid({
   }, [buildUrl, canLoadMore, nextCursor]);
 
   const fetchFirstPageForFilters = useCallback(async () => {
-    if (!filtersActive && !sortActive) {
+    if (!filtersActive && !sortActive && !queryActive) {
       setItems(initialItems);
       setNextCursor(initialNextCursor);
+      setSearchMeta(null);
       setHasLoadMoreError(false);
       setHasBootstrapError(false);
       setIsBootstrapping(false);
@@ -149,14 +169,29 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems(payload.items);
       setNextCursor(payload.nextCursor);
+      setSearchMeta(payload.search);
     } catch {
       setHasBootstrapError(true);
       setItems([]);
       setNextCursor(null);
+      setSearchMeta(null);
     } finally {
       setIsBootstrapping(false);
     }
-  }, [buildUrl, filtersActive, initialItems, initialNextCursor, sortActive]);
+  }, [buildUrl, filtersActive, initialItems, initialNextCursor, queryActive, sortActive]);
+
+  const applySuggestedSearch = useCallback((nextQuery: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("preview");
+    params.set("q", nextQuery);
+
+    const nextUrl = `${pathname}?${params.toString()}`;
+    const currentUrl = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+
+    if (nextUrl !== currentUrl) {
+      router.replace(nextUrl, { scroll: false });
+    }
+  }, [pathname, router, searchParams]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -244,13 +279,32 @@ export default function InfiniteProductGrid({
 
   return (
     <>
+      {searchMeta?.showingSuggestedResults && searchMeta.suggestedQuery && items.length > 0 && !showFilterLoader && !isBootstrapping && (
+        <div className="search-suggestion-banner" role="status" aria-live="polite">
+          <p className="search-suggestion-text">
+            No exact matches for "{searchMeta.originalQuery}". Showing close matches for "{searchMeta.appliedQuery}".
+          </p>
+          <button
+            type="button"
+            className="search-suggestion-action"
+            onClick={() => applySuggestedSearch(searchMeta.suggestedQuery as string)}
+          >
+            Search for "{searchMeta.suggestedQuery}"
+          </button>
+        </div>
+      )}
+
       <div ref={gridRef} className="content-grid">
         {showFilterLoader
           ? (
             <div className="content-grid-loading" role="status" aria-live="polite">
               <div className="brand-loader-mark" aria-hidden="true" />
               <p className="brand-loader-title">PickYourPiece</p>
-              <p className="brand-loader-text">Applying filters and loading matching products...</p>
+              <p className="brand-loader-text">
+                {queryActive
+                  ? "Searching the catalog and ranking the best matches..."
+                  : "Applying filters and loading matching products..."}
+              </p>
             </div>
           )
           : isBootstrapping
@@ -272,12 +326,16 @@ export default function InfiniteProductGrid({
                 <SearchX size={22} />
               </div>
               <h3 className="empty-state-title">
-                {filtersActive
+                {queryActive
+                  ? "No products matched that search"
+                  : filtersActive
                   ? "Sorry, no products match your current criteria"
                   : "Sorry, no products are available right now"}
               </h3>
               <p className="empty-state-text">
-                {filtersActive
+                {queryActive
+                  ? "Try a broader search term or combine fewer filters for better matches."
+                  : filtersActive
                   ? "Try editing your filters for broader results."
                   : "Please check back in a bit while we refresh the catalog."}
               </p>

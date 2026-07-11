@@ -40,9 +40,23 @@ const FILTERS = [
     ],
   },
   {
-    key: "occasion",
-    label: "Occasion",
-    options: ["Engagement", "Everyday", "Gifting"],
+    key: "purity",
+    label: "Purity",
+    options: [
+      "9KT",
+      "14KT",
+      "18KT",
+      "22KT",
+      "Platinum950",
+      "Platinum950, 14KT",
+      "Platinum950, 18KT",
+      "Silver925",
+    ],
+  },
+  {
+    key: "metalColor",
+    label: "Color",
+    options: ["Gold", "Platinum", "Rose Gold", "Silver", "Three Tone", "Two Tone", "White"],
   },
   {
     key: "style",
@@ -68,28 +82,14 @@ const FILTERS = [
     ],
   },
   {
+    key: "occasion",
+    label: "Occasion",
+    options: ["Engagement", "Everyday", "Gifting"],
+  },
+  {
     key: "gender",
     label: "Gender",
     options: ["Men", "Women"],
-  },
-  {
-    key: "purity",
-    label: "Purity",
-    options: [
-      "9KT",
-      "14KT",
-      "18KT",
-      "22KT",
-      "Platinum950",
-      "Platinum950, 14KT",
-      "Platinum950, 18KT",
-      "Silver925",
-    ],
-  },
-  {
-    key: "metalColor",
-    label: "Metal Color",
-    options: ["Platinum", "Rose", "Silver", "Three Tone", "Two Tone", "White", "Yellow"],
   },
   {
     key: "diamondQuality",

@@ -75,6 +75,7 @@ export default function ProductsExplorer({
     return {
       filters: parsedFilters,
       sortBy: parsedSort,
+      searchQuery: (params.get("q") ?? "").trim(),
       priceRange: {
         min: Math.min(clampedMin, clampedMax),
         max: Math.max(clampedMin, clampedMax),
@@ -84,6 +85,7 @@ export default function ProductsExplorer({
 
   const [filters, setFilters] = useState<ProductFilters>(parsedFromUrl.filters);
   const [sortBy, setSortBy] = useState<ProductSort>(parsedFromUrl.sortBy);
+  const [searchQuery, setSearchQuery] = useState(parsedFromUrl.searchQuery);
   const [priceRange, setPriceRange] = useState<PriceRange>(parsedFromUrl.priceRange);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const isApplyingUrlStateRef = useRef(false);
@@ -96,6 +98,7 @@ export default function ProductsExplorer({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setFilters(parsedFromUrl.filters);
     setSortBy(parsedFromUrl.sortBy);
+    setSearchQuery(parsedFromUrl.searchQuery);
     setPriceRange(parsedFromUrl.priceRange);
   // Intentionally keyed by signature so unrelated query params (e.g. preview)
   // do not rehydrate filter state and trigger visual loading churn.
@@ -120,6 +123,10 @@ export default function ProductsExplorer({
       params.set("sort", sortBy);
     }
 
+    if (searchQuery) {
+      params.set("q", searchQuery);
+    }
+
     if (hasActivePriceRange(priceRange, { min: minPrice, max: maxPrice })) {
       params.set("minPrice", String(priceRange.min));
       params.set("maxPrice", String(priceRange.max));
@@ -139,7 +146,7 @@ export default function ProductsExplorer({
 
     const fullNext = params.toString();
     router.replace(fullNext ? `${pathname}?${fullNext}` : pathname, { scroll: false });
-  }, [filters, maxPrice, minPrice, pathname, priceRange, router, searchParams, sortBy]);
+  }, [filters, maxPrice, minPrice, pathname, priceRange, router, searchParams, searchQuery, sortBy]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -239,6 +246,7 @@ export default function ProductsExplorer({
             initialNextCursor={initialNextCursor}
             pageSize={pageSize}
             filters={stableFilters}
+            searchQuery={searchQuery}
             priceRange={priceRange}
             priceBounds={{ min: minPrice, max: maxPrice }}
             sortBy={sortBy}
