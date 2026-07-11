@@ -65,18 +65,15 @@ const resolveProduct = async (brandParam: string, slugParam: string): Promise<{ 
     notFound();
   }
 
-  const wantedIds = new Set(slugCandidates.map((candidate) => candidate.id.toLowerCase()));
-  const wantedNameSlugs = new Set(slugCandidates.map((candidate) => candidate.nameSlug));
-
   let match = products.find((entry) => {
     const id = getPrimaryProductId(entry);
-    return typeof id === "string" && wantedIds.has(id.toLowerCase());
+    return typeof id === "string" && slugCandidates.some((candidate) => candidate.id.toLowerCase() === id.toLowerCase());
   });
 
   if (!match) {
     match = products.find((entry) => {
-      const name = productToName(entry);
-      return wantedNameSlugs.has(toNameSlug(name));
+      const entryName = productToName(entry);
+      return slugCandidates.some((candidate) => candidate.nameSlug === toNameSlug(entryName));
     });
   }
 
@@ -98,7 +95,7 @@ const valueToNode = (key: string, value: unknown): React.ReactNode => {
   if (key === "availability" && typeof value === "boolean") {
     return (
       <span className={`availability-badge ${value ? "in-stock" : "out-of-stock"}`}>
-        {value ? "🟢 In Stock" : "🔴 Out of Stock"}
+        {value ? "In Stock" : "Out of Stock"}
       </span>
     );
   }
@@ -175,31 +172,34 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
   const gemstone = Array.isArray(product.gemstone)
     ? product.gemstone.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim())).join(", ")
     : "";
-  const availability = typeof product.availability === "boolean"
-    ? (product.availability ? "In Stock" : "Out of Stock")
-    : "";
+  const isAvailable = typeof product.availability === "boolean" ? product.availability : null;
+  const availability = isAvailable == null ? "" : isAvailable ? "In Stock" : "Out of Stock";
   const brandLogo = BRAND_LOGOS[(getBrandSegment(brandName) ?? "").toLowerCase()] ?? null;
 
   const quickFacts = [
-    category ? `${category}` : "",
-    metal ? `${metal}${metalColor ? ` · ${metalColor}` : ""}` : "",
-    purity ? `${purity}` : "",
-    gemstone ? gemstone : "",
-    availability ? availability : "",
+    category,
+    metal ? `${metal}${metalColor ? ` / ${metalColor}` : ""}` : "",
+    purity,
+    gemstone,
+    availability,
   ].filter(Boolean);
+
   const allImages = Array.isArray(product.allImages)
     ? product.allImages.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim()))
     : [];
-
-  const rows = Object.entries(product).sort(([a], [b]) => a.localeCompare(b));
+  const galleryImages = Array.from(new Set([image, ...allImages].filter(Boolean)));
+  const rows = Object.entries(product)
+    .filter(([key]) => !["allImages", "brand", "description", "image", "name", "productUrl"].includes(key))
+    .sort(([a], [b]) => a.localeCompare(b));
   const hasExternalLink = Boolean(productUrl);
   const pageUrl = `${siteUrl}${canonicalPath}`;
+  const brandBrowseHref = `/?brand=${encodeURIComponent(brandName)}`;
 
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     name,
-    image: allImages.length > 0 ? allImages : (image ? [image] : undefined),
+    image: galleryImages.length > 0 ? galleryImages : undefined,
     description: description || undefined,
     sku: typeof product.sku === "string" ? product.sku : undefined,
     brand: {
@@ -213,9 +213,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
       priceCurrency: currency,
       price: price ?? undefined,
       availability:
-        typeof product.availability === "boolean"
-          ? (product.availability ? "https://schema.org/InStock" : "https://schema.org/OutOfStock")
-          : undefined,
+        isAvailable == null
+          ? undefined
+          : isAvailable
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
     },
   };
 
@@ -267,53 +269,99 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
           <span className="product-detail-breadcrumb-sep">&gt;</span>
           <Link href="/?category=Ring">Rings</Link>
           <span className="product-detail-breadcrumb-sep">&gt;</span>
-          <Link href={`/?brand=${encodeURIComponent(brandName)}`}>{brandName}</Link>
+          <Link href={brandBrowseHref}>{brandName}</Link>
           <span className="product-detail-breadcrumb-sep">&gt;</span>
           <span className="current" aria-current="page">{name}</span>
         </nav>
 
         <article className="product-detail-card">
           <section className="product-detail-hero">
-            {image ? <img src={image} alt={name} className="product-detail-image" /> : <div className="product-detail-image-fallback" />}
+            <div className="product-detail-media-column">
+              {image ? <img src={image} alt={name} className="product-detail-image" /> : <div className="product-detail-image-fallback" />}
+
+              {galleryImages.length > 1 && (
+                <div className="product-detail-thumb-strip" aria-label="Additional product images">
+                  {galleryImages.slice(0, 4).map((url, index) => (
+                    <img
+                      key={url}
+                      src={url}
+                      alt={index === 0 ? `${name} primary image` : `${name} alternate view ${index}`}
+                      className="product-detail-thumb"
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="product-detail-headline">
+              <p className="product-detail-kicker">Product profile</p>
+
               <div className="product-detail-brand-row">
                 {brandLogo
                   ? <img src={brandLogo} alt={`${brandName} logo`} className="product-detail-brand-logo-img" loading="lazy" />
                   : <span className="product-detail-brand-fallback" aria-hidden="true">{brandName[0]}</span>}
                 <p className="product-detail-brand">{brandName}</p>
               </div>
+
               <h1 className="product-detail-name">{name}</h1>
-              <p className="product-detail-price">
-                {price != null ? `${currency} ${price.toLocaleString("en-IN")}` : "Price on request"}
-              </p>
+
+              <div className="product-detail-summary-card">
+                <div>
+                  <p className="product-detail-summary-label">Current price</p>
+                  <p className="product-detail-price">
+                    {price != null ? `${currency} ${price.toLocaleString("en-IN")}` : "Price on request"}
+                  </p>
+                </div>
+
+                {isAvailable != null && (
+                  <div className="product-detail-summary-meta">
+                    <p className="product-detail-summary-label">Availability</p>
+                    <span className={`availability-badge ${isAvailable ? "in-stock" : "out-of-stock"}`}>
+                      {isAvailable ? "Available now" : "Currently unavailable"}
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {quickFacts.length > 0 && (
-                <ul className="product-detail-facts" aria-label="Key product highlights">
-                  {quickFacts.map((fact) => <li key={fact}>{fact}</li>)}
-                </ul>
+                <div className="product-detail-facts-panel">
+                  <p className="product-detail-facts-title">At a glance</p>
+                  <ul className="product-detail-facts" aria-label="Key product highlights">
+                    {quickFacts.map((fact) => <li key={fact}>{fact}</li>)}
+                  </ul>
+                </div>
               )}
 
               {description && <p className="product-detail-description">{description}</p>}
 
-              {hasExternalLink && (
-                <a
-                  href={productUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="product-detail-visit-btn"
-                >
-                  Visit Brand Website
-                </a>
-              )}
+              <div className="product-detail-actions">
+                <Link href={brandBrowseHref} className="product-detail-back-link">
+                  Browse more from {brandName}
+                </Link>
+
+                {hasExternalLink && (
+                  <a
+                    href={productUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="product-detail-visit-btn"
+                  >
+                    View on {brandName}
+                  </a>
+                )}
+              </div>
             </div>
           </section>
 
-          {allImages.length > 0 && (
+          {galleryImages.length > 1 && (
             <section className="product-detail-gallery">
-              <h2>More Images</h2>
+              <div className="product-detail-section-heading">
+                <p>Image library</p>
+                <h2>More views of the piece</h2>
+              </div>
               <div className="product-detail-gallery-grid">
-                {allImages.slice(0, 12).map((url) => (
+                {galleryImages.slice(1, 9).map((url) => (
                   <img key={url} src={url} alt={`${name} image`} className="product-detail-gallery-image" loading="lazy" />
                 ))}
               </div>
@@ -321,7 +369,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
           )}
 
           <section className="product-detail-data">
-            <h2>Product Details</h2>
+            <div className="product-detail-section-heading">
+              <p>Specifications</p>
+              <h2>Everything we know about this design</h2>
+            </div>
             <dl className="product-detail-grid">
               {rows.map(([key, value]) => (
                 <div key={key} className="product-detail-row">

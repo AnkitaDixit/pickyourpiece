@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Product } from "@/types/product";
-import { ExternalLink } from "lucide-react";
+import { PanelRightOpen } from "lucide-react";
 
 interface Props {
   product: Product;
@@ -23,79 +23,72 @@ const BRAND_LOGOS: Record<string, string> = {
 
 export default function ProductCard({ product, imageLoading = "lazy", onSelect, isSelected = false }: Props) {
   const brandKey = useMemo(() => product.brand.toLowerCase().replace(/\s+/g, ""), [product.brand]);
+  const displayName = useMemo(() => product.name.split("(")[0]?.trim() || product.name, [product.name]);
   const logoSrc = BRAND_LOGOS[brandKey] ?? null;
   const [brokenLogos, setBrokenLogos] = useState<Record<string, true>>({});
   const showLogo = Boolean(logoSrc) && !brokenLogos[brandKey];
   const brandClassName = `product-card-brand product-card-brand--${brandKey}`;
-
-
   return (
-   <button
-  type="button"
-  className={`product-card${isSelected ? " is-selected" : ""}`}
-  onClick={() => onSelect?.(product)}
->
-  <div className="product-card-image-wrap">
-    <img
-      className="product-card-image"
-      src={product.image}
-      alt={product.name}
-      loading={imageLoading}
-    />
-
-    {/* <button
-      className="product-card-heart"
-      aria-label="Save"
-      onClick={(e) => e.preventDefault()}
+    <button
+      type="button"
+      data-product-id={product.id}
+      className={`product-card${isSelected ? " is-selected" : ""}`}
+      onClick={() => onSelect?.(product)}
     >
-      <Heart size={16} strokeWidth={1.8} />
-    </button> */}
-
-    {/* Move this here */}
-    <div className="product-card-info">
-      <div className="product-card-brand-row">
-        <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
-          {showLogo && logoSrc ? (
-            <img
-              src={logoSrc}
-              alt={`${product.brand} logo`}
-              className="product-card-brand-logo-img"
-              width={20}
-              height={20}
-              loading="lazy"
-              onError={() =>
-                setBrokenLogos((prev) => ({
-                  ...prev,
-                  [brandKey]: true,
-                }))
-              }
-            />
-          ) : (
-            product.brand[0]
-          )}
-        </span>
-
-        <span className={brandClassName}>
-          {product.brand}
-        </span>
-      </div>
-
-      <div className="product-card-price-row">
-        <span className="product-card-price">
-          {product.price != null
-            ? `₹${product.price.toLocaleString("en-IN")}`
-            : "Price on request"}
-        </span>
-
-        <ExternalLink
-          className="product-card-link"
-          size={15}
-          strokeWidth={1.6}
+      <div className="product-card-image-wrap">
+        <img
+          className="product-card-image"
+          src={product.image}
+          alt={displayName}
+          loading={imageLoading}
         />
       </div>
-    </div>
-  </div>
-</button>
+
+      <div className="product-card-info">
+        <p className="product-card-title">{displayName}</p>
+
+        <div className="product-card-brand-row">
+          <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
+            {showLogo && logoSrc ? (
+              <img
+                src={logoSrc}
+                alt={`${product.brand} logo`}
+                className="product-card-brand-logo-img"
+                width={20}
+                height={20}
+                loading="lazy"
+                onError={() =>
+                  setBrokenLogos((prev) => ({
+                    ...prev,
+                    [brandKey]: true,
+                  }))
+                }
+              />
+            ) : (
+              product.brand[0]
+            )}
+          </span>
+
+          <span className={brandClassName}>{product.brand}</span>
+        </div>
+
+        <div className="product-card-price-row">
+          <span className="product-card-price">
+            {product.price != null
+              ? `₹${product.price.toLocaleString("en-IN")}`
+              : "Price on request"}
+          </span>
+
+          <span className="product-card-cta" aria-hidden="true">
+            <PanelRightOpen
+              className="product-card-link"
+              size={14}
+              strokeWidth={1.8}
+            />
+          </span>
+        </div>
+      </div>
+    </button>
   );
 }
 

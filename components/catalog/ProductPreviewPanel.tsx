@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
@@ -75,8 +76,9 @@ export default function ProductPreviewPanel({ product, onClose }: Props) {
   const price = typeof merged.price === "number" ? merged.price : product.price;
   const currency = typeof merged.currency === "string" ? merged.currency : product.currency;
   const productUrl = typeof merged.productUrl === "string" ? merged.productUrl : product.productUrl;
-  const detailPath = buildProductDetailPath(product);
+  const availability = typeof merged.availability === "boolean" ? merged.availability : product.availability;
   const brandSegment = getBrandSegment(brand) ?? "";
+  const detailPath = buildProductDetailPath(product);
   const logoSrc = BRAND_LOGOS[brandSegment.toLowerCase()] ?? null;
 
   const detailRows = useMemo(() => {
@@ -103,21 +105,28 @@ export default function ProductPreviewPanel({ product, onClose }: Props) {
         <div className="catalog-preview-hero">
           <img src={image} alt={name} className="catalog-preview-image" />
           <h2>{name}</h2>
+          <div className="catalog-preview-meta-row">
+            <p className="catalog-preview-meta-label">Source: {brand}</p>
+            <span className={`availability-badge ${availability ? "in-stock" : "out-of-stock"}`}>
+              {availability ? "Available" : "Unavailable"}
+            </span>
+          </div>
           <p className="catalog-preview-price">{currency} {price.toLocaleString("en-IN")}</p>
           {description && <p className="catalog-preview-description">{description}</p>}
 
           <div className="catalog-preview-actions">
-            <a href={productUrl} target="_blank" rel="noopener noreferrer" className="catalog-preview-cta">
-              Visit Brand Website
+            {detailPath ? (
+              <Link href={detailPath} target="_blank" rel="noopener noreferrer" className="catalog-preview-detail-link">
+                View details
+              </Link>
+            ) : null}
+            <a href={productUrl} target="_blank" rel="noopener noreferrer" className="catalog-preview-source-link">
+              View on {brand}
             </a>
-            {detailPath && (
-              <a href={detailPath} className="catalog-preview-link">
-                Open Dedicated Page
-              </a>
-            )}
           </div>
         </div>
 
+        <p className="catalog-preview-section-title">Specifications</p>
         <div className="catalog-preview-specs">
           {detailRows.map(([key, value]) => (
             <div key={key} className="catalog-preview-row">

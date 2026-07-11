@@ -61,6 +61,7 @@ export default function InfiniteProductGrid({
   const [showFilterLoader, setShowFilterLoader] = useState(false);
   const [debouncedPriceRange, setDebouncedPriceRange] = useState(priceRange);
 
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const filterLoaderStartedAtRef = useRef<number | null>(null);
   const filterLoaderHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -228,9 +229,22 @@ export default function InfiniteProductGrid({
     };
   }, []);
 
+  useEffect(() => {
+    if (!selectedProductId) return;
+
+    const selectedCard = gridRef.current?.querySelector<HTMLElement>(`[data-product-id="${selectedProductId}"]`);
+    if (!selectedCard) return;
+
+    selectedCard.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [selectedProductId]);
+
   return (
     <>
-      <div className="content-grid">
+      <div ref={gridRef} className="content-grid">
         {showFilterLoader
           ? (
             <div className="content-grid-loading" role="status" aria-live="polite">
