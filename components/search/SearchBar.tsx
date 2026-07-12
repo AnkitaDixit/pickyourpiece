@@ -5,8 +5,20 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 
 const MIN_SEARCH_LENGTH = 3;
+const CATALOG_MODE_PARAM = "mode";
+const CATALOG_MODE_VALUE = "catalog";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  variant?: "default" | "hero" | "landing";
+  placeholder?: string;
+  ariaLabel?: string;
+}
+
+export default function SearchBar({
+  variant = "default",
+  placeholder = "Search by title, brand, description, category, or metal...",
+  ariaLabel = "Search products",
+}: SearchBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -14,6 +26,7 @@ export default function SearchBar() {
   const [focused, setFocused] = useState(false);
   const [draftValue, setDraftValue] = useState(urlQuery);
   const value = focused ? draftValue : urlQuery;
+  const isLandingVariant = variant === "landing";
 
   const applySearch = (rawValue: string) => {
     const isCatalogPath = pathname === "/" || pathname.startsWith("/brands/");
@@ -25,8 +38,14 @@ export default function SearchBar() {
 
     if (trimmed.length >= MIN_SEARCH_LENGTH) {
       params.set("q", trimmed);
+      params.delete(CATALOG_MODE_PARAM);
     } else if (trimmed.length === 0) {
       params.delete("q");
+      const hasOtherParams = Array.from(params.keys()).some((key) => key !== CATALOG_MODE_PARAM);
+
+      if (targetPath === "/" && !hasOtherParams) {
+        params.set(CATALOG_MODE_PARAM, CATALOG_MODE_VALUE);
+      }
     } else {
       return;
     }
@@ -41,11 +60,13 @@ export default function SearchBar() {
   };
 
   return (
-    <div className={`searchbar-wrap${focused ? " focused" : ""}`}>
-      <Search size={18} className="searchbar-icon" />
+    <div
+      className={`searchbar-wrap${focused ? " focused" : ""}${variant === "hero" ? " searchbar-hero" : ""}${isLandingVariant ? " searchbar-landing" : ""}`}
+    >
+      {isLandingVariant ? null : <Search size={18} className="searchbar-icon" />}
       <input
         type="text"
-        placeholder="Search by title, brand, description, category, or metal..."
+        placeholder={placeholder}
         className="searchbar-input"
         value={value}
         onChange={(event) => {
@@ -66,9 +87,18 @@ export default function SearchBar() {
           setFocused(true);
         }}
         onBlur={() => setFocused(false)}
-        aria-label="Search products"
+        aria-label={ariaLabel}
       />
-      {value && (
+      {isLandingVariant ? (
+        <button
+          type="button"
+          className="searchbar-submit"
+          onClick={() => applySearch(draftValue)}
+          aria-label="Search"
+        >
+          <Search size={16} />
+        </button>
+      ) : value && (
         <button
           type="button"
           className="searchbar-clear"

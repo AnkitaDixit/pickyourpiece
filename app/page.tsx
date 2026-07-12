@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import MainLayout from "@/components/layout/MainLayout";
-import ProductsExplorer from "@/components/catalog/ProductsExplorer";
+import HomeCatalogMode from "@/components/home/HomeCatalogMode";
+import HomeLandingMode from "@/components/home/HomeLandingMode";
 import type { Product } from "@/types/product";
 import products from "@/data/products.json";
 import { getBrandSegment } from "@/lib/product-seo";
@@ -28,28 +28,60 @@ function sortByPrice(items: Product[]) {
   return copy;
 }
 
+const EDITOR_PICK_BRANDS = [
+  "bluestone",
+  "candere",
+  "caratlane",
+  "giva",
+  "mia",
+  "orra",
+  "tanishq",
+] as const;
+
+function pickEditorsProducts(items: Product[]): Product[] {
+  const byBrand = new Map<string, Product[]>();
+
+  for (const item of items) {
+    const segment = getBrandSegment(item.brand);
+    if (!segment) continue;
+
+    const current = byBrand.get(segment);
+    if (current) {
+      current.push(item);
+    } else {
+      byBrand.set(segment, [item]);
+    }
+  }
+
+  return EDITOR_PICK_BRANDS.map((brandSegment) => {
+    const brandItems = byBrand.get(brandSegment) ?? [];
+    const ringItem = brandItems.find((product) => product.name.toLowerCase().includes("ring"));
+    return ringItem ?? brandItems[0] ?? null;
+  }).filter((product): product is Product => product !== null);
+}
+
 export default async function Home({
   searchParams,
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const resolvedSearchParams = (await searchParams) ?? {};
-  const keys = Object.keys(resolvedSearchParams).filter((key) => key !== "preview");
-  const brandRaw = resolvedSearchParams.brand;
-  const brandValue = Array.isArray(brandRaw) ? brandRaw[0] : brandRaw;
-
-  if (brandValue && keys.length === 1) {
-    const brandSegment = getBrandSegment(brandValue);
-    if (brandSegment) {
-      redirect(`/brands/${brandSegment}`);
-    }
-  }
+  const previewIgnoredKeys = Object.keys(resolvedSearchParams).filter((key) => key !== "preview");
+  const keys = previewIgnoredKeys.filter((key) => key !== "mode");
+  const previewRaw = resolvedSearchParams.preview;
+  const previewValue = Array.isArray(previewRaw) ? previewRaw[0] : previewRaw;
+  const modeRaw = resolvedSearchParams.mode;
+  const modeValue = Array.isArray(modeRaw) ? modeRaw[0] : modeRaw;
 
   const all = sortByPrice(products as Product[]);
+  const totalBrands = new Set(all.map((product) => product.brand).filter(Boolean)).size;
   const minPrice = all.length > 0 ? all[0].price : 0;
   const maxPrice = all.length > 0 ? all[all.length - 1].price : 0;
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
+  const isCatalogMode = keys.length > 0 || Boolean(previewValue) || modeValue === "catalog";
+
+  const trendingProducts = pickEditorsProducts(all);
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -85,18 +117,27 @@ export default async function Home({
   };
 
   return (
-    <MainLayout>
+    <MainLayout showNavbarSearch={isCatalogMode} showNavbarBrand={!isCatalogMode}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
-      <ProductsExplorer
-        initialItems={initialItems}
-        initialNextCursor={initialNextCursor}
-        pageSize={INITIAL_PAGE_SIZE}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-      />
+
+      {isCatalogMode ? (
+        <HomeCatalogMode
+          initialItems={initialItems}
+          initialNextCursor={initialNextCursor}
+          pageSize={INITIAL_PAGE_SIZE}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+        />
+      ) : (
+        <HomeLandingMode
+          allCount={all.length}
+          totalBrands={totalBrands}
+          trendingProducts={trendingProducts}
+        />
+      )}
     </MainLayout>
   );
 }

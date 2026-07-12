@@ -1,12 +1,18 @@
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+interface MainLayoutProps {
+  children: React.ReactNode;
+  showNavbarSearch?: boolean;
+  showNavbarBrand?: boolean;
+}
+
+export default function MainLayout({ children, showNavbarSearch = true, showNavbarBrand = false }: MainLayoutProps) {
   return (
     <div>
       <Sidebar />
       <div className="main-layout-wrapper">
-        <Navbar />
+        <Navbar showSearch={showNavbarSearch} showBrand={showNavbarBrand} />
         <main>{children}</main>
       </div>
     </div>

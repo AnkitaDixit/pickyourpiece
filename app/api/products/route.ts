@@ -305,17 +305,29 @@ function scoreProductSearch(
 function sortProducts(
   items: Array<{ product: SearchableProduct; score: number }>,
   sort: ProductSort,
-  hasQuery: boolean
+  hasQuery: boolean,
+  hasExplicitSort: boolean
 ): Product[] {
   const copy = [...items];
   copy.sort((a, b) => {
+    const aPrice = typeof a.product.price === "number" ? a.product.price : Number.MAX_SAFE_INTEGER;
+    const bPrice = typeof b.product.price === "number" ? b.product.price : Number.MAX_SAFE_INTEGER;
+
+    // If user explicitly chooses a sort, honor that sort first.
+    if (hasExplicitSort && aPrice !== bPrice) {
+      return sort === "price-asc" ? aPrice - bPrice : bPrice - aPrice;
+    }
+
+    // Otherwise keep best-match relevance as the primary search order.
     if (hasQuery && a.score !== b.score) {
       return b.score - a.score;
     }
 
-    const aPrice = typeof a.product.price === "number" ? a.product.price : Number.MAX_SAFE_INTEGER;
-    const bPrice = typeof b.product.price === "number" ? b.product.price : Number.MAX_SAFE_INTEGER;
-    return sort === "price-asc" ? aPrice - bPrice : bPrice - aPrice;
+    if (aPrice !== bPrice) {
+      return sort === "price-asc" ? aPrice - bPrice : bPrice - aPrice;
+    }
+
+    return 0;
   });
 
   return copy.map((entry) => entry.product);
@@ -323,6 +335,7 @@ function sortProducts(
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
+  const hasExplicitSort = searchParams.has("sort");
   const cursor = parsePositiveInt(searchParams.get("cursor"), 0);
   const limit = Math.min(MAX_LIMIT, Math.max(1, parsePositiveInt(searchParams.get("limit"), DEFAULT_LIMIT)));
   const filters = parseFilters(searchParams);
@@ -345,7 +358,7 @@ export async function GET(request: NextRequest) {
     }))
     .filter((entry) => entry.score >= 0);
 
-  const sorted = sortProducts(filtered, sort, Boolean(appliedQuery));
+  const sorted = sortProducts(filtered, sort, Boolean(appliedQuery), hasExplicitSort);
 
   const start = Math.min(cursor, sorted.length);
   const end = Math.min(start + limit, sorted.length);

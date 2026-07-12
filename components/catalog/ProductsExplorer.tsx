@@ -38,6 +38,8 @@ export default function ProductsExplorer({
   hiddenFilterKeys = [],
   forcedFilters,
 }: Props) {
+  const CATALOG_MODE_PARAM = "mode";
+  const CATALOG_MODE_VALUE = "catalog";
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -135,9 +137,16 @@ export default function ProductsExplorer({
     const currentParams = new URLSearchParams(searchParams.toString());
     const previewValue = currentParams.get("preview");
     currentParams.delete("preview");
+    currentParams.delete(CATALOG_MODE_PARAM);
+
+    if (pathname === "/" && params.toString().length === 0) {
+      params.set(CATALOG_MODE_PARAM, CATALOG_MODE_VALUE);
+    }
 
     const current = toCanonicalQuery(currentParams);
-    const next = toCanonicalQuery(params);
+    const nextForComparison = new URLSearchParams(params.toString());
+    nextForComparison.delete(CATALOG_MODE_PARAM);
+    const next = toCanonicalQuery(nextForComparison);
     if (current === next) return;
 
     if (previewValue) {

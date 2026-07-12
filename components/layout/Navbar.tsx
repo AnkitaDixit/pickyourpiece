@@ -4,7 +4,12 @@ import { Suspense } from "react";
 import { UserRound } from "lucide-react";
 import SearchBar from "@/components/search/SearchBar";
 
-export default function Navbar() {
+interface NavbarProps {
+  showSearch?: boolean;
+  showBrand?: boolean;
+}
+
+export default function Navbar({ showSearch = true, showBrand = false }: NavbarProps) {
   const goHome = () => {
     if (window.location.pathname === "/" && window.location.search === "") {
       window.location.reload();
@@ -15,21 +20,25 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar${showBrand ? " navbar-show-brand" : ""}`}>
       {/* Left — Logo */}
       <div className="navbar-left">
-        {/* <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
-          <span className="navbar-logo-text">
-            Pick<span className="navbar-logo-red">Your</span>Piece
-          </span>
-        </button> */}
+        {showBrand ? (
+          <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
+            <span className="navbar-logo-text">
+              Pick<span className="navbar-logo-red">Your</span>Piece
+            </span>
+          </button>
+        ) : null}
       </div>
 
       {/* Center — SearchBar */}
       <div className="navbar-center">
-        <Suspense fallback={<div className="searchbar-wrap" aria-hidden="true" />}>
-          <SearchBar />
-        </Suspense>
+        {showSearch ? (
+          <Suspense fallback={<div className="searchbar-wrap" aria-hidden="true" />}>
+            <SearchBar />
+          </Suspense>
+        ) : null}
       </div>
 
       {/* Right — Heart, Bell, Avatar */}

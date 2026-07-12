@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SearchX } from "lucide-react";
 import ProductCard from "@/components/cards/ProductCard";
 import SkeletonCard from "@/components/cards/SkeletonCard";
@@ -20,12 +19,6 @@ interface ProductsResponse {
   items: Product[];
   nextCursor: number | null;
   total: number;
-  search: {
-    originalQuery: string;
-    appliedQuery: string;
-    suggestedQuery: string | null;
-    showingSuggestedResults: boolean;
-  } | null;
 }
 
 interface Props {
@@ -60,13 +53,9 @@ export default function InfiniteProductGrid({
   forcedFilters = EMPTY_FORCED_FILTERS,
 }: Props) {
   const MIN_FILTER_LOADER_MS =550;
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [items, setItems] = useState<Product[]>(initialItems);
   const [nextCursor, setNextCursor] = useState<number | null>(initialNextCursor);
-  const [searchMeta, setSearchMeta] = useState<ProductsResponse["search"]>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoadMoreError, setHasLoadMoreError] = useState(false);
   const [isBootstrapping, setIsBootstrapping] = useState(false);
@@ -139,7 +128,6 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems((prev) => [...prev, ...payload.items]);
       setNextCursor(payload.nextCursor);
-      setSearchMeta(payload.search);
     } catch {
       setHasLoadMoreError(true);
     } finally {
@@ -151,7 +139,6 @@ export default function InfiniteProductGrid({
     if (!filtersActive && !sortActive && !queryActive) {
       setItems(initialItems);
       setNextCursor(initialNextCursor);
-      setSearchMeta(null);
       setHasLoadMoreError(false);
       setHasBootstrapError(false);
       setIsBootstrapping(false);
@@ -169,29 +156,14 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems(payload.items);
       setNextCursor(payload.nextCursor);
-      setSearchMeta(payload.search);
     } catch {
       setHasBootstrapError(true);
       setItems([]);
       setNextCursor(null);
-      setSearchMeta(null);
     } finally {
       setIsBootstrapping(false);
     }
   }, [buildUrl, filtersActive, initialItems, initialNextCursor, queryActive, sortActive]);
-
-  const applySuggestedSearch = useCallback((nextQuery: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("preview");
-    params.set("q", nextQuery);
-
-    const nextUrl = `${pathname}?${params.toString()}`;
-    const currentUrl = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-
-    if (nextUrl !== currentUrl) {
-      router.replace(nextUrl, { scroll: false });
-    }
-  }, [pathname, router, searchParams]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -279,21 +251,6 @@ export default function InfiniteProductGrid({
 
   return (
     <>
-      {searchMeta?.showingSuggestedResults && searchMeta.suggestedQuery && items.length > 0 && !showFilterLoader && !isBootstrapping && (
-        <div className="search-suggestion-banner" role="status" aria-live="polite">
-          <p className="search-suggestion-text">
-            No exact matches for "{searchMeta.originalQuery}". Showing close matches for "{searchMeta.appliedQuery}".
-          </p>
-          <button
-            type="button"
-            className="search-suggestion-action"
-            onClick={() => applySuggestedSearch(searchMeta.suggestedQuery as string)}
-          >
-            Search for "{searchMeta.suggestedQuery}"
-          </button>
-        </div>
-      )}
-
       <div ref={gridRef} className="content-grid">
         {showFilterLoader
           ? (

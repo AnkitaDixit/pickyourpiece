@@ -24,6 +24,11 @@ const BRAND_LOGOS: Record<string, string> = {
 export default function ProductCard({ product, imageLoading = "lazy", onSelect, isSelected = false }: Props) {
   const brandKey = useMemo(() => product.brand.toLowerCase().replace(/\s+/g, ""), [product.brand]);
   const displayName = useMemo(() => product.name.split("(")[0]?.trim() || product.name, [product.name]);
+  const meta = useMemo(
+    () => [product.purity ?? "", product.gemstone?.[0] ?? "", product.metalColor ?? ""].filter(Boolean).join(" · "),
+    [product.gemstone, product.metalColor, product.purity]
+  );
+  const metaText = meta || "Metal and gemstone details available";
   const logoSrc = BRAND_LOGOS[brandKey] ?? null;
   const [brokenLogos, setBrokenLogos] = useState<Record<string, true>>({});
   const showLogo = Boolean(logoSrc) && !brokenLogos[brandKey];
@@ -45,10 +50,8 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
       </div>
 
       <div className="product-card-info">
-        <p className="product-card-title">{displayName}</p>
-
         <div className="product-card-brand-row">
-          <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
+          {/* <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
             {showLogo && logoSrc ? (
               <img
                 src={logoSrc}
@@ -67,10 +70,13 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
             ) : (
               product.brand[0]
             )}
-          </span>
+          </span> */}
 
-          <span className={brandClassName}>{product.brand}</span>
+          <span >{product.brand}</span>
         </div>
+
+        <p className="product-card-title">{displayName}</p>
+        <p className={`product-card-meta${meta ? "" : " is-fallback"}`}>{metaText}</p>
 
         <div className="product-card-price-row">
           <span className="product-card-price">
