@@ -8,6 +8,7 @@ import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 interface Props {
   product: Product;
   onClose: () => void;
+  onProductSelect?: (product: Product) => void;
 }
 
 const BRAND_LOGOS: Record<string, string> = {
@@ -32,8 +33,9 @@ const formatLabel = (value: string) => {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
-export default function ProductPreviewPanel({ product, onClose }: Props) {
+export default function ProductPreviewPanel({ product, onClose, onProductSelect }: Props) {
   const [detail, setDetail] = useState<DetailRecord | null>(null);
+  const [similarItems, setSimilarItems] = useState<Product[]>([]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -80,12 +82,82 @@ export default function ProductPreviewPanel({ product, onClose }: Props) {
   const brandSegment = getBrandSegment(brand) ?? "";
   const detailPath = buildProductDetailPath(product);
   const logoSrc = BRAND_LOGOS[brandSegment.toLowerCase()] ?? null;
+  const brandBrowseHref = `/?brand=${encodeURIComponent(brand)}`;
 
   const detailRows = useMemo(() => {
     return Object.entries(merged)
       .filter(([key]) => !["allImages", "tags"].includes(key))
       .sort(([a], [b]) => a.localeCompare(b));
   }, [merged]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadSimilarItems = async () => {
+      try {
+        const params = new URLSearchParams({
+          brand,
+          category: product.category,
+          limit: "60",
+          sort: "price-asc",
+        });
+
+        const response = await fetch(`/api/products?${params.toString()}`, {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          setSimilarItems([]);
+          return;
+        }
+
+        const payload = (await response.json()) as { items?: Product[] };
+        const candidates = Array.isArray(payload.items) ? payload.items : [];
+        const currentPrice = typeof product.price === "number" ? product.price : 0;
+        const currentGemstones = Array.isArray(product.gemstone) ? product.gemstone : [];
+        const currentBrandSegment = getBrandSegment(product.brand);
+
+        const ranked = candidates
+          .filter((candidate) => candidate.id !== product.id)
+          .map((candidate) => {
+            let score = 0;
+
+            const candidateBrandSegment = getBrandSegment(candidate.brand);
+
+            if (candidateBrandSegment && currentBrandSegment && candidateBrandSegment === currentBrandSegment) score += 4;
+            if (candidate.category === product.category) score += 3;
+            if (candidate.metal === product.metal) score += 2;
+            if (candidate.purity && product.purity && candidate.purity === product.purity) score += 1;
+            if (candidate.metalColor && product.metalColor && candidate.metalColor === product.metalColor) score += 1;
+
+            const sharedGemstones = (candidate.gemstone ?? []).filter((gem) => currentGemstones.includes(gem)).length;
+            score += sharedGemstones * 1.5;
+
+            const priceDelta = Math.abs((candidate.price ?? 0) - currentPrice);
+            const priceDeltaRatio = currentPrice > 0 ? priceDelta / currentPrice : 1;
+            score += Math.max(0, 2 - priceDeltaRatio * 4);
+
+            return { candidate, score, priceDelta };
+          })
+          .sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            return a.priceDelta - b.priceDelta;
+          })
+          .slice(0, 6)
+          .map((entry) => entry.candidate);
+
+        setSimilarItems(ranked);
+      } catch {
+        if (!controller.signal.aborted) {
+          setSimilarItems([]);
+        }
+      }
+    };
+
+    void loadSimilarItems();
+
+    return () => controller.abort();
+  }, [product, brand]);
 
   return (
     <aside className="catalog-preview" aria-live="polite">
@@ -112,9 +184,12 @@ export default function ProductPreviewPanel({ product, onClose }: Props) {
             </span>
           </div>
           <p className="catalog-preview-price">{currency} {price.toLocaleString("en-IN")}</p>
-          {description && <p className="catalog-preview-description">{description}</p>}
+          {/* {description && <p className="catalog-preview-description">{description}</p>} */}
 
           <div className="catalog-preview-actions">
+            <Link href={brandBrowseHref} className="product-detail-back-link">
+              Browse more from {brand}
+            </Link>
             {detailPath ? (
               <Link href={detailPath} target="_blank" rel="noopener noreferrer" className="catalog-preview-detail-link">
                 View details
@@ -124,6 +199,29 @@ export default function ProductPreviewPanel({ product, onClose }: Props) {
               View on {brand}
             </a>
           </div>
+
+          {similarItems.length > 0 && (
+            <div className="catalog-preview-similar">
+              <p className="catalog-preview-similar-title">Similar pieces</p>
+              <div className="catalog-preview-similar-grid">
+                {similarItems.map((item) => {
+                  const itemName = item.name.split("(")[0]?.trim() || item.name;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className="catalog-preview-similar-card"
+                      onClick={() => onProductSelect?.(item)}
+                    >
+                      <img src={item.image} alt={itemName} loading="lazy" className="catalog-preview-similar-image" />
+                      <span className="catalog-preview-similar-name">{itemName}</span>
+                      <span className="catalog-preview-similar-price">{item.currency} {item.price.toLocaleString("en-IN")}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         <p className="catalog-preview-section-title">Specifications</p>

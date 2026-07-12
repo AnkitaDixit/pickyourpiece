@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import products from "@/data/products.json";
 import type { Product } from "@/types/product";
+import { getBrandSegment } from "@/lib/product-seo";
 import {
   DEFAULT_PRODUCT_SORT,
   PRODUCT_FILTER_KEYS,
@@ -207,8 +208,28 @@ function matchesScalarValue(value: string | boolean | undefined, selected: strin
   return selected.includes(String(value));
 }
 
+function matchesBrandValue(value: string | undefined, selected: string[]): boolean {
+  if (selected.length === 0) return true;
+  if (!value) return false;
+
+  const normalizedValue = value.trim().toLowerCase();
+  const valueSegment = getBrandSegment(value);
+
+  return selected.some((selectedBrand) => {
+    const normalizedSelected = selectedBrand.trim().toLowerCase();
+    if (normalizedSelected === normalizedValue) return true;
+
+    const selectedSegment = getBrandSegment(selectedBrand);
+    if (valueSegment && selectedSegment) {
+      return valueSegment === selectedSegment;
+    }
+
+    return false;
+  });
+}
+
 function matchesProductFilters(product: Product, filters: ProductFilters): boolean {
-  if (!matchesScalarValue(product.brand, filters.brand)) return false;
+  if (!matchesBrandValue(product.brand, filters.brand)) return false;
   if (!matchesScalarValue(product.category, filters.category)) return false;
   if (!matchesScalarValue(product.metal, filters.metal)) return false;
   if (filters.gemstone.length > 0 && !matchesArrayValue(product.gemstone, filters.gemstone)) return false;

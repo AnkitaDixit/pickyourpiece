@@ -2704,6 +2704,72 @@ select {
   text-underline-offset: 3px;
 }
 
+.catalog-preview-similar {
+  margin-top: 16px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 12px;
+}
+
+.catalog-preview-similar-title {
+  margin: 0 0 10px;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.catalog-preview-similar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.catalog-preview-similar-card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-background-elevated);
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease, background-color 140ms ease;
+}
+
+.catalog-preview-similar-card:hover {
+  border-color: var(--color-primary-border-soft);
+  background: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.catalog-preview-similar-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--gradient-image-fallback);
+}
+
+.catalog-preview-similar-name {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  line-height: 1.3;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.catalog-preview-similar-price {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
 .catalog-preview-section-title {
   margin: 16px 0 8px;
   font-size: var(--font-size-caption);
@@ -2775,9 +2841,11 @@ select {
 @media (max-width: 1119px) {
   .catalog-preview {
     position: fixed;
+    top: auto;
     left: 0;
     right: 0;
     bottom: 0;
+    height: auto;
     z-index: 130;
     border-left: none;
     border-top: 1px solid var(--color-border);
@@ -2791,6 +2859,16 @@ select {
   .catalog-preview-inner {
     position: static;
     max-height: 86vh;
+  }
+
+  .catalog-preview-similar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .catalog-preview-similar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

@@ -5,6 +5,8 @@ const BRAND_ALIAS_TO_SEGMENT: Record<string, string> = {
   caratlane: "caratlane",
   tanishq: "tanishq",
   giva: "giva",
+  "giva jewellery": "giva",
+  givajewellery: "giva",
   orra: "orra",
   candere: "candere",
   mia: "mia",

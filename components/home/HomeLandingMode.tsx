@@ -147,6 +147,7 @@ export default function HomeLandingMode({
               <ProductPreviewPanel
                 key={selectedProduct.id}
                 product={selectedProduct}
+                onProductSelect={setSelectedProduct}
                 onClose={() => setSelectedProduct(null)}
               />
             )}
