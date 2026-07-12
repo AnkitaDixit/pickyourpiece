@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { PanelRightOpen } from "lucide-react";
+import { ExternalLink, PanelRightOpen } from "lucide-react";
 import { Suspense, useState } from "react";
 import SearchBar from "@/components/search/SearchBar";
 import ProductPreviewPanel from "@/components/catalog/ProductPreviewPanel";
@@ -14,6 +14,26 @@ const POPULAR_SEARCHES = [
   { label: "🌸 Rose Gold", query: "rose gold ring" },
   { label: "🔥 Trending Now", query: "trending ring" },
 ];
+
+const BRAND_ENTRIES = [
+  ["bluestone", "BlueStone"],
+  ["candere", "Candere"],
+  ["caratlane", "CaratLane"],
+  ["giva", "GIVA"],
+  ["mia", "Mia by Tanishq"],
+  ["orra", "ORRA"],
+  ["tanishq", "Tanishq"],
+] as const;
+
+const BRAND_LOGOS: Partial<Record<(typeof BRAND_ENTRIES)[number][0], string>> = {
+  bluestone: "/brands/bluestone-logo.png?v=20260709-2338",
+  candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
+  caratlane: "/brands/caratlane-logo.jpg?v=20260709-2338",
+  giva: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdiZUsR4K1BJmDa422342XYCtccq7OfbR9RFdwOuWWAz8IN3bgLWRBLw-_&s=10",
+  mia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
+  orra: "https://upload.wikimedia.org/wikipedia/commons/3/3e/ORRAJewellery.jpg",
+  tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
+};
 
 interface HomeLandingModeProps {
   allCount: number;
@@ -45,7 +65,7 @@ export default function HomeLandingMode({
             <Suspense fallback={<div className="searchbar-wrap searchbar-hero" aria-hidden="true" />}>
               <SearchBar
                 variant="landing"
-                placeholder="Search rings, earrings, necklaces, brands..."
+                placeholder = "Search by title, brand, description, category, or metal..."
                 ariaLabel="Search jewellery catalog"
               />
             </Suspense>
@@ -73,23 +93,6 @@ export default function HomeLandingMode({
           <img src="/heroImage.png" alt="Featured jewellery" />
         </div>
       </section>
-
-      {/* <section className="landing-brand-strip" aria-label="Trusted brands">
-        <div className="landing-brand-strip-head">
-          <p>Trusted by {totalBrands} top jewellery brands</p>
-          <Link href="/brands/bluestone">View all brands</Link>
-        </div>
-        <div className="landing-brand-list">
-          {brandEntries.map(([segment, brandName]) => {
-            const logo = BRAND_LOGOS[segment] ?? null;
-            return (
-              <Link key={segment} href={`/brands/${segment}`} className="landing-brand-item">
-                {logo ? <img src={logo} alt={`${brandName} logo`} loading="lazy" /> : <span>{brandName}</span>}
-              </Link>
-            );
-          })}
-        </div>
-      </section> */}
 
       <section className="landing-trending" aria-labelledby="landing-trending-title">
         <div className="landing-section-head">
@@ -153,6 +156,44 @@ export default function HomeLandingMode({
             Trending products are loading. Try a quick search to start comparing designs.
           </div>
         )}
+      </section>
+
+      <section className="landing-brand-strip" aria-labelledby="landing-brand-strip-title">
+        <div className="landing-brand-strip-head">
+          <h2 id="landing-brand-strip-title">CHECK TOP BRANDS</h2>
+          <Link href="/?mode=catalog&sort=price-asc">View all brands</Link>
+        </div>
+        <div className="landing-brand-list">
+          {BRAND_ENTRIES.map(([segment, brandName]) => {
+            const logo = BRAND_LOGOS[segment] ?? null;
+            return (
+              <article key={segment} className="product-card landing-brand-item">
+                <Link
+                  href={`/brands/${segment}`}
+                  className="product-card-cta landing-brand-cta"
+                  aria-label={`Go to ${brandName} brand page`}
+                >
+                  <ExternalLink className="product-card-link" size={14} strokeWidth={1.8} />
+                </Link>
+                <div className="product-card-image-wrap landing-brand-image-wrap">
+                  {logo ? (
+                    <img src={logo} alt={`${brandName} logo`} loading="lazy" className="landing-brand-logo-image" />
+                  ) : (
+                    <span>{brandName}</span>
+                  )}
+                </div>
+
+                {/* <div className="product-card-info landing-brand-info">
+                  <div className="product-card-brand-row">
+                    <span>{brandName}</span>
+                  </div>
+                 
+                </div> */}
+
+              </article>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

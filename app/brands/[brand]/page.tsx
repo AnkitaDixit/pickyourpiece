@@ -53,10 +53,16 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
   const canonicalPath = `/brands/${brand}`;
   const title = `${brandDisplayName} Rings | Compare Prices and Styles`;
   const description = `Explore and compare ${brandDisplayName} rings by price, style, metal, and purity on PickYourPiece.`;
+  const brandItems = getBrandProducts(brand);
+  const primaryImage = brandItems.find((item) => typeof item.image === "string" && item.image.trim())?.image;
 
   return {
     title,
     description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath,
     },
@@ -65,11 +71,13 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
       description,
       url: `${siteUrl}${canonicalPath}`,
       type: "website",
+      images: primaryImage ? [{ url: primaryImage }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: primaryImage ? [primaryImage] : undefined,
     },
   };
 }

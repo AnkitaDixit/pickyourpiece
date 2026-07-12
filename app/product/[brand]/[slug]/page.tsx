@@ -123,14 +123,27 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
   const name = productToName(product);
   const brandName = productToBrand(product, brand);
   const image = typeof product.image === "string" ? product.image : undefined;
+  const metal = typeof product.metal === "string" ? product.metal : "";
+  const purity = typeof product.purity === "string" ? product.purity : "";
+  const gemstone = Array.isArray(product.gemstone)
+    ? product.gemstone.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim())).join(", ")
+    : "";
   const description =
     typeof product.description === "string" && product.description.trim()
       ? product.description
       : `${name} by ${brandName}`;
+  const keywords = [name, brandName, "ring", metal, purity, gemstone]
+    .map((value) => value.trim())
+    .filter(Boolean);
 
   return {
     title: `${name} | ${brandName} | PickYourPiece`,
     description,
+    keywords,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath,
     },

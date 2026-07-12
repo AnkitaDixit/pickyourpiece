@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "PickYourPiece",
   title: {
     default: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
     template: "%s | PickYourPiece",
@@ -42,12 +43,21 @@ export const metadata: Metadata = {
     description:
       "Find your perfect ring by comparing styles, metals, purity, and prices from multiple brands in one place.",
     siteName: "PickYourPiece",
+    images: [
+      {
+        url: "/heroImage.png",
+        width: 1200,
+        height: 630,
+        alt: "PickYourPiece ring comparison catalog",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
     description:
       "Compare ring collections across brands with filters for price, metal, style, and more.",
+    images: ["/heroImage.png"],
   },
   robots: {
     index: true,
@@ -67,12 +77,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "PickYourPiece",
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         {children}
         <Analytics />
         <SpeedInsights />

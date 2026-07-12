@@ -38,6 +38,45 @@ const EDITOR_PICK_BRANDS = [
   "tanishq",
 ] as const;
 
+const EDITOR_PICK_NAME_BY_BRAND: Partial<Record<(typeof EDITOR_PICK_BRANDS)[number], string>> = {
+  candere: "fab fit minimal diamond stackable ring",
+  caratlane: "timeless splendor solitaire ring",
+  giva: "silver glittering ring",
+  mia: "starlit heart 14 kt gold & diamond ring",
+  tanishq: "harmony glow diamond ring",
+};
+
+function scoreImageQuality(image: string): number {
+  if (!image) return -100;
+
+  const normalized = image.trim().toLowerCase();
+  if (!normalized) return -100;
+
+  let score = 0;
+
+  if (normalized.startsWith("https://")) score += 4;
+  else if (normalized.startsWith("http://")) score += 2;
+
+  if (/\.(webp|png|jpe?g)(\?|$)/.test(normalized)) score += 2;
+  if (/w_(1024|1200|1600)|1024|1200|1600|zoom|large|original/.test(normalized)) score += 2;
+  if (/dw\/image|media\/catalog|shopify\.com\/s\/files|cdn\./.test(normalized)) score += 2;
+
+  if (/placeholder|default|no[-_]?image|coming[-_]?soon|dummy/.test(normalized)) {
+    score -= 8;
+  }
+
+  return score;
+}
+
+function scoreEditorPick(product: Product): number {
+  let score = scoreImageQuality(product.image);
+
+  if (product.name.toLowerCase().includes("ring")) score += 3;
+  if (product.availability) score += 1;
+
+  return score;
+}
+
 function pickEditorsProducts(items: Product[]): Product[] {
   const byBrand = new Map<string, Product[]>();
 
@@ -55,8 +94,32 @@ function pickEditorsProducts(items: Product[]): Product[] {
 
   return EDITOR_PICK_BRANDS.map((brandSegment) => {
     const brandItems = byBrand.get(brandSegment) ?? [];
-    const ringItem = brandItems.find((product) => product.name.toLowerCase().includes("ring"));
-    return ringItem ?? brandItems[0] ?? null;
+    if (brandItems.length === 0) return null;
+
+    const preferredName = EDITOR_PICK_NAME_BY_BRAND[brandSegment];
+    if (preferredName) {
+      const exactMatch = brandItems.find((product) => product.name.trim().toLowerCase() === preferredName);
+      if (exactMatch) return exactMatch;
+
+      const partialMatch = brandItems.find((product) => product.name.toLowerCase().includes(preferredName));
+      if (partialMatch) return partialMatch;
+    }
+
+    const ringItems = brandItems.filter((product) => product.name.toLowerCase().includes("ring"));
+    const candidates = ringItems.length > 0 ? ringItems : brandItems;
+
+    return candidates.reduce((best, current) => {
+      if (!best) return current;
+
+      const bestScore = scoreEditorPick(best);
+      const currentScore = scoreEditorPick(current);
+
+      if (currentScore !== bestScore) {
+        return currentScore > bestScore ? current : best;
+      }
+
+      return current.price < best.price ? current : best;
+    }, null as Product | null);
   }).filter((product): product is Product => product !== null);
 }
 

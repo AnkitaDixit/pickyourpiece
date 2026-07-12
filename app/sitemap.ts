@@ -8,15 +8,23 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.c
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const productRoutes = Array.from(
-    new Set(
-      (products as Product[])
-        .map((product) => buildProductDetailPath(product))
-        .filter((url): url is string => Boolean(url))
-    )
-  ).map((url) => ({
+  const routeLastModified = new Map<string, Date>();
+  for (const product of products as Product[]) {
+    const route = buildProductDetailPath(product);
+    if (!route) continue;
+
+    const candidateDate = product.updatedAt ? new Date(product.updatedAt) : now;
+    const nextDate = Number.isNaN(candidateDate.getTime()) ? now : candidateDate;
+    const previousDate = routeLastModified.get(route);
+
+    if (!previousDate || previousDate < nextDate) {
+      routeLastModified.set(route, nextDate);
+    }
+  }
+
+  const productRoutes = Array.from(routeLastModified.entries()).map(([url, lastModified]) => ({
     url: `${siteUrl}${url}`,
-    lastModified: now,
+    lastModified,
     changeFrequency: "daily" as const,
     priority: 0.8,
   }));
