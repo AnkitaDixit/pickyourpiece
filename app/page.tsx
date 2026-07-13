@@ -13,8 +13,37 @@ export const metadata: Metadata = {
   title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
   description:
     "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+  keywords: [
+    "ring price comparison",
+    "compare jewellery brands",
+    "diamond ring comparison",
+    "gold ring prices India",
+    "engagement ring comparison",
+  ],
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
+    description:
+      "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+    images: [
+      {
+        url: "/heroImage.png",
+        width: 1200,
+        height: 630,
+        alt: "PickYourPiece jewellery comparison",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
+    description:
+      "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+    images: ["/heroImage.png"],
   },
 };
 

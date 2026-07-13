@@ -19,6 +19,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: "PickYourPiece",
+  manifest: "/manifest.webmanifest",
+  category: "shopping",
+  classification: "Jewellery comparison and discovery",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   title: {
     default: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
     template: "%s | PickYourPiece",
@@ -63,6 +72,7 @@ export const metadata: Metadata = {
     description:
       "Compare ring collections across brands with filters for price, metal, style, and more.",
     images: ["/heroImage.png"],
+    site: "@pickyourpiece",
   },
   robots: {
     index: true,
@@ -94,6 +104,26 @@ export default function RootLayout({
     },
   };
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PickYourPiece",
+    url: siteUrl,
+    logo: `${siteUrl}/favicon.ico`,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: "abc@pickyourpiece.com",
+      },
+    ],
+  };
+
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [websiteSchema, organizationSchema],
+  };
+
   return (
     <html
       lang="en"
@@ -102,7 +132,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
         />
         {children}
         <Analytics />

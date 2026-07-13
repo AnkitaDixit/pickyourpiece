@@ -4,7 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import ProductsExplorer from "@/components/catalog/ProductsExplorer";
 import products from "@/data/products.json";
 import type { Product } from "@/types/product";
-import { getBrandDisplayName, getBrandSegment } from "@/lib/product-seo";
+import { buildProductDetailPath, getBrandDisplayName, getBrandSegment } from "@/lib/product-seo";
 
 const INITIAL_PAGE_SIZE = 48;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
@@ -114,6 +114,7 @@ export default async function BrandPage({ params }: { params: Promise<RouteParam
           name: product.name,
           brand: product.brand,
           image: product.image,
+          url: buildProductDetailPath(product) ? `${siteUrl}${buildProductDetailPath(product)}` : product.productUrl,
           offers: {
             "@type": "Offer",
             priceCurrency: product.currency,
@@ -127,11 +128,40 @@ export default async function BrandPage({ params }: { params: Promise<RouteParam
     },
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Brands",
+        item: `${siteUrl}/brands/${brand}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: brandDisplayName,
+        item: `${siteUrl}${canonicalPath}`,
+      },
+    ],
+  };
+
   return (
     <MainLayout>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <ProductsExplorer
         initialItems={initialItems}

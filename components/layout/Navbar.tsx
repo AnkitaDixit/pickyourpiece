@@ -43,8 +43,6 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
 
       {/* Right — Heart, Bell, Avatar */}
       <div className="navbar-right">
-        {/* <button className="navbar-icon-btn"><Heart size={20} /></button>
-        <button className="navbar-icon-btn"><Bell size={20} /></button> */}
         <div className="navbar-avatar" aria-label="Guest profile">
           <UserRound size={18} />
         </div>
