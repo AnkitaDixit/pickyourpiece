@@ -82,7 +82,7 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const brandSegment = getBrandSegment(brand) ?? "";
   const detailPath = buildProductDetailPath(product);
   const logoSrc = BRAND_LOGOS[brandSegment.toLowerCase()] ?? null;
-  const brandBrowseHref = `/?brand=${encodeURIComponent(brand)}`;
+  const brandBrowseHref = `/ring/?brand=${encodeURIComponent(brand)}`;
 
   const detailRows = useMemo(() => {
     return Object.entries(merged)

@@ -2,23 +2,20 @@
 
 import { BookText, Home } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const NAV_ITEMS = [
-  { id: "home", href: "/", icon: Home },
-  { id: "articles", href: "/articles", icon: BookText },
-  // { id: "search",   icon: Search },
-  // { id: "heart",    icon: Heart },
-  // { id: "folder",   icon: Folder },
-  // { id: "bell",     icon: Bell },
+  { id: "home", label: "Home", href: "/", icon: Home },
+  { id: "ring", label: "Ring", href: "/ring", iconSrc: "/categories/ring.png" },
+  { id: "earrings", label: "Earrings", href: "/earrings", iconSrc: "/categories/earrings.png" },
+  { id: "bracelet", label: "Bracelet", href: "/bracelet", iconSrc: "/categories/bracelet.png" },
+  { id: "pendant", label: "Pendant", href: "/pendant", iconSrc: "/categories/pendant.png" },
+  { id: "articles", label: "Articles", href: "/articles", icon: BookText },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [, setActive] = useState("home");
 
   const goHome = () => {
-    setActive("home");
     // Force full navigation so feed/filter client state is fully reset.
     if (window.location.pathname === "/" && window.location.search === "") {
       window.location.reload();
@@ -34,11 +31,11 @@ export default function Sidebar() {
       return;
     }
 
-    if (href === "/articles") {
-      setActive("articles");
-    }
+    const target = new URL(href, window.location.origin);
+    const currentPathWithQuery = `${window.location.pathname}${window.location.search}`;
+    const targetPathWithQuery = `${target.pathname}${target.search}`;
 
-    if (window.location.pathname === href) {
+    if (currentPathWithQuery === targetPathWithQuery) {
       window.location.reload();
       return;
     }
@@ -48,7 +45,11 @@ export default function Sidebar() {
 
   const isActiveItem = (id: string, href: string) => {
     if (id === "home") return pathname === "/";
+    if (id === "ring") return pathname === "/ring";
     if (id === "articles") return pathname?.startsWith("/articles") ?? false;
+    if (id === "earrings") return pathname === "/earrings";
+    if (id === "bracelet") return pathname === "/bracelet";
+    if (id === "pendant") return pathname === "/pendant";
     return pathname === href;
   };
 
@@ -60,15 +61,27 @@ export default function Sidebar() {
       </button>
 
       <div className="sidebar-nav">
-        {NAV_ITEMS.map(({ id, href, icon: Icon }) => (
+        {NAV_ITEMS.map(({ id, label, href, icon: Icon, iconSrc }) => (
           <button
             type="button"
             key={id}
             onClick={() => goTo(href)}
             className={`sidebar-btn${isActiveItem(id, href) ? " active" : ""}`}
-            aria-label={id === "home" ? "Go to home" : "Open articles"}
+            aria-label={label}
+            title={label}
           >
-            <Icon size={20} />
+            {iconSrc ? (
+              <img
+                src={iconSrc}
+                alt=""
+                width={25}
+                height={25}
+                aria-hidden="true"
+                style={{ objectFit: "contain" }}
+              />
+            ) : Icon ? (
+              <Icon size={20} />
+            ) : null}
           </button>
         ))}
       </div>

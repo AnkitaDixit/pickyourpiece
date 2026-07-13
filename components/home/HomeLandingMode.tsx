@@ -162,7 +162,7 @@ export default function HomeLandingMode({
       <section className="landing-brand-strip" aria-labelledby="landing-brand-strip-title">
         <div className="landing-brand-strip-head">
           <h2 id="landing-brand-strip-title">CHECK TOP BRANDS</h2>
-          <Link href="/?mode=catalog&sort=price-asc">View all brands</Link>
+          <Link href="/ring">View all brands</Link>
         </div>
         <div className="landing-brand-list">
           {BRAND_ENTRIES.map(([segment, brandName]) => {

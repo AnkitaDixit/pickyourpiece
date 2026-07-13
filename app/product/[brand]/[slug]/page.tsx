@@ -206,7 +206,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
     .sort(([a], [b]) => a.localeCompare(b));
   const hasExternalLink = Boolean(productUrl);
   const pageUrl = `${siteUrl}${canonicalPath}`;
-  const brandBrowseHref = `/?brand=${encodeURIComponent(brandName)}`;
+  const brandBrowseHref = `/ring/?brand=${encodeURIComponent(brandName)}`;
 
   const productSchema = {
     "@context": "https://schema.org",
@@ -254,7 +254,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
         "@type": "ListItem",
         position: 3,
         name: brandName,
-        item: `${siteUrl}/?brand=${encodeURIComponent(brandName)}`,
+        item: `${siteUrl}/ring/?brand=${encodeURIComponent(brandName)}`,
       },
       {
         "@type": "ListItem",

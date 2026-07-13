@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import MobileCategoryNav from "./MobileCategoryNav";
 import Sidebar from "./Sidebar";
 
 interface MainLayoutProps {
@@ -50,6 +51,7 @@ export default function MainLayout({ children, showNavbarSearch = true, showNavb
             <p className="site-footer-copy">&copy; 2026 PickYourPiece. All rights reserved.</p>
           </div>
         </footer>
+        <MobileCategoryNav />
       </div>
     </div>
   );
