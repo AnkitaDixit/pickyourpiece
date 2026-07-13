@@ -25,6 +25,7 @@ interface Props {
   pageSize: number;
   minPrice: number;
   maxPrice: number;
+  initialSelectedProduct?: Product | null;
   hiddenFilterKeys?: ProductFilterKey[];
   forcedFilters?: Partial<ProductFilters>;
 }
@@ -35,6 +36,7 @@ export default function ProductsExplorer({
   pageSize,
   minPrice,
   maxPrice,
+  initialSelectedProduct = null,
   hiddenFilterKeys = [],
   forcedFilters,
 }: Props) {
@@ -89,7 +91,7 @@ export default function ProductsExplorer({
   const [sortBy, setSortBy] = useState<ProductSort>(parsedFromUrl.sortBy);
   const [searchQuery, setSearchQuery] = useState(parsedFromUrl.searchQuery);
   const [priceRange, setPriceRange] = useState<PriceRange>(parsedFromUrl.priceRange);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(initialSelectedProduct);
   const isApplyingUrlStateRef = useRef(false);
   const catalogUrlRef = useRef<string>("");
 
@@ -106,6 +108,15 @@ export default function ProductsExplorer({
   // do not rehydrate filter state and trigger visual loading churn.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlSignature]);
+
+  useEffect(() => {
+    if (!initialSelectedProduct) return;
+
+    setSelectedProduct((prev) => {
+      if (prev?.id === initialSelectedProduct.id) return prev;
+      return prev ?? initialSelectedProduct;
+    });
+  }, [initialSelectedProduct]);
 
   useEffect(() => {
     if (isApplyingUrlStateRef.current) {

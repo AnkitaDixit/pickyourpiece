@@ -7,6 +7,7 @@ interface HomeCatalogModeProps {
   pageSize: number;
   minPrice: number;
   maxPrice: number;
+  initialSelectedProduct?: Product | null;
 }
 
 export default function HomeCatalogMode({
@@ -15,6 +16,7 @@ export default function HomeCatalogMode({
   pageSize,
   minPrice,
   maxPrice,
+  initialSelectedProduct,
 }: HomeCatalogModeProps) {
   return (
     <ProductsExplorer
@@ -23,6 +25,7 @@ export default function HomeCatalogMode({
       pageSize={pageSize}
       minPrice={minPrice}
       maxPrice={maxPrice}
+      initialSelectedProduct={initialSelectedProduct}
     />
   );
 }

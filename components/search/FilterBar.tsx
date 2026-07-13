@@ -127,6 +127,31 @@ export default function FilterBar({
   const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || typeof window === "undefined") return;
+
+    const syncFilterbarHeight = () => {
+      const nextHeight = Math.max(55, Math.ceil(root.getBoundingClientRect().height));
+      document.documentElement.style.setProperty("--filterbar-height", `${nextHeight}px`);
+    };
+
+    syncFilterbarHeight();
+
+    const observer = new ResizeObserver(() => {
+      syncFilterbarHeight();
+    });
+
+    observer.observe(root);
+    window.addEventListener("resize", syncFilterbarHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncFilterbarHeight);
+      document.documentElement.style.setProperty("--filterbar-height", "55px");
+    };
+  }, []);
+
   const sortLabel = sortBy === "price-desc" ? "Price: High to Low" : "Price: Low to High";
 
   useEffect(() => {

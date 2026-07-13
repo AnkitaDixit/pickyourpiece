@@ -4,7 +4,7 @@ import HomeCatalogMode from "@/components/home/HomeCatalogMode";
 import HomeLandingMode from "@/components/home/HomeLandingMode";
 import type { Product } from "@/types/product";
 import products from "@/data/products.json";
-import { getBrandSegment } from "@/lib/product-seo";
+import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 
 const INITIAL_PAGE_SIZE = 48;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
@@ -172,6 +172,9 @@ export default async function Home({
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
   const isCatalogMode = keys.length > 0 || Boolean(previewValue) || modeValue === "catalog";
+  const initialSelectedProduct = previewValue
+    ? all.find((product) => buildProductDetailPath(product) === previewValue) ?? null
+    : null;
 
   const trendingProducts = pickEditorsProducts(all);
 
@@ -222,6 +225,7 @@ export default async function Home({
           pageSize={INITIAL_PAGE_SIZE}
           minPrice={minPrice}
           maxPrice={maxPrice}
+          initialSelectedProduct={initialSelectedProduct}
         />
       ) : (
         <HomeLandingMode

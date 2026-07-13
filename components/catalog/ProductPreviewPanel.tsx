@@ -162,6 +162,10 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   return (
     <aside className="catalog-preview" aria-live="polite">
       <div className="catalog-preview-inner">
+        <div className="catalog-preview-sheet-handle" aria-hidden="true">
+          <span className="catalog-preview-sheet-bar" />
+        </div>
+
         <div className="catalog-preview-topbar">
           <div className="catalog-preview-brand-row">
             {logoSrc
