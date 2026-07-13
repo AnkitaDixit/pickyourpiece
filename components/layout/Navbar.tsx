@@ -13,10 +13,10 @@ interface NavbarProps {
 
 const MOBILE_SWITCH_OPTIONS = [
   { id: "home", label: "Home", href: "/", iconSrc: "/logo.png", isLogo: true },
-  { id: "ring", label: "Ring", href: "/ring", iconSrc: "/categories/ring.png" },
-  { id: "earrings", label: "Earrings", href: "/earrings", iconSrc: "/categories/earrings.png" },
-  { id: "bracelet", label: "Bracelet", href: "/bracelet", iconSrc: "/categories/bracelet.png" },
-  { id: "pendant", label: "Pendant", href: "/pendant", iconSrc: "/categories/pendant.png" },
+  { id: "ring", label: "Ring", href: "/ring", iconSrc: "/categories/ring.png", isLogo: false },
+  { id: "earrings", label: "Earrings", href: "/earrings", iconSrc: "/categories/earrings.png", isLogo: false },
+  { id: "bracelet", label: "Bracelet", href: "/bracelet", iconSrc: "/categories/bracelet.png", isLogo: false },
+  { id: "pendant", label: "Pendant", href: "/pendant", iconSrc: "/categories/pendant.png", isLogo: false },
 ] as const;
 
 export default function Navbar({ showSearch = true, showBrand = false }: NavbarProps) {

@@ -8,7 +8,7 @@ const MOBILE_CATEGORY_ITEMS = [
   { id: "earrings", label: "Earrings", href: "/earrings", iconSrc: "/categories/earrings.png" },
   { id: "bracelet", label: "Bracelet", href: "/bracelet", iconSrc: "/categories/bracelet.png" },
   { id: "pendant", label: "Pendant", href: "/pendant", iconSrc: "/categories/pendant.png" },
-] as const;
+];
 
 export default function MobileCategoryNav() {
   const pathname = usePathname();
