@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import Image from "next/image";
 import { UserRound } from "lucide-react";
 import SearchBar from "@/components/search/SearchBar";
 
@@ -23,6 +24,10 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
     <nav className={`navbar${showBrand ? " navbar-show-brand" : ""}`}>
       {/* Left — Logo */}
       <div className="navbar-left">
+        <button type="button" className="navbar-mobile-home" onClick={goHome} aria-label="Go to home">
+          <Image src="/logo.png" alt="PickYourPiece" width={28} height={28} className="navbar-mobile-home-icon" />
+        </button>
+
         {showBrand ? (
           <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
             <span className="navbar-logo-text">
