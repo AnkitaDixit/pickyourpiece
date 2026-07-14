@@ -369,21 +369,28 @@ select {
 }
 
 .navbar-mobile-switcher {
-  border: 1px solid var(--color-border);
-  background: var(--color-background-elevated);
+  border: 1px solid var(--color-primary-border-active);
+  background: linear-gradient(180deg, #fff4f6 0%, #ffe9ed 100%);
   border-radius: 999px;
-  min-height: 38px;
-  min-width: 38px;
+  min-height: 40px;
+  min-width: 78px;
   padding: 0 10px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  color: var(--color-primary);
+  box-shadow: 0 8px 18px var(--color-primary-shadow-soft);
+}
+
+.navbar-mobile-switcher-back {
+  color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .navbar-mobile-switcher-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
@@ -392,24 +399,15 @@ select {
   object-fit: cover;
 }
 
-.navbar-mobile-switcher-caret {
-  color: var(--color-text-secondary);
-  transition: transform 0.15s ease;
-}
-
-.navbar-mobile-switcher.open .navbar-mobile-switcher-caret {
-  transform: rotate(180deg);
-}
-
 .navbar-mobile-switcher-menu {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  min-width: 162px;
+  min-width: 176px;
   border-radius: 14px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-primary-border-soft);
   background: var(--color-background-elevated);
-  box-shadow: 0 14px 28px rgba(17, 17, 17, 0.14);
+  box-shadow: 0 14px 28px var(--color-primary-shadow-md);
   padding: 6px;
   display: grid;
   gap: 4px;
@@ -1070,13 +1068,13 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 
   .navbar.navbar-has-mobile-switcher {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr);
     column-gap: 10px;
     align-items: center;
   }
 
   .navbar.navbar-has-mobile-switcher .navbar-left {
-    min-width: 44px;
+    min-width: 88px;
   }
 
   .navbar.navbar-has-mobile-switcher .navbar-center {
@@ -1089,7 +1087,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   }
 
   .navbar.navbar-has-mobile-switcher .navbar-right {
-    min-width: 40px;
+    display: none;
   }
 
   .navbar-mobile-switcher-wrap {

@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronDown, UserRound } from "lucide-react";
+import { ArrowLeft, UserRound } from "lucide-react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@/components/search/SearchBar";
 
@@ -32,10 +32,6 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
 
   const activeSwitcherOption = useMemo(() => {
     return MOBILE_SWITCH_OPTIONS.find((option) => option.href === pathname) ?? MOBILE_SWITCH_OPTIONS[0];
-  }, [pathname]);
-
-  useEffect(() => {
-    setSwitcherOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -93,12 +89,13 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
           {isMobileCategoryDropdownRoute ? (
             <button
               type="button"
-              className={`navbar-mobile-switcher${switcherOpen ? " open" : ""}`}
+              className="navbar-mobile-switcher"
               onClick={() => setSwitcherOpen((prev) => !prev)}
-              aria-label="Open category switcher"
+              aria-label={`Open category switcher. Current category: ${activeSwitcherOption.label}`}
               aria-haspopup="menu"
               aria-expanded={switcherOpen}
             >
+              <ArrowLeft size={14} className="navbar-mobile-switcher-back" />
               <Image
                 src={activeSwitcherOption.iconSrc}
                 alt={activeSwitcherOption.isLogo ? "PickYourPiece" : ""}
@@ -107,7 +104,6 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
                 className={`navbar-mobile-switcher-icon${activeSwitcherOption.isLogo ? " is-logo" : ""}`}
                 aria-hidden={activeSwitcherOption.isLogo ? undefined : true}
               />
-              <ChevronDown size={14} className="navbar-mobile-switcher-caret" />
             </button>
           ) : null}
 
@@ -164,7 +160,7 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
         ) : null}
       </div>
 
-      {/* Right — Heart, Bell, Avatar */}
+      {/* Right — Avatar */}
       <div className="navbar-right">
         <div className="navbar-avatar" aria-label="Guest profile">
           <UserRound size={18} />
