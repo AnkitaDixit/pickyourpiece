@@ -99,11 +99,20 @@ export default function ProductsExplorer({
 
   useEffect(() => {
     isApplyingUrlStateRef.current = true;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFilters(parsedFromUrl.filters);
-    setSortBy(parsedFromUrl.sortBy);
-    setSearchQuery(parsedFromUrl.searchQuery);
-    setPriceRange(parsedFromUrl.priceRange);
+    const { filters: nF, sortBy: nS, searchQuery: nQ, priceRange: nP } = parsedFromUrl;
+    // Use functional updates so React bails out (keeps the same object reference)
+    // when serialised values are unchanged. Without this, rehydration creates new
+    // object references for `filters` and `priceRange`, causing `buildUrl` to get
+    // a new callback reference, which triggers `fetchFirstPageForFilters` a second
+    // time — producing a double network request and a visible loader flicker.
+    setFilters(prev =>
+      JSON.stringify(prev) === JSON.stringify(nF) ? prev : nF
+    );
+    setSortBy(nS);
+    setSearchQuery(nQ);
+    setPriceRange(prev =>
+      prev.min === nP.min && prev.max === nP.max ? prev : nP
+    );
   // Intentionally keyed by signature so unrelated query params (e.g. preview)
   // do not rehydrate filter state and trigger visual loading churn.
   // eslint-disable-next-line react-hooks/exhaustive-deps

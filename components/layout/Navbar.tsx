@@ -82,7 +82,7 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
   };
 
   return (
-    <nav className={`navbar${showBrand ? " navbar-show-brand" : ""}${isMobileCategoryDropdownRoute ? " navbar-has-mobile-switcher" : ""}`}>
+    <nav className={`navbar${showBrand ? " navbar-show-brand" : ""}${isMobileCategoryDropdownRoute || (showSearch && pathname === "/") ? " navbar-has-mobile-switcher" : ""}`}>
       {/* Left — Logo */}
       <div className="navbar-left">
         <div className="navbar-mobile-switcher-wrap" ref={switcherRef}>
@@ -103,6 +103,22 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
                 height={24}
                 className={`navbar-mobile-switcher-icon${activeSwitcherOption.isLogo ? " is-logo" : ""}`}
                 aria-hidden={activeSwitcherOption.isLogo ? undefined : true}
+              />
+            </button>
+          ) : showSearch && pathname === "/" ? (
+            <button
+              type="button"
+              className="navbar-mobile-home-btn"
+              onClick={goHome}
+              aria-label="Back to home"
+            >
+              <Image
+                src="/logo.png"
+                alt="PickYourPiece"
+                width={32}
+                height={32}
+                className="navbar-home-logo-img"
+                priority
               />
             </button>
           ) : null}

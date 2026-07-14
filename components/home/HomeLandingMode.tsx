@@ -5,7 +5,7 @@ import { MoveRight } from "lucide-react";
 import { Suspense, useState } from "react";
 import SearchBar from "@/components/search/SearchBar";
 import ProductPreviewPanel from "@/components/catalog/ProductPreviewPanel";
-import { buildProductDetailPath } from "@/lib/product-seo";
+import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 import type { Product } from "@/types/product";
 
 const POPULAR_SEARCHES = [
@@ -149,6 +149,8 @@ export default function HomeLandingMode({
                   {shelf.products.map((product) => {
                     const displayName = product.name.split("(")[0]?.trim() || product.name;
                     const productPath = buildProductDetailPath(product);
+                    const brandSegment = getBrandSegment(product.brand) ?? "";
+                    const brandLogo = BRAND_LOGOS[brandSegment as keyof typeof BRAND_LOGOS] ?? null;
                     return (
                       <Link
                         key={product.id}
@@ -160,7 +162,12 @@ export default function HomeLandingMode({
                           <img src={product.image} alt={`${displayName} by ${product.brand}`} loading="lazy" />
                         </div>
                         <div className="discovery-product-info">
-                          <span className="discovery-product-brand">{product.brand}</span>
+                          <div className="discovery-product-brand-row">
+                            {brandLogo && (
+                              <img src={brandLogo} alt="" width={14} height={14} aria-hidden="true" className="discovery-product-brand-logo" />
+                            )}
+                            <span className="discovery-product-brand">{product.brand}</span>
+                          </div>
                           <p className="discovery-product-name">{displayName}</p>
                           <p className="discovery-product-price">₹{product.price.toLocaleString("en-IN")}</p>
                         </div>

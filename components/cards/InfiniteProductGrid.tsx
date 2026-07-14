@@ -67,6 +67,7 @@ export default function InfiniteProductGrid({
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const filterLoaderStartedAtRef = useRef<number | null>(null);
   const filterLoaderHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const bootstrapAbortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -136,6 +137,12 @@ export default function InfiniteProductGrid({
   }, [buildUrl, canLoadMore, nextCursor]);
 
   const fetchFirstPageForFilters = useCallback(async () => {
+    // Cancel any previous in-flight bootstrap fetch so the loader
+    // never flickers off-then-on when this is called twice in quick succession.
+    bootstrapAbortRef.current?.abort();
+    const controller = new AbortController();
+    bootstrapAbortRef.current = controller;
+
     if (!filtersActive && !sortActive && !queryActive) {
       setItems(initialItems);
       setNextCursor(initialNextCursor);
@@ -150,18 +157,21 @@ export default function InfiniteProductGrid({
     setHasLoadMoreError(false);
 
     try {
-      const response = await fetch(buildUrl(0));
+      const response = await fetch(buildUrl(0), { signal: controller.signal });
       if (!response.ok) throw new Error("Failed to load filtered products");
 
       const payload = (await response.json()) as ProductsResponse;
       setItems(payload.items);
       setNextCursor(payload.nextCursor);
-    } catch {
+    } catch (err) {
+      if (controller.signal.aborted) return; // superseded — leave loader running
       setHasBootstrapError(true);
       setItems([]);
       setNextCursor(null);
     } finally {
-      setIsBootstrapping(false);
+      if (!controller.signal.aborted) {
+        setIsBootstrapping(false);
+      }
     }
   }, [buildUrl, filtersActive, initialItems, initialNextCursor, queryActive, sortActive]);
 

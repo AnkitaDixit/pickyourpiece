@@ -51,7 +51,7 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
 
       <div className="product-card-info">
         <div className="product-card-brand-row">
-          {/* <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
+          <span className={`product-card-brand-logo${showLogo ? " has-image" : ""}`}>
             {showLogo && logoSrc ? (
               <img
                 src={logoSrc}
@@ -70,9 +70,9 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
             ) : (
               product.brand[0]
             )}
-          </span> */}
+          </span>
 
-          <span >{product.brand}</span>
+          <span>{product.brand}</span>
         </div>
 
         <p className="product-card-title">{displayName}</p>

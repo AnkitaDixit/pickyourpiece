@@ -1,10 +1,148 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { PriceRange, ProductFilterKey, ProductFilters } from "@/types/filters";
-import { hasActivePriceRange, PRODUCT_FILTER_KEYS } from "@/types/filters";
+import { hasActivePriceRange, PRODUCT_FILTER_KEYS, EMPTY_PRODUCT_FILTERS } from "@/types/filters";
 import type { ProductSort } from "@/types/filters";
+
+// ── Compact price label (Indian K/L notation) ──────────────────────────────────
+function formatPriceCompact(value: number): string {
+  if (value >= 100_000) {
+    const l = value / 100_000;
+    return `₹${Number.isInteger(l) ? l : l.toFixed(1)}L`;
+  }
+  if (value >= 1_000) {
+    const k = value / 1_000;
+    return `₹${Number.isInteger(k) ? k : k.toFixed(1)}K`;
+  }
+  return `₹${value}`;
+}
+
+// ── Log-scale helpers ──────────────────────────────────────────────────────────
+// Logarithmic scale so equal slider movement = equal % price change.
+// Without this, ₹800–₹1L (where most jewellery lives) is squished into
+// the leftmost 7% of a ₹800–₹14L slider.
+function priceToLogPct(price: number, min: number, max: number): number {
+  const logMin = Math.log(Math.max(1, min));
+  const logMax = Math.log(Math.max(1, max));
+  return ((Math.log(Math.max(1, price)) - logMin) / (logMax - logMin)) * 100;
+}
+function logPctToPrice(pct: number, min: number, max: number): number {
+  const logMin = Math.log(Math.max(1, min));
+  const logMax = Math.log(Math.max(1, max));
+  return Math.exp(logMin + (pct / 100) * (logMax - logMin));
+}
+function snapPrice(value: number, min: number, max: number): number {
+  const magnitude = Math.pow(10, Math.floor(Math.log10(Math.max(1, value))) - 1);
+  const step = Math.max(100, magnitude * 5);
+  return Math.max(min, Math.min(max, Math.round(value / step) * step));
+}
+
+// ── Custom dual-range slider ───────────────────────────────────────────────────
+function PriceRangeSlider({
+  priceRange,
+  priceBounds,
+  onMinChange,
+  onMaxChange,
+}: {
+  priceRange: PriceRange;
+  priceBounds: PriceRange;
+  step?: number;
+  onMinChange: (v: number) => void;
+  onMaxChange: (v: number) => void;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const minPct = priceToLogPct(priceRange.min, priceBounds.min, priceBounds.max);
+  const maxPct = priceToLogPct(priceRange.max, priceBounds.min, priceBounds.max);
+
+  const getValueFromClientX = useCallback((clientX: number) => {
+    if (!trackRef.current) return priceBounds.min;
+    const rect = trackRef.current.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    return snapPrice(logPctToPrice(pct, priceBounds.min, priceBounds.max), priceBounds.min, priceBounds.max);
+  }, [priceBounds.min, priceBounds.max]);
+
+  // Keyboard: ~4% of log range per press = proportional feel at any price level
+  const keyStep = useCallback((current: number, dir: 1 | -1) => {
+    const logMin = Math.log(Math.max(1, priceBounds.min));
+    const logMax = Math.log(Math.max(1, priceBounds.max));
+    const newLog = Math.log(Math.max(1, current)) + dir * (logMax - logMin) * 0.04;
+    return snapPrice(Math.exp(Math.max(logMin, Math.min(logMax, newLog))), priceBounds.min, priceBounds.max);
+  }, [priceBounds.min, priceBounds.max]);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  }, []);
+
+  const handleMinPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
+    onMinChange(Math.min(getValueFromClientX(e.clientX), priceRange.max));
+  }, [getValueFromClientX, onMinChange, priceRange.max]);
+
+  const handleMaxPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
+    onMaxChange(Math.max(getValueFromClientX(e.clientX), priceRange.min));
+  }, [getValueFromClientX, onMaxChange, priceRange.min]);
+
+  const handleMinKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowLeft")  { e.preventDefault(); onMinChange(Math.max(priceBounds.min, keyStep(priceRange.min, -1))); }
+    if (e.key === "ArrowRight") { e.preventDefault(); onMinChange(Math.min(priceRange.max, keyStep(priceRange.min, 1))); }
+  }, [onMinChange, priceBounds.min, priceRange.min, priceRange.max, keyStep]);
+
+  const handleMaxKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowLeft")  { e.preventDefault(); onMaxChange(Math.max(priceRange.min, keyStep(priceRange.max, -1))); }
+    if (e.key === "ArrowRight") { e.preventDefault(); onMaxChange(Math.min(priceBounds.max, keyStep(priceRange.max, 1))); }
+  }, [onMaxChange, priceBounds.max, priceRange.min, priceRange.max, keyStep]);
+
+  const handleTrackPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).classList.contains("filter-price-thumb")) return;
+    const v = getValueFromClientX(e.clientX);
+    const vPct = priceToLogPct(v, priceBounds.min, priceBounds.max);
+    if (Math.abs(vPct - minPct) <= Math.abs(vPct - maxPct)) {
+      onMinChange(Math.min(v, priceRange.max));
+    } else {
+      onMaxChange(Math.max(v, priceRange.min));
+    }
+  }, [getValueFromClientX, onMinChange, onMaxChange, priceRange.min, priceRange.max, priceBounds.min, priceBounds.max, minPct, maxPct]);
+
+  return (
+    <div className="filter-price-range-slider" ref={trackRef} onPointerDown={handleTrackPointerDown}>
+      <div className="filter-price-range-track" />
+      <div
+        className="filter-price-range-track active"
+        style={{ left: `${minPct}%`, width: `${Math.max(0, maxPct - minPct)}%` }}
+      />
+      <div
+        className="filter-price-thumb"
+        style={{ left: `${minPct}%` }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handleMinPointerMove}
+        onKeyDown={handleMinKeyDown}
+        role="slider"
+        aria-label="Minimum price"
+        aria-valuemin={priceBounds.min}
+        aria-valuemax={priceRange.max}
+        aria-valuenow={priceRange.min}
+        tabIndex={0}
+      />
+      <div
+        className="filter-price-thumb"
+        style={{ left: `${maxPct}%` }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handleMaxPointerMove}
+        onKeyDown={handleMaxKeyDown}
+        role="slider"
+        aria-label="Maximum price"
+        aria-valuemin={priceRange.min}
+        aria-valuemax={priceBounds.max}
+        aria-valuenow={priceRange.max}
+        tabIndex={0}
+      />
+    </div>
+  );
+}
 
 const FILTERS = [
   {
@@ -125,6 +263,10 @@ export default function FilterBar({
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
+  const [activeFilterTab, setActiveFilterTab] = useState<ProductFilterKey | "price">("brand");
+  // Draft state — only committed when "Done" is pressed
+  const [draftFilters, setDraftFilters] = useState<ProductFilters>(filters);
+  const [draftPriceRange, setDraftPriceRange] = useState<PriceRange>(priceRange);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -151,6 +293,8 @@ export default function FilterBar({
       document.documentElement.style.setProperty("--filterbar-height", "55px");
     };
   }, []);
+
+  // Reset to first visible tab whenever the sheet opens — handled in the click handler below
 
   const sortLabel = sortBy === "price-desc" ? "Price: High to Low" : "Price: Low to High";
 
@@ -234,27 +378,46 @@ export default function FilterBar({
     });
   };
 
-  const sliderMetrics = useMemo(() => {
-    const span = Math.max(1, priceBounds.max - priceBounds.min);
-    const minPercent = ((priceRange.min - priceBounds.min) / span) * 100;
-    const maxPercent = ((priceRange.max - priceBounds.min) / span) * 100;
-    return {
-      span,
-      minPercent,
-      maxPercent,
-    };
-  }, [priceBounds.max, priceBounds.min, priceRange.max, priceRange.min]);
+  // sliderMetrics kept for potential future use but PriceRangeSlider now uses dynamic snapping
+  // const sliderMetrics = ...
 
-  const sliderStep = useMemo(() => {
-    if (sliderMetrics.span <= 1000) return 10;
-    if (sliderMetrics.span <= 10000) return 50;
-    if (sliderMetrics.span <= 100000) return 100;
-    return 500;
-  }, [sliderMetrics.span]);
+  // sliderStep kept for potential future use but PriceRangeSlider now uses dynamic snapping
+  // const sliderStep = ...
 
   const closeMobileSheets = () => {
     setIsMobileFiltersOpen(false);
     setIsMobileSortOpen(false);
+  };
+
+  // Commit draft and close
+  const applyFiltersAndClose = () => {
+    for (const key of PRODUCT_FILTER_KEYS) {
+      if (JSON.stringify(draftFilters[key]) !== JSON.stringify(filters[key])) {
+        onFilterChange(key, draftFilters[key]);
+      }
+    }
+    if (draftPriceRange.min !== priceRange.min || draftPriceRange.max !== priceRange.max) {
+      onPriceRangeChange(draftPriceRange);
+    }
+    setIsMobileFiltersOpen(false);
+  };
+
+  // Reset draft to empty and immediately apply
+  const resetDraftAndApply = () => {
+    const emptyFilters = { ...EMPTY_PRODUCT_FILTERS };
+    const emptyPrice = { min: priceBounds.min, max: priceBounds.max };
+    setDraftFilters(emptyFilters);
+    setDraftPriceRange(emptyPrice);
+    onResetFilters();
+  };
+
+  const draftPriceActive = hasActivePriceRange(draftPriceRange, priceBounds);
+  const draftToggleValue = (key: ProductFilterKey, value: string) => {
+    const current = draftFilters[key];
+    setDraftFilters(prev => ({
+      ...prev,
+      [key]: current.includes(value) ? current.filter(v => v !== value) : [...current, value],
+    }));
   };
 
   const mobileSortLabel = sortBy === "price-desc" ? "High to Low" : "Low to High";
@@ -335,40 +498,16 @@ export default function FilterBar({
             <div className="filter-price-range-slider-row">
               <span className="filter-select-label filter-price-title">Price</span>
               <span className="filter-price-bound-label">
-                {priceRange.min.toLocaleString("en-IN")}
+                {formatPriceCompact(priceRange.min)}
               </span>
-              <div className="filter-price-range-slider" role="group" aria-label="Price range">
-                <div className="filter-price-range-track" />
-                <div
-                  className="filter-price-range-track active"
-                  style={{
-                    left: `${sliderMetrics.minPercent}%`,
-                    width: `${Math.max(0, sliderMetrics.maxPercent - sliderMetrics.minPercent)}%`,
-                  }}
-                />
-                <input
-                  className="filter-price-range-input min"
-                  type="range"
-                  min={priceBounds.min}
-                  max={priceBounds.max}
-                  step={sliderStep}
-                  value={priceRange.min}
-                  onChange={(event) => handleMinChange(Number(event.target.value))}
-                  aria-label="Minimum price"
-                />
-                <input
-                  className="filter-price-range-input max"
-                  type="range"
-                  min={priceBounds.min}
-                  max={priceBounds.max}
-                  step={sliderStep}
-                  value={priceRange.max}
-                  onChange={(event) => handleMaxChange(Number(event.target.value))}
-                  aria-label="Maximum price"
-                />
-              </div>
+              <PriceRangeSlider
+                priceRange={priceRange}
+                priceBounds={priceBounds}
+                onMinChange={handleMinChange}
+                onMaxChange={handleMaxChange}
+              />
               <span className="filter-price-bound-label">
-                {priceRange.max.toLocaleString("en-IN")}
+                {formatPriceCompact(priceRange.max)}
               </span>
             </div>
           </div>
@@ -427,6 +566,10 @@ export default function FilterBar({
           type="button"
           className="mobile-filter-dock-btn"
           onClick={() => {
+            const first = FILTERS.find(f => !hiddenFilterKeys.includes(f.key));
+            setActiveFilterTab(first ? (first.key as ProductFilterKey) : "price");
+            setDraftFilters({ ...filters });
+            setDraftPriceRange({ ...priceRange });
             setOpenKey(null);
             setIsSortOpen(false);
             setIsMobileSortOpen(false);
@@ -461,108 +604,134 @@ export default function FilterBar({
       )}
 
       {isMobileFiltersOpen && (
-        <section className="mobile-sheet" role="dialog" aria-modal="true" aria-label="Filters">
+        <section
+          className="mobile-sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Filters"
+          ref={(el) => {
+            if (!el) return;
+            // Swipe-down-to-close — standard mobile bottom sheet pattern
+            const handle = el.querySelector<HTMLElement>(".mobile-sheet-handle");
+            if (!handle) return;
+            let startY = 0;
+            let delta = 0;
+            const onDown = (e: PointerEvent) => {
+              handle.setPointerCapture(e.pointerId);
+              startY = e.clientY;
+              delta = 0;
+              el.style.transition = "none";
+            };
+            const onMove = (e: PointerEvent) => {
+              if (!handle.hasPointerCapture(e.pointerId)) return;
+              delta = Math.max(0, e.clientY - startY);
+              el.style.transform = `translateY(${delta}px)`;
+            };
+            const onUp = () => {
+              el.style.transition = "";
+              if (delta > 80) {
+                el.style.transform = "translateY(110%)";
+                // swipe-down = discard draft
+                setTimeout(() => setIsMobileFiltersOpen(false), 200);
+              } else {
+                el.style.transform = "";
+              }
+              delta = 0;
+            };
+            handle.addEventListener("pointerdown", onDown);
+            handle.addEventListener("pointermove", onMove);
+            handle.addEventListener("pointerup", onUp);
+          }}
+        >
           <div className="mobile-sheet-handle" aria-hidden="true" />
           <div className="mobile-sheet-header">
             <h3>Filters</h3>
-            <button type="button" className="mobile-sheet-close" onClick={() => setIsMobileFiltersOpen(false)}>
-              Close
-            </button>
-          </div>
-          <div className="mobile-sheet-body">
-            {FILTERS.map((filter) => {
-              if (hiddenFilterKeys.includes(filter.key)) return null;
-
-              return (
-                <div key={filter.key} className="mobile-filter-section">
-                  <div className="mobile-filter-section-head">
-                    <p>{filter.label}</p>
-                    <div className="mobile-filter-section-actions">
-                      <button type="button" onClick={() => onFilterChange(filter.key, [...filter.options])}>
-                        All
-                      </button>
-                      <button type="button" onClick={() => onFilterChange(filter.key, [])}>
-                        Clear
-                      </button>
-                    </div>
-                  </div>
-                  <div className="mobile-filter-options">
-                    {filter.options.map((option) => {
-                      const checked = filters[filter.key].includes(option);
-                      return (
-                        <label key={option} className="mobile-filter-option">
-                          <input
-                            type="checkbox"
-                            checked={checked}
-                            onChange={() => toggleValue(filter.key, option)}
-                          />
-                          <span>{option}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-
-            <div className="mobile-filter-section">
-              <div className="mobile-filter-section-head">
-                <p>Price</p>
-              </div>
-              <div className="mobile-price-box">
-                <div className="filter-price-range-slider" role="group" aria-label="Price range">
-                  <div className="filter-price-range-track" />
-                  <div
-                    className="filter-price-range-track active"
-                    style={{
-                      left: `${sliderMetrics.minPercent}%`,
-                      width: `${Math.max(0, sliderMetrics.maxPercent - sliderMetrics.minPercent)}%`,
-                    }}
-                  />
-                  <input
-                    className="filter-price-range-input min"
-                    type="range"
-                    min={priceBounds.min}
-                    max={priceBounds.max}
-                    step={sliderStep}
-                    value={priceRange.min}
-                    onChange={(event) => handleMinChange(Number(event.target.value))}
-                    aria-label="Minimum price"
-                  />
-                  <input
-                    className="filter-price-range-input max"
-                    type="range"
-                    min={priceBounds.min}
-                    max={priceBounds.max}
-                    step={sliderStep}
-                    value={priceRange.max}
-                    onChange={(event) => handleMaxChange(Number(event.target.value))}
-                    aria-label="Maximum price"
-                  />
-                </div>
-                <div className="mobile-price-values">
-                  <span>{priceRange.min.toLocaleString("en-IN")}</span>
-                  <span>{priceRange.max.toLocaleString("en-IN")}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mobile-sheet-footer">
-            {hasActiveFilters && (
-              <button
-                type="button"
-                className="mobile-sheet-reset"
-                onClick={() => {
-                  onResetFilters();
-                }}
-              >
-                Reset filters
-              </button>
-            )}
-            <button type="button" className="mobile-sheet-apply" onClick={() => setIsMobileFiltersOpen(false)}>
+            <button type="button" className="mobile-sheet-close" onClick={applyFiltersAndClose}>
               Done
             </button>
           </div>
+
+          <div className="mobile-filter-two-panel">
+            {/* Left: filter category tabs */}
+            <nav className="mobile-filter-tabs" aria-label="Filter categories">
+              {FILTERS.map((filter) => {
+                if (hiddenFilterKeys.includes(filter.key)) return null;
+                const count = draftFilters[filter.key].length;
+                const isActive = activeFilterTab === filter.key;
+                return (
+                  <button
+                    key={filter.key}
+                    type="button"
+                    className={`mobile-filter-tab${isActive ? " is-active" : ""}${count > 0 ? " has-selection" : ""}`}
+                    onClick={() => setActiveFilterTab(filter.key as ProductFilterKey)}
+                  >
+                    <span className="mobile-filter-tab-label">{filter.label}</span>
+                    {count > 0 && <span className="mobile-filter-tab-count">{count}</span>}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                className={`mobile-filter-tab${activeFilterTab === "price" ? " is-active" : ""}${draftPriceActive ? " has-selection" : ""}`}
+                onClick={() => setActiveFilterTab("price")}
+              >
+                <span className="mobile-filter-tab-label">Price</span>
+                {draftPriceActive && <span className="mobile-filter-tab-dot" aria-hidden="true" />}
+              </button>
+            </nav>
+
+            {/* Right: options panel */}
+            <div className="mobile-filter-panel">
+              {activeFilterTab === "price" ? (
+                <div className="mobile-price-box">
+                  <PriceRangeSlider
+                    priceRange={draftPriceRange}
+                    priceBounds={priceBounds}
+                    onMinChange={(v) => setDraftPriceRange(prev => ({ ...prev, min: Math.min(v, prev.max) }))}
+                    onMaxChange={(v) => setDraftPriceRange(prev => ({ ...prev, max: Math.max(v, prev.min) }))}
+                  />
+                  <div className="mobile-price-values">
+                    <span>{formatPriceCompact(draftPriceRange.min)}</span>
+                    <span>{formatPriceCompact(draftPriceRange.max)}</span>
+                  </div>
+                </div>
+              ) : (() => {
+                const filter = FILTERS.find(f => f.key === activeFilterTab);
+                if (!filter) return null;
+                return (
+                  <>
+                    <div className="mobile-filter-panel-actions">
+                      <button type="button" onClick={() => setDraftFilters(prev => ({ ...prev, [filter.key]: [...filter.options] }))}>Select all</button>
+                      <button type="button" onClick={() => setDraftFilters(prev => ({ ...prev, [filter.key]: [] }))}>Clear</button>
+                    </div>
+                    <div className="mobile-filter-options">
+                      {filter.options.map((option) => {
+                        const checked = draftFilters[filter.key].includes(option);
+                        return (
+                          <label key={option} className="mobile-filter-option">
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={() => draftToggleValue(filter.key, option)}
+                            />
+                            <span>{option}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+
+          {(draftFilters !== filters || draftPriceActive || priceActive) && (
+            <div className="mobile-filter-reset-bar">
+              <button type="button" className="mobile-sheet-reset" onClick={resetDraftAndApply}>
+                Reset all filters
+              </button>
+            </div>
+          )}
         </section>
       )}
 

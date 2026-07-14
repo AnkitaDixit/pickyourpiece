@@ -181,11 +181,32 @@ export default async function Home({
   function pickShelf(
     filter: (p: Product) => boolean,
     limit = 8,
+    maxPerBrand = 2,
   ): Product[] {
-    return all
-      .filter(filter)
-      .sort((a, b) => scoreImageQuality(b.image) - scoreImageQuality(a.image))
-      .slice(0, limit);
+    const filtered = all.filter(filter);
+
+    // Group best-scoring products per brand
+    const byBrand = new Map<string, Product[]>();
+    for (const p of filtered) {
+      const seg = getBrandSegment(p.brand) ?? p.brand.toLowerCase().replace(/\s+/g, "");
+      const bucket = byBrand.get(seg) ?? [];
+      bucket.push(p);
+      byBrand.set(seg, bucket);
+    }
+    // Sort each brand's bucket by image quality (best first)
+    for (const [seg, bucket] of byBrand) {
+      byBrand.set(seg, bucket.sort((a, b) => scoreImageQuality(b.image) - scoreImageQuality(a.image)));
+    }
+
+    // Round-robin across brands so the shelf is brand-diverse
+    const result: Product[] = [];
+    for (let round = 0; round < maxPerBrand && result.length < limit; round++) {
+      for (const bucket of byBrand.values()) {
+        if (result.length >= limit) break;
+        if (round < bucket.length) result.push(bucket[round]);
+      }
+    }
+    return result;
   }
 
   const discoveryShelves = [
