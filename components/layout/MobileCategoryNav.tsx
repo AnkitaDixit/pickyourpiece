@@ -58,7 +58,7 @@ export default function MobileCategoryNav() {
             aria-label={item.label}
             title={item.label}
           >
-            <img src={item.iconSrc} alt="" width={22} height={22} aria-hidden="true" style={{ objectFit: "contain" }} />
+            <img src={item.iconSrc} alt="" width={26} height={26} aria-hidden="true" style={{ objectFit: "contain" }} />
             <span>{item.label}</span>
           </button>
         );

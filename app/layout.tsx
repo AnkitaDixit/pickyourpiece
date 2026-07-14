@@ -46,9 +46,13 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: [{ url: "/favicon.ico" }],
+    icon: [
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
     shortcut: ["/favicon.ico"],
-    apple: [{ url: "/favicon.ico" }],
+    apple: [{ url: "/favicon-96.png" }],
   },
   openGraph: {
     type: "website",

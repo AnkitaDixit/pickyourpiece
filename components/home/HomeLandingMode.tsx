@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLink, PanelRightOpen } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { Suspense, useState } from "react";
 import SearchBar from "@/components/search/SearchBar";
 import ProductPreviewPanel from "@/components/catalog/ProductPreviewPanel";
+import { buildProductDetailPath } from "@/lib/product-seo";
 import type { Product } from "@/types/product";
 
 const POPULAR_SEARCHES = [
@@ -13,6 +14,13 @@ const POPULAR_SEARCHES = [
   { label: "✨ Engagement Rings", query: "engagement ring" },
   { label: "🌸 Rose Gold", query: "rose gold ring" },
   { label: "🔥 Trending Now", query: "trending ring" },
+];
+
+const CATEGORY_ITEMS = [
+  { id: "ring",     label: "Rings",     href: "/ring",     iconSrc: "/categories/ring.png",     sub: "Browse 9,000+", available: true },
+  { id: "earrings", label: "Earrings",  href: "/earrings", iconSrc: "/categories/earrings.png", sub: "Coming soon",   available: false },
+  { id: "bracelet", label: "Bracelets", href: "/bracelet", iconSrc: "/categories/bracelet.png", sub: "Coming soon",   available: false },
+  { id: "pendant",  label: "Pendants",  href: "/pendant",  iconSrc: "/categories/pendant.png",  sub: "Coming soon",   available: false },
 ];
 
 const BRAND_ENTRIES = [
@@ -35,16 +43,25 @@ const BRAND_LOGOS: Partial<Record<(typeof BRAND_ENTRIES)[number][0], string>> = 
   tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
 };
 
+interface DiscoveryShelf {
+  id: string;
+  title: string;
+  emoji: string;
+  href: string;
+  products: Product[];
+}
+
 interface HomeLandingModeProps {
   allCount: number;
   totalBrands: number;
   trendingProducts: Product[];
+  discoveryShelves: DiscoveryShelf[];
 }
 
 export default function HomeLandingMode({
   allCount,
   totalBrands,
-  trendingProducts,
+  discoveryShelves,
 }: HomeLandingModeProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -57,7 +74,7 @@ export default function HomeLandingMode({
             <span>Compare every brand.</span>
           </h1>
           <p className="landing-hero-subtitle">
-            Explore {allCount.toLocaleString()}+ designs from {totalBrands} trusted brands. Filter by price,
+            Explore {allCount.toLocaleString()}+ designs from {totalBrands}+ trusted brands. Filter by price,
             metal, purity, and style in seconds.
           </p>
 
@@ -72,130 +89,124 @@ export default function HomeLandingMode({
           </div>
 
           <div className="landing-chip-block" aria-label="Popular quick searches">
-            <p className="landing-chip-label">Popular Searches</p>
             <div className="landing-chip-row">
+              <span className="landing-chip-label">Popular Searches</span>
               {POPULAR_SEARCHES.map((item) => (
                 <Link key={item.query} className="landing-chip" href={`/?q=${encodeURIComponent(item.query)}`}>
                   {item.label}
                 </Link>
               ))}
             </div>
+          </div>
 
-            <div className="landing-chip-view-all-wrap">
-              <Link className="landing-chip-view-all" href="/?sort=price-asc">
-                Explore all pieces
+          <div className="landing-category-block" aria-label="Browse by category">
+            <div className="landing-cat-row">
+              {CATEGORY_ITEMS.map((item) => (
+                <Link
+                  key={item.id}
+                  className={`landing-cat-card${item.available ? "" : " is-soon"}`}
+                  href={item.available ? item.href : "#"}
+                  aria-disabled={!item.available}
+                >
+                  <div className="landing-cat-card-icon-wrap">
+                    <img src={item.iconSrc} alt="" width={38} height={38} aria-hidden="true" className="landing-cat-card-icon" />
+                  </div>
+                  <div className="landing-cat-card-body">
+                    <span className="landing-cat-card-label">{item.label}</span>
+                    <span className="landing-cat-card-sub">{item.sub}</span>
+                  </div>
+                  {item.available && <MoveRight size={15} className="landing-cat-card-arrow" aria-hidden="true" />}
+                </Link>
+              ))}
+              <Link className="landing-category-explore-all" href="/?sort=price-asc">
+                Explore all categories
+                <MoveRight size={13} aria-hidden="true" />
               </Link>
             </div>
           </div>
         </div>
 
         <div className="landing-hero-visual" aria-hidden="true">
-          <img src="/heroImage.png" alt="Featured jewellery" />
+          <img src="/heroImageNew.png" alt="Featured jewellery" loading="eager" />
         </div>
       </section>
 
-      <section className="landing-trending" aria-labelledby="landing-trending-title">
-        <div className="landing-section-head">
-          <h2 id="landing-trending-title">Editors Picks</h2>
-          <Link href="/?sort=price-asc">View all</Link>
-        </div>
-        {trendingProducts.length > 0 ? (
-          <div className={`catalog-split${selectedProduct ? " with-preview" : ""}`}>
-            <div className="catalog-split-main">
-              <div className="landing-trending-grid content-grid">
-                {trendingProducts.map((product) => {
-                  const displayName = product.name.split("(")[0]?.trim() || product.name;
-                  const meta = [product.purity ?? "", product.gemstone?.[0] ?? "", product.metalColor ?? ""]
-                    .filter(Boolean)
-                    .join(" · ");
-                  const metaText = meta || "Metal and gemstone details available";
-                  return (
-                    <button
-                      key={product.id}
-                      type="button"
-                      className={`product-card${selectedProduct?.id === product.id ? " is-selected" : ""}`}
-                      onClick={() => setSelectedProduct(product)}
-                    >
-                      <div className="product-card-image-wrap">
-                        <img src={product.image} alt={displayName} loading="lazy" className="product-card-image" />
-                      </div>
-                      <div className="product-card-info">
-                        <div className="product-card-brand-row">
-                          {/* <span className="product-card-brand-logo" aria-hidden="true">
-                            {product.brand[0]}
-                          </span> */}
-                          <span>{product.brand}</span>
+      <div className={`catalog-split${selectedProduct ? " with-preview" : ""}`}>
+        <div className="catalog-split-main">
+          <section className="landing-discovery" aria-label="Discover jewellery">
+            {discoveryShelves.map((shelf) => (
+              <div key={shelf.id} className="discovery-shelf">
+                <div className="discovery-shelf-head">
+                  <h3 className="discovery-shelf-title">
+                    <span aria-hidden="true">{shelf.emoji}</span>
+                    {shelf.title}
+                  </h3>
+                  <Link className="discovery-shelf-all" href={shelf.href}>
+                    See all <MoveRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+                <div className="discovery-shelf-scroll">
+                  {shelf.products.map((product) => {
+                    const displayName = product.name.split("(")[0]?.trim() || product.name;
+                    const productPath = buildProductDetailPath(product);
+                    return (
+                      <Link
+                        key={product.id}
+                        href={productPath ?? "/?sort=price-asc"}
+                        className={`discovery-product-card${selectedProduct?.id === product.id ? " is-selected" : ""}`}
+                        onClick={(e) => { e.preventDefault(); setSelectedProduct(product); }}
+                      >
+                        <div className="discovery-product-image">
+                          <img src={product.image} alt={`${displayName} by ${product.brand}`} loading="lazy" />
                         </div>
-
-                        <p className="product-card-title">{displayName}</p>
-                        <p className={`product-card-meta${meta ? "" : " is-fallback"}`}>{metaText}</p>
-
-                        <div className="product-card-price-row">
-                          <p className="product-card-price">₹{product.price.toLocaleString("en-IN")}</p>
-                          <span className="product-card-cta" aria-hidden="true">
-                            <PanelRightOpen className="product-card-link" size={14} strokeWidth={1.8} />
-                          </span>
+                        <div className="discovery-product-info">
+                          <span className="discovery-product-brand">{product.brand}</span>
+                          <p className="discovery-product-name">{displayName}</p>
+                          <p className="discovery-product-price">₹{product.price.toLocaleString("en-IN")}</p>
                         </div>
-                      </div>
-                    </button>
-                  );
-                })}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ))}
+          </section>
+        </div>
 
-            {selectedProduct && (
-              <ProductPreviewPanel
-                key={selectedProduct.id}
-                product={selectedProduct}
-                onProductSelect={setSelectedProduct}
-                onClose={() => setSelectedProduct(null)}
-              />
-            )}
-          </div>
-        ) : (
-          <div className="landing-trending-empty">
-            Trending products are loading. Try a quick search to start comparing designs.
-          </div>
+        {selectedProduct && (
+          <ProductPreviewPanel
+            key={selectedProduct.id}
+            product={selectedProduct}
+            onProductSelect={setSelectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
         )}
-      </section>
+      </div>
 
-      <section className="landing-brand-strip" aria-labelledby="landing-brand-strip-title">
+         <section className="landing-brand-strip" aria-labelledby="landing-brand-strip-title">
         <div className="landing-brand-strip-head">
-          <h2 id="landing-brand-strip-title">CHECK TOP BRANDS</h2>
-          <Link href="/ring">View all brands</Link>
+          <h2 id="landing-brand-strip-title">Shop by Brand</h2>
+          <Link href="/ring">View all</Link>
         </div>
         <div className="landing-brand-list">
           {BRAND_ENTRIES.map(([segment, brandName]) => {
             const logo = BRAND_LOGOS[segment] ?? null;
             return (
-              <article key={segment} className="product-card landing-brand-item">
-                <Link
-                  href={`/brands/${segment}`}
-                  className="product-card-cta landing-brand-cta"
-                  aria-label={`Go to ${brandName} brand page`}
-                >
-                  <ExternalLink className="product-card-link" size={14} strokeWidth={1.8} />
-                </Link>
-                <div className="product-card-image-wrap landing-brand-image-wrap">
+              <Link key={segment} href={`/brands/${segment}`} className="landing-brand-card" aria-label={`Browse ${brandName}`}>
+                <div className="landing-brand-card-logo">
                   {logo ? (
                     <img src={logo} alt={`${brandName} logo`} loading="lazy" className="landing-brand-logo-image" />
                   ) : (
-                    <span>{brandName}</span>
+                    <span className="landing-brand-card-initial">{brandName[0]}</span>
                   )}
                 </div>
-
-                {/* <div className="product-card-info landing-brand-info">
-                  <div className="product-card-brand-row">
-                    <span>{brandName}</span>
-                  </div>
-                 
-                </div> */}
-
-              </article>
+                <span className="landing-brand-card-name">{brandName}</span>
+              </Link>
             );
           })}
         </div>
       </section>
+
     </div>
   );
 }

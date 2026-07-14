@@ -178,6 +178,72 @@ export default async function Home({
 
   const trendingProducts = pickEditorsProducts(all);
 
+  function pickShelf(
+    filter: (p: Product) => boolean,
+    limit = 8,
+  ): Product[] {
+    return all
+      .filter(filter)
+      .sort((a, b) => scoreImageQuality(b.image) - scoreImageQuality(a.image))
+      .slice(0, limit);
+  }
+
+  const discoveryShelves = [
+    {
+      id: "trending",
+      title: "Trending Today",
+      emoji: "🔥",
+      href: "/?sort=price-asc",
+      products: trendingProducts,
+    },
+    {
+      id: "budget",
+      title: "Under ₹10,000",
+      emoji: "💸",
+      href: "/?maxPrice=10000",
+      products: pickShelf(p => p.price <= 10_000),
+    },
+    {
+      id: "engagement",
+      title: "Engagement Rings",
+      emoji: "💍",
+      href: "/?q=engagement+ring",
+      products: pickShelf(p =>
+        p.occasion?.some(o => o.toLowerCase().includes("engagement")) ||
+        p.style?.some(s => s.toLowerCase().includes("solitaire")) ||
+        p.name.toLowerCase().includes("engagement")
+      ),
+    },
+    {
+      id: "giftsforher",
+      title: "Gifts for Her",
+      emoji: "🌸",
+      href: "/?q=gift+jewellery",
+      products: pickShelf(p =>
+        p.occasion?.some(o => o.toLowerCase().includes("gift")) ||
+        ((p.gender === "Women" || p.gender === "Unisex") && p.price >= 3000 && p.price <= 30_000)
+      ),
+    },
+    {
+      id: "minimal",
+      title: "Minimal Jewellery",
+      emoji: "✨",
+      href: "/?q=minimal",
+      products: pickShelf(p =>
+        p.style?.some(s => ["minimal", "simple", "solitaire", "classic"].includes(s.toLowerCase())) ||
+        p.name.toLowerCase().includes("minimal") ||
+        p.name.toLowerCase().includes("solitaire")
+      ),
+    },
+    {
+      id: "diamond",
+      title: "Diamond Picks",
+      emoji: "💎",
+      href: "/?q=diamond",
+      products: pickShelf(p => p.gemstone?.some(g => g.toLowerCase().includes("diamond"))),
+    },
+  ].filter(shelf => shelf.products.length >= 2);
+
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -232,6 +298,7 @@ export default async function Home({
           allCount={all.length}
           totalBrands={totalBrands}
           trendingProducts={trendingProducts}
+          discoveryShelves={discoveryShelves}
         />
       )}
     </MainLayout>

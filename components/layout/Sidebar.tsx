@@ -68,20 +68,22 @@ export default function Sidebar() {
             onClick={() => goTo(href)}
             className={`sidebar-btn${isActiveItem(id, href) ? " active" : ""}`}
             aria-label={label}
-            title={label}
           >
-            {iconSrc ? (
-              <img
-                src={iconSrc}
-                alt=""
-                width={25}
-                height={25}
-                aria-hidden="true"
-                style={{ objectFit: "contain" }}
-              />
-            ) : Icon ? (
-              <Icon size={20} />
-            ) : null}
+            <span className="sidebar-btn-icon">
+              {iconSrc ? (
+                <img
+                  src={iconSrc}
+                  alt=""
+                  width={22}
+                  height={22}
+                  aria-hidden="true"
+                  style={{ objectFit: "contain" }}
+                />
+              ) : Icon ? (
+                <Icon size={22} strokeWidth={1.8} />
+              ) : null}
+            </span>
+            <span className="sidebar-btn-label">{label}</span>
           </button>
         ))}
       </div>
