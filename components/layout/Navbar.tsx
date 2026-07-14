@@ -144,6 +144,14 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
 
         {shouldShowBrand ? (
           <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
+            <Image
+              src="/logo.png"
+              alt="PickYourPiece"
+              width={32}
+              height={32}
+              className="navbar-logo-img"
+              priority
+            />
             <span className="navbar-logo-text">
               pick<span className="navbar-logo-red">Your</span>piece
             </span>

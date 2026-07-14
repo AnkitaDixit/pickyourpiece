@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/product";
 import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 
@@ -36,6 +36,40 @@ const formatLabel = (value: string) => {
 export default function ProductPreviewPanel({ product, onClose, onProductSelect }: Props) {
   const [detail, setDetail] = useState<DetailRecord | null>(null);
   const [similarItems, setSimilarItems] = useState<Product[]>([]);
+  const panelRef = useRef<HTMLElement>(null);
+  const dragStartY = useRef(0);
+  const dragDelta = useRef(0);
+  const dragging = useRef(false);
+
+  const onDragStart = (e: React.TouchEvent) => {
+    dragStartY.current = e.touches[0].clientY;
+    dragDelta.current = 0;
+    dragging.current = true;
+    if (panelRef.current) panelRef.current.style.transition = "none";
+  };
+
+  const onDragMove = (e: React.TouchEvent) => {
+    if (!dragging.current) return;
+    const delta = Math.max(0, e.touches[0].clientY - dragStartY.current);
+    dragDelta.current = delta;
+    if (panelRef.current) panelRef.current.style.transform = `translateY(${delta}px)`;
+  };
+
+  const onDragEnd = () => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    const panel = panelRef.current;
+    if (!panel) return;
+    if (dragDelta.current > 80) {
+      panel.style.transition = "transform 220ms ease";
+      panel.style.transform = "translateY(110%)";
+      setTimeout(onClose, 210);
+    } else {
+      panel.style.transition = "transform 300ms cubic-bezier(0.32, 0.72, 0, 1)";
+      panel.style.transform = "";
+    }
+    dragDelta.current = 0;
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -160,9 +194,15 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   }, [product, brand]);
 
   return (
-    <aside className="catalog-preview" aria-live="polite">
+    <aside className="catalog-preview" aria-live="polite" ref={panelRef}>
       <div className="catalog-preview-inner">
-        <div className="catalog-preview-sheet-handle" aria-hidden="true">
+        <div
+          className="catalog-preview-sheet-handle"
+          onTouchStart={onDragStart}
+          onTouchMove={onDragMove}
+          onTouchEnd={onDragEnd}
+          aria-hidden="true"
+        >
           <span className="catalog-preview-sheet-bar" />
         </div>
 

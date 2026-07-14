@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+
+const SCROLL_THRESHOLD = 80;
 
 const MOBILE_CATEGORY_ITEMS = [
   { id: "ring", label: "Ring", href: "/ring", iconSrc: "/categories/ring.png" },
@@ -13,6 +15,17 @@ const MOBILE_CATEGORY_ITEMS = [
 export default function MobileCategoryNav() {
   const pathname = usePathname();
   const showOnRoute = pathname === "/";
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (!showOnRoute) return;
+
+    const onScroll = () => setVisible(window.scrollY > SCROLL_THRESHOLD);
+    onScroll(); // set correct initial state
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [showOnRoute]);
 
   useEffect(() => {
     const className = "has-mobile-category-nav";
@@ -46,7 +59,11 @@ export default function MobileCategoryNav() {
   };
 
   return (
-    <nav className="mobile-category-nav" aria-label="Primary categories">
+    <nav
+      className={`mobile-category-nav${visible ? " is-visible" : ""}`}
+      aria-label="Primary categories"
+      aria-hidden={!visible}
+    >
       {MOBILE_CATEGORY_ITEMS.map((item) => {
         const isActive = pathname === item.href;
         return (
