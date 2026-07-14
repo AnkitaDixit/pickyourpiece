@@ -261,7 +261,7 @@ select {
 }
 
 .navbar-logo-text {
-  font-size: var(--font-size-title-sm);
+  font-size: var(--font-size-title-lg);
   font-weight: var(--font-weight-regular);
   color: var(--color-text);
   letter-spacing: -0.2px;
@@ -272,7 +272,9 @@ select {
 
 .navbar-logo-red {
   color: var(--color-primary);
-  font-style: italic;
+  text-transform: capitalize;
+  font-weight: var(--font-weight-medium);
+  /* font-style: italic; */
   /* background-color: var(--color-primary);
     padding: 1px 4px;
     border-radius: 10px; */

@@ -149,7 +149,7 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
         {shouldShowBrand ? (
           <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
             <span className="navbar-logo-text">
-              Pick<span className="navbar-logo-red">Your</span>Piece
+              pick<span className="navbar-logo-red">Your</span>piece
             </span>
           </button>
         ) : null}
