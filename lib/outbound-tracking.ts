@@ -29,12 +29,14 @@ export function buildTrackedBrandUrl(rawUrl: string, options: BuildTrackedBrandU
     return rawUrl;
   }
 
-  parsed.searchParams.set("utm_source", "pyp");
+  parsed.searchParams.set("utm_source", "pickyourpiece");
   parsed.searchParams.set("utm_medium", "referral");
-  parsed.searchParams.set("utm_campaign", "brand_redirect");
+  parsed.searchParams.set("utm_campaign", "brand_redirect_pyp");
   parsed.searchParams.set("utm_content", options.context);
+  parsed.searchParams.set("utm_term", "pyp");
 
   parsed.searchParams.set("pyp_ref", "pyp");
+  parsed.searchParams.set("pyp_ref_full", "pickyourpiece");
   parsed.searchParams.set("pyp_context", options.context);
 
   if (options.brand) {
