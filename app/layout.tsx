@@ -29,14 +29,28 @@ export const metadata: Metadata = {
     telephone: false,
   },
   title: {
-    default: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
+    default: "PickYourPiece | Compare Jewellery Across Top Brands",
     template: "%s | PickYourPiece",
   },
   description:
-    "Browse and compare ring collections across top jewellery brands with smart filters, price range, and live catalog updates.",
+    "Compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
   keywords: [
     "jewellery",
+    "compare jewellery across brands",
+    "jewellery comparison site",
+    "compare jewellery prices",
+    "compare jewellery brands India",
+    "online jewellery comparison",
+    "jewellery designs",
+    "latest jewellery designs",
+    "jewellery design comparison",
+    "jewellery price",
+    "jewellery prices",
+    "latest jewellery price",
     "rings",
+    "earrings",
+    "pendants",
+    "bracelets",
     "diamond rings",
     "gold rings",
     "jewellery comparison",
@@ -57,24 +71,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
+    title: "PickYourPiece | Compare Jewellery Across Top Brands",
     description:
-      "Find your perfect ring by comparing styles, metals, purity, and prices from multiple brands in one place.",
+      "Compare jewellery across brands with filters for price, metal, style, purity, and category in one place.",
     siteName: "PickYourPiece",
     images: [
       {
         url: "/heroImage.png",
         width: 1200,
         height: 630,
-        alt: "PickYourPiece ring comparison catalog",
+        alt: "PickYourPiece jewellery comparison catalog",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PickYourPiece | Compare Rings Across Top Jewellery Brands",
+    title: "PickYourPiece | Compare Jewellery Across Top Brands",
     description:
-      "Compare ring collections across brands with filters for price, metal, style, and more.",
+      "Compare jewellery across brands with filters for price, metal, style, purity, and category.",
     images: ["/heroImage.png"],
     site: "@pickyourpiece",
   },
@@ -101,6 +115,7 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "PickYourPiece",
     url: siteUrl,
+    description: "Compare jewellery across brands in one place with smart filtering and price discovery.",
     potentialAction: {
       "@type": "SearchAction",
       target: `${siteUrl}/?q={search_term_string}`,

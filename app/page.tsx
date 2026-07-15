@@ -10,10 +10,20 @@ const INITIAL_PAGE_SIZE = 48;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
 export const metadata: Metadata = {
-  title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
+  title: "PickYourPiece | Compare Jewellery Prices Across Brands",
   description:
-    "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+    "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
   keywords: [
+    "compare jewellery across brands",
+    "jewellery price comparison India",
+    "compare jewellery online",
+    "best jewellery comparison platform",
+    "jewellery designs and price",
+    "ring designs and price",
+    "diamond ring designs and price",
+    "gold jewellery designs and price",
+    "earring designs and price",
+    "bracelet designs and price",
     "ring price comparison",
     "compare jewellery brands",
     "diamond ring comparison",
@@ -26,9 +36,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
+    title: "PickYourPiece | Compare Jewellery Prices Across Brands",
     description:
-      "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+      "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: [
       {
         url: "/heroImage.png",
@@ -40,9 +50,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PickYourPiece | Compare Ring Prices, Styles, and Brands",
+    title: "PickYourPiece | Compare Jewellery Prices Across Brands",
     description:
-      "Explore thousands of rings and compare prices, styles, metals, and purity across trusted jewellery brands.",
+      "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: ["/heroImage.png"],
   },
 };
@@ -268,9 +278,9 @@ export default async function Home({
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "PickYourPiece Ring Catalog",
+    name: "PickYourPiece Jewellery Comparison Catalog",
     description:
-      "Compare ring collections from multiple jewellery brands with live filters and price range controls.",
+      "Compare jewellery across brands with live filters for category, price, style, metal, and purity.",
     url: siteUrl,
     mainEntity: {
       "@type": "ItemList",
