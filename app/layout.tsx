@@ -156,7 +156,7 @@ export default function RootLayout({
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "abc@pickyourpiece.com",
+        email: "founder@pickyourpiece.com",
       },
     ],
   };

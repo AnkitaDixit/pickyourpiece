@@ -46,7 +46,7 @@ export default function MainLayout({ children, showNavbarSearch = true, showNavb
             </p>
 
             <p className="site-footer-contact">
-              Contact us: <a href="mailto:abc@pickyourpiece.com">abc@pickyourpiece.com</a>
+              Contact us: <a href="mailto:founder@pickyourpiece.com">founder@pickyourpiece.com</a>
             </p>
             <p className="site-footer-copy">&copy; 2026 PickYourPiece. All rights reserved.</p>
           </div>
