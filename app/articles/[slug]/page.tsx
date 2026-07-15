@@ -64,6 +64,10 @@ export async function generateMetadata({
   return {
     title: `${article.title} | PickYourPiece Articles`,
     description: article.description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath,
     },
@@ -142,17 +146,6 @@ export default async function ArticleDetailPage({
         />
 
         <article className="article-detail" id="article-top">
-          <div className="article-detail-image-wrap">
-            <Image
-              src={article.image}
-              alt={article.title}
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 820px"
-              className="article-detail-image"
-            />
-          </div>
-
           <header className="article-detail-header">
             <p className="articles-kicker">{article.category}</p>
             <h1>{article.title}</h1>

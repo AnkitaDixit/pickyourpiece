@@ -829,20 +829,6 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   gap: 16px;
 }
 
-.article-detail-image-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 840px;
-  aspect-ratio: 16 / 8;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid var(--color-border-soft);
-}
-
-.article-detail-image {
-  object-fit: cover;
-}
-
 .article-detail-header {
   display: grid;
   gap: 10px;
@@ -1278,10 +1264,6 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
     gap: 12px;
   }
 
-  .article-detail-image-wrap {
-    border-radius: 14px;
-  }
-
   .article-detail-body {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -1315,6 +1297,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   width: 100%;
   max-width: 850px;
   height: 52px;
+  position: relative;
   border-radius: var(--radius-full);
   background: var(--color-surface-strong);
   border: 2px solid transparent;
@@ -1348,6 +1331,52 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   background: transparent;
   font-size: var(--font-size-body);
   color: var(--color-text);
+}
+
+.searchbar-suggest-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  background: var(--color-background-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 75;
+}
+
+.searchbar-suggest-item {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-body-sm);
+}
+
+.searchbar-suggest-item:hover,
+.searchbar-suggest-item.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.searchbar-suggest-icon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.searchbar-suggest-item:hover .searchbar-suggest-icon,
+.searchbar-suggest-item.active .searchbar-suggest-icon {
+  color: var(--color-primary);
 }
 
 .searchbar-clear {
@@ -1393,6 +1422,11 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 
 .searchbar-wrap.searchbar-landing .searchbar-input {
   font-size: var(--font-size-body-sm);
+}
+
+.searchbar-wrap.searchbar-landing .searchbar-suggest-list {
+  top: calc(100% + 10px);
+  border-radius: 18px;
 }
 
 .searchbar-submit {

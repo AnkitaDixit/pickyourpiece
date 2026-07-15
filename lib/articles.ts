@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 
@@ -23,6 +23,7 @@ export type ArticleEntry = {
   image: string;
   featured: boolean;
   content: string;
+  lastModified: string;
 };
 
 type ArticleFrontmatter = {
@@ -64,7 +65,7 @@ export async function getAllArticles(): Promise<ArticleEntry[]> {
   const parsed = await Promise.all(
     articleFiles.map(async (fileName) => {
       const filePath = path.join(ARTICLES_DIR, fileName);
-      const source = await readFile(filePath, "utf8");
+      const [source, fileStats] = await Promise.all([readFile(filePath, "utf8"), stat(filePath)]);
       const { data, content } = matter(source);
       const frontmatter = data as ArticleFrontmatter;
 
@@ -91,6 +92,7 @@ export async function getAllArticles(): Promise<ArticleEntry[]> {
         image: frontmatter.image,
         featured: Boolean(frontmatter.featured),
         content: content.trim(),
+        lastModified: fileStats.mtime.toISOString(),
       } satisfies ArticleEntry;
     })
   );

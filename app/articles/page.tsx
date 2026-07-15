@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   title: "Jewellery Articles | Guides for Rings, Diamonds and Metals",
   description:
     "Magazine-style jewellery articles on engagement rings, diamonds, gemstones, metals, and buying guides.",
+  robots: {
+    index: true,
+    follow: true,
+  },
   alternates: {
     canonical: "/articles",
   },
