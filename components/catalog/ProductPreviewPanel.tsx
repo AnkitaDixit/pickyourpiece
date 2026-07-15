@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/product";
 import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
+import { buildTrackedBrandUrl } from "@/lib/outbound-tracking";
 
 interface Props {
   product: Product;
@@ -108,10 +109,15 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const name = typeof merged.name === "string" ? merged.name : product.name;
   const brand = typeof merged.brand === "string" ? merged.brand : product.brand;
   const image = typeof merged.image === "string" ? merged.image : product.image;
-  const description = typeof merged.description === "string" ? merged.description : "";
   const price = typeof merged.price === "number" ? merged.price : product.price;
   const currency = typeof merged.currency === "string" ? merged.currency : product.currency;
   const productUrl = typeof merged.productUrl === "string" ? merged.productUrl : product.productUrl;
+  const trackedProductUrl = buildTrackedBrandUrl(productUrl, {
+    context: "preview_panel",
+    brand,
+    productId: String(product.id),
+  });
+  console.log("Tracked product URL:", trackedProductUrl);
   const availability = typeof merged.availability === "boolean" ? merged.availability : product.availability;
   const brandSegment = getBrandSegment(brand) ?? "";
   const detailPath = buildProductDetailPath(product);
@@ -239,7 +245,7 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
                 View details
               </Link>
             ) : null}
-            <a href={productUrl} target="_blank" rel="noopener noreferrer" className="catalog-preview-source-link">
+            <a href={trackedProductUrl} target="_blank" rel="noopener" className="catalog-preview-source-link">
               View on {brand}
             </a>
           </div>

@@ -12,6 +12,7 @@ import {
   parseProductSlugCandidates,
   toNameSlug,
 } from "@/lib/product-seo";
+import { buildTrackedBrandUrl } from "@/lib/outbound-tracking";
 
 type RouteParams = {
   brand: string;
@@ -177,6 +178,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
   const currency = typeof product.currency === "string" ? product.currency : "INR";
   const image = typeof product.image === "string" ? product.image : "";
   const productUrl = typeof product.productUrl === "string" ? product.productUrl : "";
+  const trackedProductUrl = buildTrackedBrandUrl(productUrl, {
+    context: "product_detail",
+    brand: brandName,
+    productId: getPrimaryProductId(product) ?? undefined,
+  });
+  console.log("Tracked product URL:", trackedProductUrl);
   const description = typeof product.description === "string" ? product.description : "";
   const category = typeof product.category === "string" ? product.category : "";
   const metal = typeof product.metal === "string" ? product.metal : "";
@@ -355,9 +362,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
 
                 {hasExternalLink && (
                   <a
-                    href={productUrl}
+                    href={trackedProductUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                     className="product-detail-visit-btn"
                   >
                     View on {brandName}

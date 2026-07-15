@@ -33,8 +33,14 @@ export const metadata: Metadata = {
     template: "%s | PickYourPiece",
   },
   description:
-    "Compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
+    "PickYourPiece (PyP) helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
   keywords: [
+    "pyp",
+    "pick your piece",
+    "pickyourpiece",
+    "pick your piece pyp",
+    "pyp jewellery",
+    "pyp rings",
     "jewellery",
     "compare jewellery across brands",
     "jewellery comparison site",
@@ -86,10 +92,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "PickYourPiece | Compare Jewellery Across Top Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category in one place.",
-    siteName: "PickYourPiece",
+    siteName: "PickYourPiece (PYP)",
     images: [
       {
         url: "/heroImage.png",
@@ -101,7 +107,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PickYourPiece | Compare Jewellery Across Top Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category.",
     images: ["/heroImage.png"],
@@ -129,6 +135,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "PickYourPiece",
+    alternateName: ["PYP", "Pick Your Piece"],
     url: siteUrl,
     description: "Compare jewellery across brands in one place with smart filtering and price discovery.",
     potentialAction: {
@@ -142,6 +149,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "PickYourPiece",
+    alternateName: ["PYP", "Pick Your Piece"],
     url: siteUrl,
     logo: `${siteUrl}/favicon.ico`,
     contactPoint: [

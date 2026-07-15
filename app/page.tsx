@@ -12,8 +12,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.c
 export const metadata: Metadata = {
   title: "PickYourPiece | Compare Jewellery Prices Across Brands",
   description:
-    "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
+    "PickYourPiece (PyP) lets you compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
   keywords: [
+    "pyp",
+    "pick your piece",
+    "pickyourpiece",
+    "pick your piece jewellery",
+    "pyp jewellery comparison",
     "compare jewellery across brands",
     "jewellery price comparison India",
     "compare jewellery online",
@@ -46,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "PickYourPiece | Compare Jewellery Prices Across Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Prices Across Brands",
     description:
       "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: [
@@ -60,7 +65,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PickYourPiece | Compare Jewellery Prices Across Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Prices Across Brands",
     description:
       "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: ["/heroImage.png"],
