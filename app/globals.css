@@ -206,8 +206,8 @@ select {
   justify-content: center;
   margin-bottom: 4px;
   cursor: pointer;
-  border: 1px solid var(--color-border);
-  background: var(--color-background-elevated);
+  /* border: 1px solid var(--color-border);
+  background: var(--color-background-elevated); */
   padding: 0;
   overflow: hidden;
 }
@@ -1430,8 +1430,8 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 }
 
 .searchbar-submit {
-  width: 38px;
-  height: 38px;
+  width: 45px;
+  height: 45px;
   border: none;
   border-radius: 999px;
   background: var(--color-primary);
@@ -1622,7 +1622,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 
 .landing-chip-label {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.01em;
   text-transform: none;
@@ -1641,7 +1641,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   color: var(--color-landing-text-subtle);
   text-decoration: none;
   background: var(--color-background-elevated);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-body-sm);
   font-weight: var(--font-weight-medium);
   box-shadow: 0 1px 4px rgba(17, 17, 17, 0.05);
   transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease, color 140ms ease;
@@ -2650,7 +2650,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
     background: #fff8f9;
     color: var(--color-landing-text-soft);
     /* font-weight: var(--font-weight-bold); */
-    font-size: 11px;
+    font-size: 12px;
     box-shadow: 0 4px 12px rgba(17, 17, 17, 0.08);
   }
 
