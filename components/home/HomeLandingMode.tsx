@@ -30,6 +30,7 @@ const BRAND_ENTRIES = [
   ["giva", "GIVA"],
   ["mia", "Mia by Tanishq"],
   ["orra", "ORRA"],
+  ["palmonas", "Palmonas"],
   ["tanishq", "Tanishq"],
 ] as const;
 
@@ -40,6 +41,7 @@ const BRAND_LOGOS: Partial<Record<(typeof BRAND_ENTRIES)[number][0], string>> = 
   giva: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdiZUsR4K1BJmDa422342XYCtccq7OfbR9RFdwOuWWAz8IN3bgLWRBLw-_&s=10",
   mia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
   orra: "https://upload.wikimedia.org/wikipedia/commons/3/3e/ORRAJewellery.jpg",
+  palmonas: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP_TFMjp4QLM89RGzLpBaGMmS9q4eX04dfFkihs9oa1rI_dhfgDvvEDlmN&s=10",
   tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
 };
 

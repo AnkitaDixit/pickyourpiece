@@ -148,12 +148,12 @@ const FILTERS = [
   {
     key: "brand",
     label: "Brand",
-    options: ["BlueStone", "Candere", "Caratlane", "GIVA", "Mia by Tanishq", "ORRA", "Tanishq"],
+    options: ["BlueStone", "Candere", "Caratlane", "GIVA", "Mia by Tanishq", "ORRA", "Palmonas", "Tanishq"],
   },
   {
     key: "metal",
     label: "Metal",
-    options: ["Gold", "Platinum", "Silver"],
+    options: ["Gold", "Gold Plated", "Platinum", "Silver", "Silver Plated"],
   },
   {
     key: "gemstone",
