@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "PickYourPiece (PyP)",
+    name: "pickYourpiece (PyP)",
     short_name: "PyP",
     description: "PickYourPiece (PyP): compare rings across top jewellery brands with price, metal, and style filters.",
     start_url: "/",

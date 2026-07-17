@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "PickYourPiece",
+  applicationName: "pickYourpiece",
   manifest: "/manifest.webmanifest",
   category: "shopping",
   classification: "Jewellery comparison and discovery",
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
     telephone: false,
   },
   title: {
-    default: "PickYourPiece | Compare Jewellery Across Top Brands",
-    template: "%s | PickYourPiece",
+    default: "pickYourPiece (PyP) | Compare Jewellery Across Top Brands",
+    template: "%s | Pick Your Piece",
   },
   description:
-    "PickYourPiece (PyP) helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
+    "Pick Your Piece (PyP), also searched as PickYourPiece, helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
   keywords: [
     "pyp",
     "pick your piece",
@@ -94,10 +94,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
+    title: "Pick Your Piece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category in one place.",
-    siteName: "PickYourPiece (PYP)",
+    siteName: "Pick Your Piece",
     images: [
       {
         url: "/heroImage.png",
@@ -109,7 +109,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
+    title: "Pick Your Piece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category.",
     images: ["/heroImage.png"],
@@ -136,10 +136,12 @@ export default function RootLayout({
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "PickYourPiece",
-    alternateName: ["PYP", "Pick Your Piece"],
+    "@id": `${siteUrl}/#website`,
+    name: "Pick Your Piece",
+    alternateName: ["PYP", "PickYourPiece", "PyP"],
     url: siteUrl,
-    description: "Compare jewellery across brands in one place with smart filtering and price discovery.",
+    description: "Pick Your Piece helps shoppers compare jewellery across brands in one place with smart filtering and price discovery.",
+    inLanguage: "en-IN",
     potentialAction: {
       "@type": "SearchAction",
       target: `${siteUrl}/?q={search_term_string}`,
@@ -150,10 +152,12 @@ export default function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PickYourPiece",
-    alternateName: ["PYP", "Pick Your Piece"],
+    "@id": `${siteUrl}/#organization`,
+    name: "Pick Your Piece",
+    alternateName: ["PYP", "PickYourPiece", "PyP"],
     url: siteUrl,
     logo: `${siteUrl}/favicon.ico`,
+    sameAs: ["https://x.com/pickyourpiece"],
     contactPoint: [
       {
         "@type": "ContactPoint",
