@@ -55,19 +55,62 @@ function normalizePurity(rawPurity: string): string {
     .replace(/\s*,\s*/g, ", ");
 }
 
-function isPlated(rawPurity: string, rawMetal: string, rawMetalColor: string): boolean {
-  return /plated/i.test(buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor));
+function isPlated(...values: string[]): boolean {
+  return /(plated|plating|vermeil)/i.test(buildMetalFingerprint(...values));
 }
 
-function hasSilverBaseWithGoldPlating(rawPurity: string, rawMetal: string, rawMetalColor: string): boolean {
-  const combined = buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor);
-  return /silver/i.test(combined) && /gold plating|gold plated/i.test(combined);
+function hasSilverBase(combined: string): boolean {
+  return /(silver|sterling|silver925|\b925\b)/i.test(combined);
+}
+
+function hasGoldBase(combined: string): boolean {
+  return /(rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k(?:t)?\b)/i.test(combined);
+}
+
+function hasPlatinumBase(combined: string): boolean {
+  return /(platinum|platinum\s*950|\b950\s*k(?:t)?\b)/i.test(combined);
+}
+
+function hasGoldPlating(combined: string): boolean {
+  return /(gold\s*(?:tone\s*)?plated|gold\s*plating|gold\s*vermeil|vermeil|\d+\s*k(?:t)?\s*gold\s*(?:tone\s*)?plated)/i.test(combined);
+}
+
+function hasSilverPlating(combined: string): boolean {
+  return /(silver\s*plated|silver\s*plating|rhodium\s*plated|rhodium\s*plating)/i.test(combined);
+}
+
+function hasSilverBaseWithGoldPlating(...values: string[]): boolean {
+  const combined = buildMetalFingerprint(...values);
+  return hasSilverBase(combined) && hasGoldPlating(combined);
+}
+
+function deriveMetalByPlatingRules(...values: string[]): string | null {
+  const combined = buildMetalFingerprint(...values);
+  const goldPlated = hasGoldPlating(combined);
+  const silverPlated = hasSilverPlating(combined);
+  const plated = goldPlated || silverPlated;
+
+  if (!plated) return null;
+
+  // Rule 1: Gold plating on silver must remain Silver.
+  if (goldPlated && hasSilverBase(combined)) return "Silver";
+
+  // Rule 2: Any plating on silver/gold/platinum keeps the base metal.
+  if (hasSilverBase(combined)) return "Silver";
+  if (hasGoldBase(combined)) return "Gold";
+  if (hasPlatinumBase(combined)) return "Platinum";
+
+  // Rule 3 and 4: Plating on non-precious/unknown base becomes plated metal.
+  if (goldPlated) return "Gold Plated";
+  if (silverPlated) return "Silver Plated";
+
+  return null;
 }
 
 function derivePlatedMetal(rawPurity: string, rawMetal: string, rawMetalColor: string): PlatedMetal | null {
   const combined = buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor);
 
-  if (!/plated/i.test(combined)) return null;
+  if (!isPlated(combined)) return null;
   if (hasSilverBaseWithGoldPlating(rawPurity, rawMetal, rawMetalColor)) return null;
   if (/rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k\b/i.test(combined)) return "Gold Plated";
   if (/silver|rhodium|stainless\s*steel|\bsteel\b|white/i.test(combined)) return "Silver Plated";
@@ -75,8 +118,8 @@ function derivePlatedMetal(rawPurity: string, rawMetal: string, rawMetalColor: s
   return null;
 }
 
-function derivePurity(rawPurity: string, rawMetal: string, rawMetalColor: string): string {
-  if (isPlated(rawPurity, rawMetal, rawMetalColor)) return "";
+function derivePurity(rawPurity: string, rawMetal: string, rawMetalColor: string, rawName: string, rawDescription: string): string {
+  if (isPlated(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription)) return "";
 
   const normalizedExisting = normalizePurity(rawPurity);
   if (normalizedExisting) return normalizedExisting;
@@ -88,11 +131,14 @@ function derivePurity(rawPurity: string, rawMetal: string, rawMetalColor: string
   return unique.join(", ");
 }
 
-function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: string): string {
-  if (hasSilverBaseWithGoldPlating(rawPurity, rawMetal, rawMetalColor)) return "Silver";
-
-  const platedMetal = derivePlatedMetal(rawPurity, rawMetal, rawMetalColor);
+function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: string, rawName: string, rawDescription: string): string {
+  const platedMetal = deriveMetalByPlatingRules(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription);
   if (platedMetal) return platedMetal;
+
+  if (hasSilverBaseWithGoldPlating(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription)) return "Silver";
+
+  const fallbackPlatedMetal = derivePlatedMetal(rawPurity, rawMetal, rawMetalColor);
+  if (fallbackPlatedMetal) return fallbackPlatedMetal;
 
   const normalized = normalizeMalformedSilverPurity(rawMetal);
   if (!normalized) return "";
@@ -244,13 +290,15 @@ export function mergeProducts(): JsonRecord[] {
       const rawMetal = asString(product.metal);
       const rawPurity = asString(product.purity);
       const rawMetalColor = asString(product.metalColor);
-      const normalizedPurity = derivePurity(rawPurity, rawMetal, rawMetalColor);
+      const rawName = asString(product.name);
+      const rawDescription = asString(product.description);
+      const normalizedPurity = derivePurity(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription);
 
       normalized.brand = normalizeBrand(rawBrand);
       normalized.purity = normalizedPurity;
       normalized.metal = shouldForceSilverMetal(normalizedPurity)
         ? "Silver"
-        : deriveBaseMetal(rawMetal, rawPurity, rawMetalColor);
+        : deriveBaseMetal(rawMetal, rawPurity, rawMetalColor, rawName, rawDescription);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
       normalized.image = normalizeImageUrl(asString(product.image));
 

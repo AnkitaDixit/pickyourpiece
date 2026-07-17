@@ -119,8 +119,8 @@ export default async function ArticlesPage({
           </p>
 
           <ul className="articles-hero-metrics" aria-label="Articles proof points">
-            <li>2,000+ rings compared</li>
-            <li>7 trusted brands</li>
+            <li>10k+ rings compared</li>
+            <li>8 trusted brands</li>
             <li>{Math.max(20, articles.length)}+ buying guides</li>
           </ul>
 
