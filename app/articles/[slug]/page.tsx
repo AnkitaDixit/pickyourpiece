@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ArticleCardVisual from "@/components/cards/ArticleCardVisual";
 import MainLayout from "@/components/layout/MainLayout";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import products from "@/data/products.json";
 import type { Product } from "@/types/product";
@@ -251,6 +252,14 @@ export default async function ArticleDetailPage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
 
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Articles", href: "/articles" },
+            { label: article.title },
+          ]}
+        />
+
         <article className="article-detail" id="article-top">
           <header className="article-detail-header">
             <p className="articles-kicker">{article.category}</p>
@@ -326,15 +335,15 @@ export default async function ArticleDetailPage({
           <div className="articles-grid">
             {relatedArticles.map((entry) => (
               <article key={entry.slug} className="article-card">
-                <div className="article-card-image-wrap">
-                  <ArticleCardVisual slug={entry.slug} title={entry.title} />
-                </div>
-                <span className="article-chip">{entry.category}</span>
-                <h3>{entry.title}</h3>
-                <p className="article-description">{entry.description}</p>
-                <span className="article-read-time">{entry.readTime}</span>
-                <Link href={`/articles/${entry.slug}`} className="article-link">
-                  Read article
+                <Link href={`/articles/${entry.slug}`} className="article-card-link" aria-label={`Read ${entry.title}`}>
+                  <div className="article-card-image-wrap">
+                    <ArticleCardVisual slug={entry.slug} title={entry.title} />
+                  </div>
+                  <span className="article-chip" data-topic={entry.topic}>{entry.topic}</span>
+                  <h3>{entry.title}</h3>
+                  <p className="article-description">{entry.description}</p>
+                  <span className="article-read-time">{entry.readTime}</span>
+                  <span className="article-link">Read article</span>
                 </Link>
               </article>
             ))}

@@ -11,6 +11,7 @@ export type ArticleTopic =
   | "Engagement"
   | "Wedding"
   | "Trending"
+  | "Brand Comparison"
   | "Brand Comparisons";
 
 export type ArticleEntry = {
@@ -39,6 +40,7 @@ type ArticleFrontmatter = {
 const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
 
 export const ARTICLE_TOPICS: ArticleTopic[] = [
+  "Brand Comparison",
   "Buying Guides",
   "Diamond Education",
   "Gold & Metals",
@@ -47,10 +49,13 @@ export const ARTICLE_TOPICS: ArticleTopic[] = [
   "Engagement",
   "Wedding",
   "Trending",
-  "Brand Comparisons",
 ];
 
 function ensureTopic(value: string): ArticleTopic {
+  if (value === "Brand Comparisons") {
+    return "Brand Comparison";
+  }
+
   if (ARTICLE_TOPICS.includes(value as ArticleTopic)) {
     return value as ArticleTopic;
   }

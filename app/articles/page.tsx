@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import ArticleCardVisual from "@/components/cards/ArticleCardVisual";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import { ARTICLE_TOPICS, getAllArticles } from "@/lib/articles";
+import { GUIDE_HUBS } from "@/lib/guides";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
@@ -73,8 +75,8 @@ export default async function ArticlesPage({
 
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0];
   const latestArticles = featuredArticle
-    ? filteredArticles.filter((article) => article.slug !== featuredArticle.slug).slice(0, 6)
-    : filteredArticles.slice(0, 6);
+    ? filteredArticles.filter((article) => article.slug !== featuredArticle.slug)
+    : filteredArticles;
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -100,6 +102,13 @@ export default async function ArticlesPage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        />
+
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Articles" },
+          ]}
         />
 
         <header className="articles-hero" aria-labelledby="articles-title">
@@ -128,68 +137,29 @@ export default async function ArticlesPage({
           </form>
         </header>
 
-        {featuredArticle ? (
-          <section className="articles-section" aria-labelledby="articles-featured-title">
-          <div className="articles-section-head">
-            <h2 id="articles-featured-title">Featured</h2>
-          </div>
-          <article className="article-featured-card">
-            <div className="article-card-image-wrap">
-              <ArticleCardVisual
-                slug={featuredArticle.slug}
-                title={featuredArticle.title}
-                featured
-              />
-            </div>
-            <div className="article-featured-content">
-              <span className="article-chip">{featuredArticle.category}</span>
-              <h3>{featuredArticle.title}</h3>
-              <p>{featuredArticle.description}</p>
-              <Link href={`/articles/${featuredArticle.slug}`} className="article-link">
-                Read featured guide
-              </Link>
-            </div>
-          </article>
-          </section>
-        ) : null}
-
-        <section className="articles-section" aria-labelledby="articles-latest-title">
-          <div className="articles-section-head">
-            <h2 id="articles-latest-title">Latest Articles</h2>
-          </div>
-
-          <div className="articles-grid" aria-label="Latest articles">
-            {latestArticles.map((article) => (
-              <article key={article.slug} className="article-card">
-                <div className="article-card-image-wrap">
-                  <ArticleCardVisual
-                    slug={article.slug}
-                    title={article.title}
-                  />
-                </div>
-                <span className="article-chip">{article.category}</span>
-                <h3>{article.title}</h3>
-                <p className="article-description">{article.description}</p>
-                <span className="article-read-time">{article.readTime}</span>
-                <Link href={`/articles/${article.slug}`} className="article-link">
-                  Read article
-                </Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="articles-section" aria-labelledby="articles-topics-title">
           <div className="articles-section-head">
             <h2 id="articles-topics-title">Browse by Topic</h2>
           </div>
 
           <div className="articles-topics" role="list" aria-label="Article topics">
+            <Link
+              role="listitem"
+              href="/articles"
+              scroll={false}
+              aria-current={topicFilter.length === 0 ? "page" : undefined}
+              className={`topic-pill${topicFilter.length === 0 ? " active" : ""}`}
+            >
+              All
+            </Link>
             {ARTICLE_TOPICS.map((topic) => (
               <Link
                 key={topic}
                 role="listitem"
                 href={`/articles?topic=${encodeURIComponent(topic)}`}
+                scroll={false}
+                data-topic={topic}
+                aria-current={topicFilter === topic ? "page" : undefined}
                 className={`topic-pill${topicFilter === topic ? " active" : ""}`}
               >
                 {topic}
@@ -209,18 +179,18 @@ export default async function ArticlesPage({
             <div className="articles-grid" aria-label="Filtered articles">
               {filteredArticles.map((article) => (
                 <article key={`${article.slug}-filtered`} className="article-card">
-                  <div className="article-card-image-wrap">
-                    <ArticleCardVisual
-                      slug={article.slug}
-                      title={article.title}
-                    />
-                  </div>
-                  <span className="article-chip">{article.category}</span>
-                  <h3>{article.title}</h3>
-                  <p className="article-description">{article.description}</p>
-                  <span className="article-read-time">{article.readTime}</span>
-                  <Link href={`/articles/${article.slug}`} className="article-link">
-                    Read article
+                  <Link href={`/articles/${article.slug}`} className="article-card-link" aria-label={`Read ${article.title}`}>
+                    <div className="article-card-image-wrap">
+                      <ArticleCardVisual
+                        slug={article.slug}
+                        title={article.title}
+                      />
+                    </div>
+                    <span className="article-chip" data-topic={article.topic}>{article.topic}</span>
+                    <h3>{article.title}</h3>
+                    <p className="article-description">{article.description}</p>
+                    <span className="article-read-time">{article.readTime}</span>
+                    <span className="article-link">Read article</span>
                   </Link>
                 </article>
               ))}
@@ -230,6 +200,78 @@ export default async function ArticlesPage({
           {(query || topicFilter) && filteredArticles.length === 0 ? (
             <p className="articles-filter-note">No articles matched your filters. Try a broader search.</p>
           ) : null}
+        </section>
+
+        {featuredArticle ? (
+          <section className="articles-section" aria-labelledby="articles-featured-title">
+          <div className="articles-section-head">
+            <h2 id="articles-featured-title">Featured</h2>
+          </div>
+          <article className="article-featured-card">
+            <Link
+              href={`/articles/${featuredArticle.slug}`}
+              className="article-featured-link"
+              aria-label={`Read ${featuredArticle.title}`}
+            >
+              <div className="article-card-image-wrap">
+                <ArticleCardVisual
+                  slug={featuredArticle.slug}
+                  title={featuredArticle.title}
+                  featured
+                />
+              </div>
+              <div className="article-featured-content">
+                <span className="article-chip" data-topic={featuredArticle.topic}>{featuredArticle.topic}</span>
+                <h3>{featuredArticle.title}</h3>
+                <p>{featuredArticle.description}</p>
+                <span className="article-link">Read article</span>
+              </div>
+            </Link>
+          </article>
+          </section>
+        ) : null}
+
+        <section className="articles-section" aria-labelledby="articles-latest-title">
+          <div className="articles-section-head">
+            <h2 id="articles-latest-title">Latest Articles</h2>
+          </div>
+
+          <div className="articles-grid" aria-label="Latest articles">
+            {latestArticles.map((article) => (
+              <article key={article.slug} className="article-card">
+                <Link href={`/articles/${article.slug}`} className="article-card-link" aria-label={`Read ${article.title}`}>
+                  <div className="article-card-image-wrap">
+                    <ArticleCardVisual
+                      slug={article.slug}
+                      title={article.title}
+                    />
+                  </div>
+                  <span className="article-chip" data-topic={article.topic}>{article.topic}</span>
+                  <h3>{article.title}</h3>
+                  <p className="article-description">{article.description}</p>
+                  <span className="article-read-time">{article.readTime}</span>
+                  <span className="article-link">Read article</span>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="articles-section" aria-labelledby="articles-guidebar-title">
+          <div className="articles-section-head">
+            <h2 id="articles-guidebar-title">Guide Bar</h2>
+          </div>
+
+          <div className="articles-guidebar" role="list" aria-label="Guides hubs quick links">
+            <Link role="listitem" href="/guides" className="topic-pill">
+              All Guides
+            </Link>
+            {GUIDE_HUBS.map((hub) => (
+              <Link key={hub.slug} role="listitem" href={`/guides/${hub.slug}`} className="topic-pill">
+                {hub.title}
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </MainLayout>

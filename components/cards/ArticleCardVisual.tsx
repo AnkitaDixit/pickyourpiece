@@ -7,7 +7,8 @@ type VisualGlyph =
   | "diamond"
   | "rose"
   | "size"
-  | "halo";
+  | "halo"
+  | "comparison";
 
 type VisualSpec = {
   label: string;
@@ -18,6 +19,66 @@ type VisualSpec = {
   accent: string;
   accentSoft: string;
 };
+
+type BrandPalette = {
+  bg: string;
+  accent: string;
+};
+
+const BRAND_VISUAL_PALETTES: Record<string, BrandPalette> = {
+  bluestone: { bg: "#e8f1ff", accent: "#1d4ed8" },
+  caratlane: { bg: "#ffeef8", accent: "#be185d" },
+  candere: { bg: "#fff4ea", accent: "#c2410c" },
+  giva: { bg: "#edf7ff", accent: "#0f766e" },
+  mia: { bg: "#f7f1ff", accent: "#7c3aed" },
+  palmonas: { bg: "#fff3f8", accent: "#db2777" },
+  tanishq: { bg: "#fff7df", accent: "#a16207" },
+};
+
+function toWords(token: string): string {
+  return token
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function normalizeBrandToken(token: string): string {
+  return token.toLowerCase().replace(/[^a-z]/g, "");
+}
+
+function buildComparisonSpecFromSlug(slug: string): VisualSpec | null {
+  if (!slug.includes("-vs-")) {
+    return null;
+  }
+
+  const [leftRaw, rightRaw] = slug.split("-vs-");
+  const leftKey = normalizeBrandToken(leftRaw ?? "");
+  const rightKey = normalizeBrandToken(rightRaw ?? "");
+  const leftPalette = BRAND_VISUAL_PALETTES[leftKey];
+  const rightPalette = BRAND_VISUAL_PALETTES[rightKey];
+
+  if (!leftPalette || !rightPalette) {
+    return null;
+  }
+
+  const left = toWords(leftRaw ?? "");
+  const right = toWords(rightRaw ?? "");
+
+  if (!left || !right) {
+    return null;
+  }
+
+  return {
+    label: `${left.toUpperCase()} VS ${right.toUpperCase()}`,
+    sublabel: "BRAND COMPARISON",
+    glyph: "comparison",
+    bgStart: leftPalette.bg,
+    bgEnd: rightPalette.bg,
+    accent: leftPalette.accent,
+    accentSoft: rightPalette.accent,
+  };
+}
 
 const COLOR = {
   surfaceImageStart: "var(--color-surface-image-start)",
@@ -182,6 +243,23 @@ function renderVisualGlyph(glyph: VisualGlyph, accent: string, accentSoft: strin
           <ellipse cx="86" cy="116" rx="72" ry="40" fill="none" stroke={accent} strokeWidth="6" />
         </g>
       );
+    case "comparison":
+      return (
+        <g transform="translate(176 114)">
+          <rect x="0" y="8" width="132" height="170" rx="18" fill={COLOR.white} fillOpacity="0.2" stroke={accentSoft} strokeWidth="3" />
+          <rect x="156" y="8" width="132" height="170" rx="18" fill={COLOR.white} fillOpacity="0.2" stroke={accent} strokeWidth="3" />
+
+          <ellipse cx="66" cy="114" rx="42" ry="28" fill="none" stroke={accentSoft} strokeWidth="5" />
+          <path d="M56 64L66 50L76 64L70 76H62L56 64Z" fill="none" stroke={accentSoft} strokeWidth="3" />
+
+          <ellipse cx="222" cy="114" rx="42" ry="28" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M212 64L222 50L232 64L226 76H218L212 64Z" fill="none" stroke={accent} strokeWidth="3" />
+
+          <rect x="126" y="74" width="36" height="44" rx="12" fill={COLOR.white} fillOpacity="0.42" stroke={COLOR.white} strokeOpacity="0.65" />
+          <path d="M136 90L144 98L152 90" fill="none" stroke={accentSoft} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M136 102L144 110L152 102" fill="none" stroke={accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      );
     case "ring":
     default:
       return (
@@ -205,7 +283,9 @@ export default function ArticleCardVisual({
   title: string;
   featured?: boolean;
 }) {
-  const spec = ARTICLE_VISUALS[slug] ?? {
+  const comparisonSpec = buildComparisonSpecFromSlug(slug);
+
+  const spec = comparisonSpec ?? ARTICLE_VISUALS[slug] ?? {
     label: "JEWELLERY ARTICLE",
     sublabel: "PREMIUM GUIDE",
     glyph: "ring",

@@ -5,6 +5,7 @@ import products from "@/data/products.json";
 import type { Product } from "@/types/product";
 import { buildProductDetailPath, getBrandSegment, getPrimaryProductId, toNameSlug } from "@/lib/product-seo";
 import { getAllArticles } from "@/lib/articles";
+import { GUIDE_HUBS } from "@/lib/guides";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
@@ -133,6 +134,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.72,
   }));
 
+  const guideHubRoutes = GUIDE_HUBS.map((hub) => ({
+    url: `${siteUrl}/guides/${hub.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.82,
+  }));
+
   const categoryRoutes = staticCategoryRoutes.map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: now,
@@ -153,8 +161,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.85,
     },
+    {
+      url: `${siteUrl}/guides`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     ...categoryRoutes,
     ...articleRoutes,
+    ...guideHubRoutes,
     ...brandRoutes,
     ...productRoutes,
   ];
