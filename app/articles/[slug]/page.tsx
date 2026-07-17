@@ -1,18 +1,120 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import ArticleCardVisual from "@/components/cards/ArticleCardVisual";
 import MainLayout from "@/components/layout/MainLayout";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
+import products from "@/data/products.json";
+import type { Product } from "@/types/product";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
 type RouteParams = {
   slug: string;
 };
+
+type SearchIntent = {
+  heading: string;
+  subheading: string;
+  searchQuery: string;
+  terms: string[];
+};
+
+const RELATED_SEARCH_BY_SLUG: Record<string, SearchIntent> = {
+  "how-to-choose-engagement-ring": {
+    heading: "Shop Engagement Rings",
+    subheading: "Compare Across Brands",
+    searchQuery: "engagement ring",
+    terms: ["engagement", "solitaire", "halo", "diamond", "wedding"],
+  },
+  "engagement-ring-budget": {
+    heading: "Shop Budget-Friendly Engagement Rings",
+    subheading: "Find best-value picks",
+    searchQuery: "engagement ring budget",
+    terms: ["engagement", "diamond", "minimal", "everyday"],
+  },
+  "gold-vs-platinum": {
+    heading: "Shop Gold & Platinum Rings",
+    subheading: "Compare metal options",
+    searchQuery: "gold platinum ring",
+    terms: ["gold", "platinum", "ring"],
+  },
+  "how-to-measure-ring-size-at-home": {
+    heading: "Shop Rings by Fit-Friendly Styles",
+    subheading: "Explore adjustable and daily-wear rings",
+    searchQuery: "daily wear ring",
+    terms: ["ring", "daily", "minimal", "band"],
+  },
+  "lab-diamond-guide": {
+    heading: "Shop Lab-Diamond Style Rings",
+    subheading: "Compare modern diamond looks",
+    searchQuery: "diamond ring",
+    terms: ["diamond", "solitaire", "halo", "ring"],
+  },
+  "diamond-shapes-guide": {
+    heading: "Shop Diamond Shape Inspired Rings",
+    subheading: "Find the silhouette you love",
+    searchQuery: "diamond shape ring",
+    terms: ["diamond", "solitaire", "cluster", "ring"],
+  },
+  "rose-gold-guide": {
+    heading: "Shop Rose Gold Rings",
+    subheading: "Compare warm-tone favourites",
+    searchQuery: "rose gold ring",
+    terms: ["rose gold", "ring", "gold"],
+  },
+  "ring-size-guide": {
+    heading: "Shop Everyday Fit Rings",
+    subheading: "Comfortable styles across brands",
+    searchQuery: "everyday ring",
+    terms: ["everyday", "band", "minimal", "ring"],
+  },
+  "solitaire-vs-halo": {
+    heading: "Shop Solitaire & Halo Rings",
+    subheading: "Compare hero engagement styles",
+    searchQuery: "solitaire halo ring",
+    terms: ["solitaire", "halo", "engagement", "diamond"],
+  },
+};
+
+function normalizeSearchText(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9\s]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function getSearchIntent(slug: string): SearchIntent {
+  return RELATED_SEARCH_BY_SLUG[slug] ?? {
+    heading: "Shop Rings",
+    subheading: "Compare Across Brands",
+    searchQuery: "ring",
+    terms: ["ring"],
+  };
+}
+
+function countMatchingProducts(items: Array<Product & Record<string, unknown>>, terms: string[]): number {
+  const normalizedTerms = terms.map((term) => normalizeSearchText(term)).filter(Boolean);
+  if (normalizedTerms.length === 0) return items.length;
+
+  return items.filter((product) => {
+    const haystack = normalizeSearchText(
+      [
+        product.name,
+        product.brand,
+        product.category,
+        product.metal,
+        product.purity ?? "",
+        (product.gemstone ?? []).join(" "),
+        (product.style ?? []).join(" "),
+        (product.occasion ?? []).join(" "),
+        typeof product.description === "string" ? product.description : "",
+      ].join(" ")
+    );
+
+    return normalizedTerms.some((term) => haystack.includes(term));
+  }).length;
+}
 
 function slugify(value: string) {
   return value
@@ -130,6 +232,10 @@ export default async function ArticleDetailPage({
 
   const allArticles = await getAllArticles();
   const relatedArticles = allArticles.filter((entry) => entry.slug !== article.slug).slice(0, 3);
+  const intent = getSearchIntent(article.slug);
+  const catalog = products as Array<Product & Record<string, unknown>>;
+  const matchedProductCount = countMatchingProducts(catalog, intent.terms);
+  const relatedProductsHref = `/ring?q=${encodeURIComponent(intent.searchQuery)}`;
   const tocItems = article.content
     .split("\n")
     .map((line) => line.trim())
@@ -199,6 +305,19 @@ export default async function ArticleDetailPage({
           Top
         </a>
 
+        <section className="article-related-shop" aria-labelledby="related-products-title">
+          <p className="articles-kicker">Related Products</p>
+          <h2 id="related-products-title">{intent.heading}</h2>
+          <p className="article-related-subheading">{intent.subheading}</p>
+          <div className="article-related-metrics" aria-label="Related product stats">
+            <span>{matchedProductCount.toLocaleString("en-IN")}+ Designs</span>
+            <span>Compare Across Brands</span>
+          </div>
+          <Link href={relatedProductsHref} className="article-related-cta">
+            Compare Across Brands →
+          </Link>
+        </section>
+
         <section className="articles-section" aria-labelledby="related-articles-title">
           <div className="articles-section-head">
             <h2 id="related-articles-title">More Articles</h2>
@@ -208,13 +327,7 @@ export default async function ArticleDetailPage({
             {relatedArticles.map((entry) => (
               <article key={entry.slug} className="article-card">
                 <div className="article-card-image-wrap">
-                  <Image
-                    src={entry.image}
-                    alt={entry.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
-                    className="article-card-image"
-                  />
+                  <ArticleCardVisual slug={entry.slug} title={entry.title} />
                 </div>
                 <span className="article-chip">{entry.category}</span>
                 <h3>{entry.title}</h3>

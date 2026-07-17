@@ -173,6 +173,28 @@ function hasValidImage(product: JsonRecord): boolean {
   return image !== "" && !/icon\.png$/i.test(image);
 }
 
+function normalizeImageUrl(rawUrl: string): string {
+  if (!rawUrl) return "";
+
+  let normalized = rawUrl;
+
+  // Magento-style cached image URLs:
+  // /media/catalog/product/cache/<id>/image/<size>/<hash>/... -> /media/catalog/product/...
+  // /media/catalog/product/image/<size>/<hash>/... -> /media/catalog/product/...
+  normalized = normalized.replace(
+    /(\/media\/catalog\/product)\/(?:cache\/[^/]+\/)?image\/[^/]+\/[^/]+(?=\/)/gi,
+    "$1"
+  );
+
+  // Generic cache segment cleanup for other sources.
+  normalized = normalized.replace(/\/cache\/[^/]+/gi, "");
+
+  // BlueStone image variant normalization.
+  normalized = normalized.replace(/BP-PICS-00000/gi, "PICS-00001");
+
+  return normalized;
+}
+
 function hasValidPrice(product: JsonRecord): boolean {
   return Number(product.price) > 0;
 }
@@ -230,6 +252,7 @@ export function mergeProducts(): JsonRecord[] {
         ? "Silver"
         : deriveBaseMetal(rawMetal, rawPurity, rawMetalColor);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
+      normalized.image = normalizeImageUrl(asString(product.image));
 
       return normalized;
     });

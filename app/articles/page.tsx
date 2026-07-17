@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
+import ArticleCardVisual from "@/components/cards/ArticleCardVisual";
 import { ARTICLE_TOPICS, getAllArticles } from "@/lib/articles";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
@@ -103,12 +103,17 @@ export default async function ArticlesPage({
         />
 
         <header className="articles-hero" aria-labelledby="articles-title">
-          <p className="articles-kicker">Jewellery Articles</p>
-          <h1 id="articles-title">Learn about rings, diamonds, gemstones, metals, and buying guides</h1>
+          <p className="articles-kicker">Jewellery Buying Guides</p>
+          <h1 id="articles-title">Learn from experts before you buy.</h1>
           <p>
-            Editorial-style explainers designed for evergreen decisions, from engagement picks to long-term jewellery
-            care.
+            Educational content built on real jewellery comparison data so you can choose with confidence.
           </p>
+
+          <ul className="articles-hero-metrics" aria-label="Articles proof points">
+            <li>2,000+ rings compared</li>
+            <li>7 trusted brands</li>
+            <li>{Math.max(20, articles.length)}+ buying guides</li>
+          </ul>
 
           <form className="articles-search" action="/articles" method="get">
             <input
@@ -118,6 +123,7 @@ export default async function ArticlesPage({
               placeholder="Search articles"
               aria-label="Search articles"
             />
+            <button type="submit">Search Articles</button>
             {topicFilter ? <input type="hidden" name="topic" value={topicFilter} /> : null}
           </form>
         </header>
@@ -129,12 +135,10 @@ export default async function ArticlesPage({
           </div>
           <article className="article-featured-card">
             <div className="article-card-image-wrap">
-              <Image
-                src={featuredArticle.image}
-                alt={featuredArticle.title}
-                fill
-                sizes="(max-width: 900px) 100vw, 540px"
-                className="article-card-image"
+              <ArticleCardVisual
+                slug={featuredArticle.slug}
+                title={featuredArticle.title}
+                featured
               />
             </div>
             <div className="article-featured-content">
@@ -158,12 +162,9 @@ export default async function ArticlesPage({
             {latestArticles.map((article) => (
               <article key={article.slug} className="article-card">
                 <div className="article-card-image-wrap">
-                  <Image
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
-                    className="article-card-image"
+                  <ArticleCardVisual
+                    slug={article.slug}
+                    title={article.title}
                   />
                 </div>
                 <span className="article-chip">{article.category}</span>
@@ -209,12 +210,9 @@ export default async function ArticlesPage({
               {filteredArticles.map((article) => (
                 <article key={`${article.slug}-filtered`} className="article-card">
                   <div className="article-card-image-wrap">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw"
-                      className="article-card-image"
+                    <ArticleCardVisual
+                      slug={article.slug}
+                      title={article.title}
                     />
                   </div>
                   <span className="article-chip">{article.category}</span>
