@@ -30,9 +30,9 @@ If you need a fast decision framework, prioritize in this order:
 
 Quick shortlist links:
 
-- [Classic solitaire proposal rings](/ring?occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_solitaire)
-- [Sparkle-forward halo proposal rings](/ring?occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_halo)
-- [Engagement rings under Rs 1,00,000](/ring?occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_under_1l)
+- [Classic solitaire proposal rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_solitaire)
+- [Sparkle-forward halo proposal rings](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_halo)
+- [Engagement rings under Rs 1,00,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=quick_answer_under_1l)
 
 ---
 
@@ -67,8 +67,8 @@ Style comparison guide: [solitaire vs halo](/articles/solitaire-vs-halo?utm_sour
 
 Shop by style:
 
-- [Solitaire engagement options](/ring?occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=style_shop_solitaire)
-- [Halo engagement options](/ring?occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=style_shop_halo)
+- [Solitaire engagement options](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=style_shop_solitaire)
+- [Halo engagement options](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=style_shop_halo)
 
 ---
 
@@ -100,7 +100,7 @@ Lab comparison guide: [lab diamond guide](/articles/lab-diamond-guide?utm_source
 
 Browse lab proposal options:
 
-- [Lab diamond engagement rings](/ring?occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=diamond_shop_lab_options)
+- [Lab diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=diamond_shop_lab_options)
 
 ---
 
@@ -116,9 +116,9 @@ Compare metal trade-offs: [gold vs platinum guide](/articles/gold-vs-platinum?ut
 
 Shop by metal:
 
-- [Gold engagement rings](/ring?occasion=Engagement&metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_gold)
-- [Rose gold engagement rings](/ring?occasion=Engagement&metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_rose_gold)
-- [Platinum engagement rings](/ring?occasion=Engagement&metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_platinum)
+- [Gold engagement rings](/ring?sort=price-desc&occasion=Engagement&metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_gold)
+- [Rose gold engagement rings](/ring?sort=price-desc&occasion=Engagement&metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_rose_gold)
+- [Platinum engagement rings](/ring?sort=price-desc&occasion=Engagement&metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=metal_shop_platinum)
 
 ---
 
@@ -147,7 +147,7 @@ Before final checkout, verify:
 
 Cross-brand comparison often improves value more than negotiating one listing.
 
-Start comparison: [Compare engagement options](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=policy_section_compare_now).
+Start comparison: [Compare engagement options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=policy_section_compare_now).
 
 ---
 
@@ -179,7 +179,7 @@ Use this before checkout:
 
 There is no fixed rule. For many buyers, Rs 50,000 to Rs 1,50,000 gives strong style and quality options.
 
-[Explore this range](/ring?occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=faq_budget_range)
+[Explore this range](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=faq_budget_range)
 
 ---
 
@@ -209,4 +209,4 @@ When you follow a framework instead of impulse, the ring feels right both at pro
 
 ---
 
-> Ready to shortlist now? [Browse proposal-ready engagement rings](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=final_cta).
+> Ready to shortlist now? [Browse proposal-ready engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_guide&utm_content=final_cta).

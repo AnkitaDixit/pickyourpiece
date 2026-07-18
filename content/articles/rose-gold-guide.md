@@ -23,8 +23,8 @@ If you are still deciding your overall ring budget, start here: [Engagement ring
 
 Quick shop links:
 
-- [Rose gold engagement rings](/ring?metal=Gold&metalColor=Rose%20Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=quick_answer_rose_gold_engagement)
-- [Rose gold solitaire rings](/ring?metal=Gold&gemstone=Solitaire&metalColor=Rose%20Gold&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=quick_answer_rose_gold_solitaire)
+- [Rose gold engagement rings](/ring?sort=price-desc&metal=Gold&metalColor=Rose%20Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=quick_answer_rose_gold_engagement)
+- [Rose gold solitaire rings](/ring?sort=price-desc&metal=Gold&gemstone=Solitaire&metalColor=Rose%20Gold&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=quick_answer_rose_gold_solitaire)
 
 ---
 
@@ -75,8 +75,8 @@ For long-term wear quality, also check:
 
 Daily-wear options:
 
-- [Rose gold daily-wear rings](/ring?metal=Gold&metalColor=Rose%20Gold&style=Everyday&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=durability_daily_wear)
-- [Bezel rose gold rings](/ring?metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=durability_bezel)
+- [Rose gold daily-wear rings](/ring?sort=price-desc&metal=Gold&metalColor=Rose%20Gold&style=Everyday&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=durability_daily_wear)
+- [Bezel rose gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=durability_bezel)
 
 ---
 
@@ -103,8 +103,8 @@ Popular choices include:
 
 Compare top styles:
 
-- [Rose gold halo rings](/ring?metal=Gold&gemstone=Diamond&metalColor=Rose%20Gold&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=styles_halo)
-- [Rose gold three-stone rings](/ring?metal=Gold&gemstone=Diamond&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=styles_three_stone)
+- [Rose gold halo rings](/ring?sort=price-desc&metal=Gold&gemstone=Diamond&metalColor=Rose%20Gold&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=styles_halo)
+- [Rose gold three-stone rings](/ring?sort=price-desc&metal=Gold&gemstone=Diamond&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=styles_three_stone)
 
 ---
 
@@ -178,4 +178,4 @@ Before finalizing, confirm your fit with this [ring size at home guide](/article
 
 ---
 
-> Ready to compare options? [Browse rose gold rings now](/ring?metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=final_cta).
+> Ready to compare options? [Browse rose gold rings now](/ring?sort=price-desc&metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose_gold_guide&utm_content=final_cta).

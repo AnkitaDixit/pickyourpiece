@@ -27,9 +27,9 @@ For most buyers, prioritize in this order:
 
 Quick starting points:
 
-- [Lab diamond engagement rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_lab_engagement)
-- [Oval lab diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_oval)
-- [Round lab diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_round)
+- [Lab diamond engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_lab_engagement)
+- [Oval lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_oval)
+- [Round lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_round)
 
 ---
 
@@ -97,9 +97,9 @@ Shape can change how large a diamond appears face-up, even at similar carat.
 
 Compare shape-led options:
 
-- [Oval lab diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_oval_compare)
-- [Pear lab diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_pear_compare)
-- [Round lab diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_round_compare)
+- [Oval lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_oval_compare)
+- [Pear lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_pear_compare)
+- [Round lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=shape_round_compare)
 
 ---
 
@@ -139,7 +139,7 @@ Comparison checklist:
 - Return/exchange policy
 - Final price including making/setting charges
 
-Start here: [Compare lab diamond rings across brands](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=compare_across_brands).
+Start here: [Compare lab diamond rings across brands](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=compare_across_brands).
 
 ---
 
@@ -209,4 +209,4 @@ Before finalizing, check sizing confidence with this [ring size at home guide](/
 
 ---
 
-> Ready to shortlist options? [Browse lab diamond rings now](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=final_cta).
+> Ready to shortlist options? [Browse lab diamond rings now](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=final_cta).

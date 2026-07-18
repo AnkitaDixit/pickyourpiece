@@ -22,8 +22,8 @@ If you are still finalizing spend range, start with the [engagement ring budget 
 
 Quick shop links:
 
-- [Solitaire engagement rings](/ring?gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=quick_answer_solitaire)
-- [Halo engagement rings](/ring?style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=quick_answer_halo)
+- [Solitaire engagement rings](/ring?sort=price-desc&gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=quick_answer_solitaire)
+- [Halo engagement rings](/ring?sort=price-desc&style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=quick_answer_halo)
 
 ---
 
@@ -65,8 +65,8 @@ Solitaires often let you concentrate spend on center stone quality (cut, color, 
 
 Compare both styles in your price range:
 
-- [Solitaire rings by budget](/ring?gemstone=Solitaire&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=budget_solitaire)
-- [Halo rings by budget](/ring?gemstone=Diamond&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=budget_halo)
+- [Solitaire rings by budget](/ring?sort=price-desc&gemstone=Solitaire&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=budget_solitaire)
+- [Halo rings by budget](/ring?sort=price-desc&gemstone=Diamond&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=budget_halo)
 
 ---
 
@@ -187,4 +187,4 @@ Before buying, confirm fit with this [ring size at home guide](/articles/how-to-
 
 ---
 
-> Ready to compare both styles side by side? [Browse solitaire rings](/ring?gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=final_cta_solitaire) and [browse halo rings](/ring?gemstone=Diamond&style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=final_cta_halo).
+> Ready to compare both styles side by side? [Browse solitaire rings](/ring?sort=price-desc&gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=final_cta_solitaire) and [browse halo rings](/ring?sort=price-desc&gemstone=Diamond&style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=solitaire_vs_halo&utm_content=final_cta_halo).

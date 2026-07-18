@@ -19,10 +19,10 @@ If you are still exploring ring basics, start with our [engagement ring buying g
 
 Use this quick budget selector:
 
-- First ring, value-focused: [Under Rs 50,000 options](/ring?occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_under_50k)
-- Balanced quality and design: [Rs 50,000 to Rs 1,50,000](/ring?occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_50k_150k)
-- Premium center stone focus: [Rs 1,50,000 to Rs 3,00,000](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_150k_300k)
-- Luxury and designer picks: [Rs 3,00,000+ engagement rings](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_luxury)
+- First ring, value-focused: [Under Rs 50,000 options](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_under_50k)
+- Balanced quality and design: [Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_50k_150k)
+- Premium center stone focus: [Rs 1,50,000 to Rs 3,00,000](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_150k_300k)
+- Luxury and designer picks: [Rs 3,00,000+ engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=at_a_glance_luxury)
 
 ---
 
@@ -49,7 +49,7 @@ Budget confidence is more important than headline carat.
 | Rs 1,50,000 to Rs 3,00,000 | Larger center stones, finer finishing | Premium look seekers |
 | Rs 3,00,000+ | Designer craft, larger high-grade stones | Luxury-focused buying |
 
-Compare options in your range before deciding: [Browse engagement rings by budget](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=budget_band_browse).
+Compare options in your range before deciding: [Browse engagement rings by budget](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=budget_band_browse).
 
 ---
 
@@ -129,7 +129,7 @@ Checklist for comparisons:
 - Return and exchange policy
 - Hidden add-on costs
 
-Start comparing now: [Compare engagement rings across brands](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=compare_across_brands).
+Start comparing now: [Compare engagement rings across brands](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=compare_across_brands).
 
 ---
 
@@ -161,7 +161,7 @@ Use this sequence for fast clarity:
 
 For many buyers, Rs 50,000 to Rs 1,50,000 is a practical range with strong design and quality options.
 
-[See options in this range](/ring?occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_good_budget_range)
+[See options in this range](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_good_budget_range)
 
 ---
 
@@ -169,7 +169,7 @@ For many buyers, Rs 50,000 to Rs 1,50,000 is a practical range with strong desig
 
 In most cases, cut quality gives better visible impact than a small carat jump.
 
-[Shop high-sparkle engagement rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_carat_vs_cut)
+[Shop high-sparkle engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_carat_vs_cut)
 
 ---
 
@@ -177,7 +177,7 @@ In most cases, cut quality gives better visible impact than a small carat jump.
 
 Yes. With the right shape, quality balance, and setting choice, you can find excellent options under Rs 1,00,000.
 
-[Browse engagement rings under Rs 1 lakh](/ring?occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_under_1_lakh)
+[Browse engagement rings under Rs 1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=faq_under_1_lakh)
 
 ---
 
@@ -197,4 +197,4 @@ Before finalizing, also review fit basics in the [ring size guide](/articles/rin
 
 ---
 
-> **Ready to shortlist engagement rings by budget?** [Compare options across brands now](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=final_cta).
+> **Ready to shortlist engagement rings by budget?** [Compare options across brands now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_budget&utm_content=final_cta).

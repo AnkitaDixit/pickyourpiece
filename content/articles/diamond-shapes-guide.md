@@ -19,11 +19,11 @@ This guide explains every major diamond shape, how it performs in real-world wea
 
 If you are short on time, use this quick selector:
 
-- Maximum sparkle: [Round Brilliant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_round)
-- Looks biggest for carat: [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_oval), [Marquise](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_marquise), [Pear](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_pear)
-- Clean, premium look: [Emerald](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_emerald)
-- Best value alternatives to round: [Cushion](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_cushion), [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_oval_value)
-- Modern geometric style: [Princess](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_princess), [Radiant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_radiant)
+- Maximum sparkle: [Round Brilliant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_round)
+- Looks biggest for carat: [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_oval), [Marquise](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_marquise), [Pear](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_pear)
+- Clean, premium look: [Emerald](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_emerald)
+- Best value alternatives to round: [Cushion](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_cushion), [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_oval_value)
+- Modern geometric style: [Princess](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_princess), [Radiant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=at_a_glance_radiant)
 
 ---
 
@@ -58,14 +58,14 @@ In simple terms: choose the shape with your eyes, and protect beauty with strong
 
 | Shape | Sparkle Level | Appears Larger for Same Carat? | Overall Style |
 |------|----------------|----------------------------------|---------------|
-| [Round Brilliant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_round) | Very High | No | Classic and timeless |
-| [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_oval) | High | Yes | Elegant and modern |
-| [Princess](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_princess) | High | Slightly | Contemporary and structured |
-| [Cushion](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_cushion) | Medium to High | Slightly | Soft, romantic, vintage-modern |
-| [Emerald](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_emerald) | Medium (mirror-like flashes) | No | Sophisticated and clean |
-| [Pear](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_pear) | High | Yes | Distinctive and graceful |
-| [Marquise](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_marquise) | Medium to High | Yes | Dramatic and elongated |
-| [Radiant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_radiant) | High | Slightly | Bold with strong brilliance |
+| [Round Brilliant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_round) | Very High | No | Classic and timeless |
+| [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_oval) | High | Yes | Elegant and modern |
+| [Princess](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_princess) | High | Slightly | Contemporary and structured |
+| [Cushion](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_cushion) | Medium to High | Slightly | Soft, romantic, vintage-modern |
+| [Emerald](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_emerald) | Medium (mirror-like flashes) | No | Sophisticated and clean |
+| [Pear](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_pear) | High | Yes | Distinctive and graceful |
+| [Marquise](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_marquise) | Medium to High | Yes | Dramatic and elongated |
+| [Radiant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=quick_compare_radiant) | High | Slightly | Bold with strong brilliance |
 
 ---
 
@@ -81,7 +81,7 @@ Best for: buyers who want maximum brilliance and timeless appeal.
 
 Watch out for: highest price per carat in most budgets.
 
-[Shop Round Brilliant Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_round)
+[Shop Round Brilliant Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_round)
 
 ---
 
@@ -95,7 +95,7 @@ Best for: buyers who want elegance plus strong visual size.
 
 Watch out for: bow-tie shadow in some stones, so compare videos closely.
 
-[Shop Oval Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_oval)
+[Shop Oval Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_oval)
 
 ---
 
@@ -109,7 +109,7 @@ Best for: buyers who like geometric, contemporary rings.
 
 Watch out for: corner durability; secure prongs are important.
 
-[Shop Princess Cut Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_princess)
+[Shop Princess Cut Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_princess)
 
 ---
 
@@ -123,7 +123,7 @@ Best for: buyers who want a softer, classic-luxe look.
 
 Watch out for: varying facet styles can change sparkle dramatically.
 
-[Shop Cushion Cut Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_cushion)
+[Shop Cushion Cut Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_cushion)
 
 ---
 
@@ -137,7 +137,7 @@ Best for: buyers who prefer sophistication over maximum fire.
 
 Watch out for: clarity visibility due to broad step facets.
 
-[Shop Emerald Cut Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_emerald)
+[Shop Emerald Cut Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_emerald)
 
 ---
 
@@ -151,7 +151,7 @@ Best for: buyers who want uniqueness without being overly unconventional.
 
 Watch out for: tip protection and balanced symmetry.
 
-[Shop Pear Shape Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_pear)
+[Shop Pear Shape Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_pear)
 
 ---
 
@@ -165,7 +165,7 @@ Best for: buyers focused on length, drama, and visible spread.
 
 Watch out for: tip chipping risk and center bow-tie in some stones.
 
-[Shop Marquise Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_marquise)
+[Shop Marquise Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_marquise)
 
 ---
 
@@ -179,7 +179,7 @@ Best for: buyers who want both shape definition and high sparkle.
 
 Watch out for: ratio differences that can make it look too square or too long.
 
-[Shop Radiant Cut Rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_radiant)
+[Shop Radiant Cut Rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=shape_section_radiant)
 
 ---
 
@@ -189,10 +189,10 @@ If your goal is maximum visual size per carat, elongated shapes usually win.
 
 Top picks for face-up spread:
 
-- [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_oval)
-- [Marquise](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_marquise)
-- [Pear](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_pear)
-- [Elongated radiant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_radiant)
+- [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_oval)
+- [Marquise](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_marquise)
+- [Pear](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_pear)
+- [Elongated radiant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=looks_biggest_radiant)
 
 Round diamonds usually face up smaller for the same carat because more weight is distributed in depth.
 
@@ -225,10 +225,10 @@ The best diamond shape is not only about trend. It should match your hand propor
 
 | Hand/Finger Profile | Best Shapes | Why It Works |
 |---------------------|------------|--------------|
-| Shorter fingers | [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_oval), [Pear](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_pear), [Marquise](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_marquise), [Emerald](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_emerald) | Vertical visual line creates an elongated look |
-| Petite hands | [Round](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_round), [Cushion](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_cushion), [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_oval) | Balanced scale without overpowering the hand |
-| Wider fingers | [Elongated radiant](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_radiant), [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_oval), [Three-stone](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_three_stone) | Better coverage and proportion across the finger |
-| Long slender fingers | [Round](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_round), [Princess](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_princess), [Cushion](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_cushion) | Adds visual width and keeps proportions soft |
+| Shorter fingers | [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_oval), [Pear](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_pear), [Marquise](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_marquise), [Emerald](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_shorter_emerald) | Vertical visual line creates an elongated look |
+| Petite hands | [Round](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_round), [Cushion](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_cushion), [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_petite_oval) | Balanced scale without overpowering the hand |
+| Wider fingers | [Elongated radiant](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_radiant), [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_oval), [Three-stone](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_wider_three_stone) | Better coverage and proportion across the finger |
+| Long slender fingers | [Round](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_round), [Princess](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_princess), [Cushion](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=finger_profile_slender_cushion) | Adds visual width and keeps proportions soft |
 
 ### Setting Tips That Improve Fit
 
@@ -247,10 +247,10 @@ Round diamonds are often the most expensive per carat due to demand and rough di
 
 Fancy shapes (non-round) can offer better value, especially:
 
-- [Oval](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_oval)
-- [Cushion](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_cushion)
-- [Pear](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_pear)
-- [Emerald](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_emerald)
+- [Oval](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_oval)
+- [Cushion](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_cushion)
+- [Pear](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_pear)
+- [Emerald](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=price_section_emerald)
 
 If budget is important, compare fancy shapes at the same quality level before choosing round. For budget planning benchmarks, read [engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=budget_context).
 
@@ -305,7 +305,7 @@ If you are deciding between ring concepts, compare [solitaire vs halo](/articles
 
 Round brilliant remains the most popular because of its sparkle and timeless look. Oval and cushion are also top choices for modern buyers.
 
-[Compare top Round, Oval and Cushion options](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_best_shape)
+[Compare top Round, Oval and Cushion options](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_best_shape)
 
 ---
 
@@ -313,7 +313,7 @@ Round brilliant remains the most popular because of its sparkle and timeless loo
 
 Round brilliant generally gives the highest sparkle. Radiant and princess also perform very well when cut quality is excellent.
 
-[Shop high-sparkle diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_sparkle)
+[Shop high-sparkle diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_sparkle)
 
 ---
 
@@ -321,7 +321,7 @@ Round brilliant generally gives the highest sparkle. Radiant and princess also p
 
 Oval, marquise, and pear often look larger face-up than round diamonds at the same carat weight.
 
-[See shapes that look larger for carat](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_looks_biggest)
+[See shapes that look larger for carat](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_looks_biggest)
 
 ---
 
@@ -329,7 +329,7 @@ Oval, marquise, and pear often look larger face-up than round diamonds at the sa
 
 Oval often looks larger and more elongated, while round usually sparkles more consistently. The better option depends on your style priorities.
 
-[Compare oval vs round diamond rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_oval_vs_round)
+[Compare oval vs round diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_oval_vs_round)
 
 ---
 
@@ -337,7 +337,7 @@ Oval often looks larger and more elongated, while round usually sparkles more co
 
 Often yes. Many fancy shapes provide better value per carat compared with round diamonds of similar quality.
 
-[Browse value-focused fancy shape rings](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_fancy_value)
+[Browse value-focused fancy shape rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_fancy_value)
 
 ---
 
@@ -359,4 +359,4 @@ Before checkout, run this quick final checklist:
 
 ---
 
-> **Ready to compare diamond ring styles across brands?** [Explore shape-based options side by side](/ring?gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=final_cta) and shortlist the right ring for your budget and preferences.
+> **Ready to compare diamond ring styles across brands?** [Explore shape-based options side by side](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=final_cta) and shortlist the right ring for your budget and preferences.

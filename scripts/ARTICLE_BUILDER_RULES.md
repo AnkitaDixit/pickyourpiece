@@ -103,6 +103,7 @@ Use `---` separators between major blocks.
 
 - Do not use `/ring?q=...` links.
 - Use explicit filter params in `/ring?...`.
+- Every `/ring?...` link in articles must include `sort=price-desc`.
 - Keep UTM params for article attribution on all product links:
 	- `utm_source=internal_article`
 	- `utm_medium=article`
@@ -112,12 +113,14 @@ Use `---` separators between major blocks.
 Example pattern:
 
 ```text
-/ring?occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=example_campaign&utm_content=quick_answer
+/ring?sort=price-desc&occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=example_campaign&utm_content=quick_answer
 ```
 
 ## 9) Query-to-filter mapping policy
 
 When converting search intent phrases into ring links, map to filter params (not `q`).
+
+Also append `sort=price-desc` on every mapped `/ring?...` URL.
 
 Examples:
 
@@ -147,6 +150,7 @@ Before finalizing, verify:
 - Topic value is allowed.
 - No `/ring?q=` links exist.
 - Product links use explicit filters and include UTM params.
+- Every article product link includes `sort=price-desc`.
 - Structure includes mistakes + framework + FAQ + final CTA.
 - Grammar and formatting are clean.
 
@@ -176,6 +180,7 @@ Requirements:
 - Follow all structure, SEO, and link rules from ARTICLE_BUILDER_RULES.md.
 - Add internal links to relevant existing articles.
 - Use only /ring filter links (no q).
+- Add `sort=price-desc` to all product links.
 - Add UTM params to all product links.
 - Ensure it is valid and appears on /articles.
 ```

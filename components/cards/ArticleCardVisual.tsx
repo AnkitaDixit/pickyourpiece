@@ -1,6 +1,9 @@
 type VisualGlyph =
   | "ring"
   | "budget"
+  | "engagementBudget"
+  | "coinStack"
+  | "tag"
   | "metals"
   | "ruler"
   | "lab"
@@ -8,7 +11,15 @@ type VisualGlyph =
   | "rose"
   | "size"
   | "halo"
-  | "comparison";
+  | "comparison"
+  | "vintageFrame"
+  | "minimalLine"
+  | "trendArrow"
+  | "checklist"
+  | "warning"
+  | "splitRings"
+  | "promiseBand"
+  | "timeline";
 
 type VisualSpec = {
   label: string;
@@ -19,6 +30,30 @@ type VisualSpec = {
   accent: string;
   accentSoft: string;
 };
+
+function buildLabelLines(label: string): string[] {
+  const normalized = label.trim();
+  if (!normalized) return ["JEWELLERY ARTICLE"];
+
+  if (normalized.includes(" VS ")) {
+    const [left, right] = normalized.split(" VS ");
+    if (left && right) {
+      return [left, `VS ${right}`];
+    }
+  }
+
+  if (normalized.length <= 22) {
+    return [normalized];
+  }
+
+  const words = normalized.split(" ");
+  if (words.length < 2) {
+    return [normalized.slice(0, 22), normalized.slice(22).trim()].filter(Boolean);
+  }
+
+  const midpoint = Math.ceil(words.length / 2);
+  return [words.slice(0, midpoint).join(" "), words.slice(midpoint).join(" ")].filter(Boolean);
+}
 
 type BrandPalette = {
   bg: string;
@@ -111,6 +146,132 @@ const ARTICLE_VISUALS: Record<string, VisualSpec> = {
     accent: COLOR.primary,
     accentSoft: COLOR.primarySoftStrong,
   },
+  "engagement-rings-under-25000": {
+    label: "ENGAGEMENT RINGS",
+    sublabel: "UNDER 25K",
+    glyph: "engagementBudget",
+    bgStart: "#fde7ef",
+    bgEnd: "#fcefc8",
+    accent: "#b4235f",
+    accentSoft: "#d97706",
+  },
+  "engagement-rings-under-50000": {
+    label: "ENGAGEMENT RINGS",
+    sublabel: "UNDER 50K",
+    glyph: "coinStack",
+    bgStart: "#ffe8ec",
+    bgEnd: "#ffefd6",
+    accent: "#be123c",
+    accentSoft: "#c2410c",
+  },
+  "engagement-rings-under-1-lakh": {
+    label: "ENGAGEMENT RINGS",
+    sublabel: "UNDER 1 LAKH",
+    glyph: "tag",
+    bgStart: "#eef2ff",
+    bgEnd: "#e9fbff",
+    accent: "#3730a3",
+    accentSoft: "#0f766e",
+  },
+  "best-solitaire-engagement-rings": {
+    label: "BEST SOLITAIRE",
+    sublabel: "ENGAGEMENT PICKS",
+    glyph: "ring",
+    bgStart: "#fef3f2",
+    bgEnd: "#fff4dd",
+    accent: "#9f1239",
+    accentSoft: "#b45309",
+  },
+  "best-halo-engagement-rings": {
+    label: "BEST HALO",
+    sublabel: "ENGAGEMENT PICKS",
+    glyph: "halo",
+    bgStart: "#ecfeff",
+    bgEnd: "#eff6ff",
+    accent: "#0e7490",
+    accentSoft: "#1d4ed8",
+  },
+  "best-vintage-engagement-rings": {
+    label: "BEST VINTAGE",
+    sublabel: "ENGAGEMENT PICKS",
+    glyph: "vintageFrame",
+    bgStart: "#fef7e6",
+    bgEnd: "#fdf2f8",
+    accent: "#92400e",
+    accentSoft: "#be185d",
+  },
+  "best-minimal-engagement-rings": {
+    label: "BEST MINIMAL",
+    sublabel: "ENGAGEMENT PICKS",
+    glyph: "minimalLine",
+    bgStart: "#f8fafc",
+    bgEnd: "#edf2f7",
+    accent: "#334155",
+    accentSoft: "#0891b2",
+  },
+  "engagement-ring-trends-2026": {
+    label: "RING TRENDS",
+    sublabel: "2026 EDITION",
+    glyph: "trendArrow",
+    bgStart: "#eef2ff",
+    bgEnd: "#fce7f3",
+    accent: "#4338ca",
+    accentSoft: "#db2777",
+  },
+  "engagement-ring-shopping-checklist": {
+    label: "SHOPPING CHECKLIST",
+    sublabel: "STEP BY STEP",
+    glyph: "checklist",
+    bgStart: "#ecfdf5",
+    bgEnd: "#f0fdfa",
+    accent: "#0f766e",
+    accentSoft: "#047857",
+  },
+  "mistakes-to-avoid-when-buying-an-engagement-ring": {
+    label: "AVOID MISTAKES",
+    sublabel: "ENGAGEMENT BUYING",
+    glyph: "warning",
+    bgStart: "#fff7ed",
+    bgEnd: "#fef2f2",
+    accent: "#c2410c",
+    accentSoft: "#b91c1c",
+  },
+  "proposal-ring-vs-engagement-ring": {
+    label: "PROPOSAL VS",
+    sublabel: "ENGAGEMENT RING",
+    glyph: "splitRings",
+    bgStart: "#eef2ff",
+    bgEnd: "#f5f3ff",
+    accent: "#3730a3",
+    accentSoft: "#7c3aed",
+  },
+  "promise-ring-vs-engagement-ring": {
+    label: "PROMISE VS",
+    sublabel: "ENGAGEMENT RING",
+    glyph: "promiseBand",
+    bgStart: "#fff1f2",
+    bgEnd: "#fdf4ff",
+    accent: "#be123c",
+    accentSoft: "#a21caf",
+  },
+  "how-much-should-an-engagement-ring-cost": {
+    label: "RING COST GUIDE",
+    sublabel: "HOW MUCH TO SPEND",
+    glyph: "budget",
+    bgStart: "#fff7ed",
+    bgEnd: "#ecfeff",
+    accent: "#b45309",
+    accentSoft: "#0f766e",
+  },
+  "engagement-ring-buying-timeline": {
+    label: "BUYING TIMELINE",
+    sublabel: "WEEK BY WEEK",
+    glyph: "timeline",
+    bgStart: "#eff6ff",
+    bgEnd: "#f5f3ff",
+    accent: "#1d4ed8",
+    accentSoft: "#6d28d9",
+  },
   "gold-vs-platinum": {
     label: "METAL COMPARISON",
     sublabel: "GOLD VS PLATINUM",
@@ -178,6 +339,124 @@ const ARTICLE_VISUALS: Record<string, VisualSpec> = {
 
 function renderVisualGlyph(glyph: VisualGlyph, accent: string, accentSoft: string) {
   switch (glyph) {
+    case "coinStack":
+      return (
+        <g transform="translate(228 118)">
+          <ellipse cx="78" cy="124" rx="64" ry="20" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M14 124V90C14 101 42 110 78 110C114 110 142 101 142 90V124" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M14 98C14 109 42 118 78 118C114 118 142 109 142 98" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <path d="M14 84C14 95 42 104 78 104C114 104 142 95 142 84" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <text x="206" y="102" fill={accent} fontSize="26" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">50K</text>
+        </g>
+      );
+    case "tag":
+      return (
+        <g transform="translate(210 112)">
+          <path d="M40 46H188L244 102L188 158H40V46Z" fill="none" stroke={accent} strokeWidth="5" strokeLinejoin="round" />
+          <circle cx="72" cy="102" r="10" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <text x="124" y="112" fill={accentSoft} fontSize="28" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">1L</text>
+        </g>
+      );
+    case "vintageFrame":
+      return (
+        <g transform="translate(214 120)">
+          <rect x="18" y="18" width="176" height="126" rx="16" fill="none" stroke={accent} strokeWidth="5" />
+          <rect x="36" y="36" width="140" height="90" rx="12" fill="none" stroke={accentSoft} strokeWidth="3" strokeDasharray="3 9" />
+          <circle cx="106" cy="80" r="16" fill="none" stroke={accent} strokeWidth="4" />
+          <path d="M96 162H116" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+        </g>
+      );
+    case "minimalLine":
+      return (
+        <g transform="translate(212 132)">
+          <path d="M22 116H250" stroke={accent} strokeWidth="5" strokeLinecap="round" />
+          <circle cx="136" cy="80" r="18" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <path d="M126 70L136 58L146 70" fill="none" stroke={accent} strokeWidth="3" strokeLinejoin="round" />
+        </g>
+      );
+    case "trendArrow":
+      return (
+        <g transform="translate(206 124)">
+          <path d="M26 136L88 92L132 118L214 52" fill="none" stroke={accent} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M196 52H214V70" fill="none" stroke={accent} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="88" cy="92" r="8" fill={accentSoft} />
+          <circle cx="132" cy="118" r="8" fill={accentSoft} />
+        </g>
+      );
+    case "checklist":
+      return (
+        <g transform="translate(214 116)">
+          <rect x="30" y="20" width="182" height="154" rx="18" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M56 60L66 70L82 52" fill="none" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M56 94L66 104L82 86" fill="none" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M56 128L66 138L82 120" fill="none" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M98 62H184M98 96H184M98 130H184" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+        </g>
+      );
+    case "warning":
+      return (
+        <g transform="translate(224 116)">
+          <path d="M96 22L194 184H-2L96 22Z" fill="none" stroke={accent} strokeWidth="5" strokeLinejoin="round" />
+          <path d="M96 84V128" stroke={accentSoft} strokeWidth="6" strokeLinecap="round" />
+          <circle cx="96" cy="154" r="6" fill={accentSoft} />
+        </g>
+      );
+    case "splitRings":
+      return (
+        <g transform="translate(208 122)">
+          <ellipse cx="78" cy="120" rx="52" ry="34" fill="none" stroke={accent} strokeWidth="6" />
+          <ellipse cx="210" cy="120" rx="52" ry="34" fill="none" stroke={accentSoft} strokeWidth="6" />
+          <text x="144" y="124" textAnchor="middle" fill={COLOR.text} fontSize="16" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">VS</text>
+          <path d="M68 72L78 56L88 72L82 84H74L68 72Z" fill="none" stroke={accent} strokeWidth="3" />
+          <path d="M200 72L210 56L220 72L214 84H206L200 72Z" fill="none" stroke={accentSoft} strokeWidth="3" />
+        </g>
+      );
+    case "promiseBand":
+      return (
+        <g transform="translate(220 126)">
+          <path d="M38 122C62 90 114 90 138 122" fill="none" stroke={accent} strokeWidth="6" strokeLinecap="round" />
+          <path d="M154 122C178 90 230 90 254 122" fill="none" stroke={accentSoft} strokeWidth="6" strokeLinecap="round" />
+          <path d="M146 78C152 62 174 62 180 78" fill="none" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+          <path d="M148 78C142 62 120 62 114 78" fill="none" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+          <path d="M146 78L162 96L178 78" fill="none" stroke={accent} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      );
+    case "timeline":
+      return (
+        <g transform="translate(212 130)">
+          <path d="M24 108H264" stroke={accent} strokeWidth="5" strokeLinecap="round" />
+          <circle cx="54" cy="108" r="8" fill={accentSoft} />
+          <circle cx="124" cy="108" r="8" fill={accentSoft} />
+          <circle cx="194" cy="108" r="8" fill={accentSoft} />
+          <circle cx="254" cy="108" r="8" fill={accentSoft} />
+          <path d="M54 88V64M124 88V54M194 88V64M254 88V54" stroke={accentSoft} strokeWidth="3" strokeLinecap="round" />
+        </g>
+      );
+    case "engagementBudget":
+      return (
+        <g transform="translate(0 0)">
+          <ellipse cx="298" cy="246" rx="76" ry="46" fill="none" stroke={accentSoft} strokeWidth="6" />
+          <path d="M278 184L298 162L318 184L307 204H289L278 184Z" fill="none" stroke={accent} strokeWidth="3.5" />
+          <path d="M278 184H318" stroke={accent} strokeWidth="3" />
+          <path d="M289 204L298 162L307 204" stroke={accent} strokeWidth="3" fill="none" />
+
+          <rect x="360" y="176" width="118" height="76" rx="14" fill={COLOR.white} fillOpacity="0.35" stroke={accent} strokeWidth="3" />
+          <circle cx="380" cy="198" r="8" fill="none" stroke={accentSoft} strokeWidth="3" />
+          <path d="M388 198H402" stroke={accentSoft} strokeWidth="3" strokeLinecap="round" />
+          <text
+            x="418"
+            y="220"
+            textAnchor="middle"
+            fill={accent}
+            fontSize="24"
+            fontWeight="700"
+            letterSpacing="0.8"
+            fontFamily="'Trebuchet MS', Verdana, sans-serif"
+          >
+            25K
+          </text>
+        </g>
+      );
     case "budget":
       return (
         <g transform="translate(250 132)">
@@ -245,19 +524,32 @@ function renderVisualGlyph(glyph: VisualGlyph, accent: string, accentSoft: strin
       );
     case "comparison":
       return (
-        <g transform="translate(176 114)">
-          <rect x="0" y="8" width="132" height="170" rx="18" fill={COLOR.white} fillOpacity="0.2" stroke={accentSoft} strokeWidth="3" />
-          <rect x="156" y="8" width="132" height="170" rx="18" fill={COLOR.white} fillOpacity="0.2" stroke={accent} strokeWidth="3" />
+        <g transform="translate(170 110)">
+          <rect x="0" y="10" width="138" height="176" rx="20" fill={COLOR.white} fillOpacity="0.2" stroke={accentSoft} strokeWidth="3.5" />
+          <rect x="162" y="10" width="138" height="176" rx="20" fill={COLOR.white} fillOpacity="0.2" stroke={accent} strokeWidth="3.5" />
 
-          <ellipse cx="66" cy="114" rx="42" ry="28" fill="none" stroke={accentSoft} strokeWidth="5" />
-          <path d="M56 64L66 50L76 64L70 76H62L56 64Z" fill="none" stroke={accentSoft} strokeWidth="3" />
+          <rect x="18" y="28" width="102" height="10" rx="5" fill={accentSoft} fillOpacity="0.25" />
+          <rect x="180" y="28" width="102" height="10" rx="5" fill={accent} fillOpacity="0.25" />
 
-          <ellipse cx="222" cy="114" rx="42" ry="28" fill="none" stroke={accent} strokeWidth="5" />
-          <path d="M212 64L222 50L232 64L226 76H218L212 64Z" fill="none" stroke={accent} strokeWidth="3" />
+          <ellipse cx="69" cy="116" rx="44" ry="30" fill="none" stroke={accentSoft} strokeWidth="5" />
+          <path d="M57 64L69 48L81 64L74 78H64L57 64Z" fill="none" stroke={accentSoft} strokeWidth="3" />
 
-          <rect x="126" y="74" width="36" height="44" rx="12" fill={COLOR.white} fillOpacity="0.42" stroke={COLOR.white} strokeOpacity="0.65" />
-          <path d="M136 90L144 98L152 90" fill="none" stroke={accentSoft} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M136 102L144 110L152 102" fill="none" stroke={accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <ellipse cx="231" cy="116" rx="44" ry="30" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M219 64L231 48L243 64L236 78H226L219 64Z" fill="none" stroke={accent} strokeWidth="3" />
+
+          <circle cx="150" cy="100" r="24" fill={COLOR.white} fillOpacity="0.5" stroke={COLOR.white} strokeOpacity="0.8" />
+          <text
+            x="150"
+            y="106"
+            textAnchor="middle"
+            fill={COLOR.text}
+            fontSize="17"
+            fontWeight="700"
+            letterSpacing="1.2"
+            fontFamily="'Trebuchet MS', Verdana, sans-serif"
+          >
+            VS
+          </text>
         </g>
       );
     case "ring":
@@ -298,11 +590,13 @@ export default function ArticleCardVisual({
   const safeSlug = slug.replace(/[^a-z0-9-]/gi, "").toLowerCase() || "article";
   const bgId = `article-bg-${safeSlug}`;
   const labelFontSize = featured ? 24 : 20;
-  const labelY = featured ? 76 : 72;
+  const labelY = featured ? 72 : 68;
   const labelSpacing = featured ? 1 : 1.1;
   const sublabelFontSize = featured ? 17 : 15;
-  const sublabelY = featured ? 112 : 104;
+  const sublabelY = featured ? 116 : 110;
   const sublabelSpacing = featured ? 0.75 : 0.9;
+  const labelLines = buildLabelLines(spec.label);
+  const lineGap = featured ? 26 : 22;
 
   return (
     <div className="article-card-visual article-card-visual--engagement" role="img" aria-label={`${title} illustration`}>
@@ -349,15 +643,28 @@ export default function ArticleCardVisual({
           x="36"
           y="34"
           width={featured ? 392 : 336}
-          height={featured ? 96 : 84}
+          height={featured ? 106 : 92}
           rx="14"
           fill={COLOR.white}
-          fillOpacity="0.42"
+          fillOpacity="0.48"
           stroke={COLOR.white}
-          strokeOpacity="0.48"
+          strokeOpacity="0.55"
         />
 
-        <text x="48" y={labelY} fill={COLOR.text} fontSize={labelFontSize} letterSpacing={labelSpacing} fontFamily="Georgia, 'Times New Roman', serif">{spec.label}</text>
+        {labelLines.map((line, index) => (
+          <text
+            key={`${safeSlug}-line-${index}`}
+            x="48"
+            y={labelY + index * lineGap}
+            fill={COLOR.text}
+            fontSize={labelFontSize}
+            letterSpacing={labelSpacing}
+            fontFamily="'Trebuchet MS', Verdana, sans-serif"
+            fontWeight="700"
+          >
+            {line}
+          </text>
+        ))}
         <text x="48" y={sublabelY} fill={COLOR.textSecondary} fontSize={sublabelFontSize} letterSpacing={sublabelSpacing} fontFamily="Georgia, 'Times New Roman', serif">{spec.sublabel}</text>
       </svg>
     </div>

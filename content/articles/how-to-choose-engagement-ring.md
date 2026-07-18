@@ -26,9 +26,9 @@ If you only remember one approach, use this order:
 
 Quick starting links:
 
-- [Browse engagement rings by budget](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_budget)
-- [Browse solitaire engagement rings](/ring?gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_solitaire)
-- [Browse halo engagement rings](/ring?gemstone=Diamond&style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_halo)
+- [Browse engagement rings by budget](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_budget)
+- [Browse solitaire engagement rings](/ring?sort=price-desc&gemstone=Solitaire&style=Solitaire&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_solitaire)
+- [Browse halo engagement rings](/ring?sort=price-desc&gemstone=Diamond&style=Halo&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=quick_answer_halo)
 
 ---
 
@@ -153,9 +153,9 @@ Need a deeper shape comparison? [Read diamond shapes guide](/articles/diamond-sh
 
 Shop by shape:
 
-- [Round engagement rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_round)
-- [Oval engagement rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_oval)
-- [Pear engagement rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_pear)
+- [Round engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_round)
+- [Oval engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_oval)
+- [Pear engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=shape_pear)
 
 ---
 
@@ -297,7 +297,7 @@ Both are real diamonds with identical chemical composition.
 
 The right choice depends on your priorities and budget.
 
-Compare lab-diamond options directly: [Browse lab diamond rings](/ring?gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=natural_vs_lab_shop_lab).
+Compare lab-diamond options directly: [Browse lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=natural_vs_lab_shop_lab).
 
 ---
 
@@ -333,7 +333,7 @@ can help you make a more informed decision.
 
 Taking a few extra minutes to compare options may save money or help you find a ring that better matches your preferences.
 
-Start your comparison flow here: [Compare engagement rings across brands](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=compare_section_compare_now).
+Start your comparison flow here: [Compare engagement rings across brands](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=compare_section_compare_now).
 
 ---
 
@@ -406,4 +406,4 @@ The best ring is not necessarily the most expensive one. It is the one that fits
 
 ---
 
-> Ready to shortlist with confidence? [Browse and compare engagement rings now](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=final_cta).
+> Ready to shortlist with confidence? [Browse and compare engagement rings now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_to_choose_engagement_ring&utm_content=final_cta).

@@ -6,7 +6,6 @@ const OUTPUT_FILE = path.join(process.cwd(), "data", "products.json");
 const TARGET_BRANDS = ["bluestone", "caratlane", "tanishq", "giva", "mia", "orra", "candere", "palmonas"] as const;
 
 type JsonRecord = Record<string, unknown>;
-type PlatedMetal = "Gold Plated" | "Silver Plated";
 
 function buildMetalFingerprint(...values: string[]): string {
   return values
@@ -85,7 +84,9 @@ function hasSilverBaseWithGoldPlating(...values: string[]): boolean {
 }
 
 function deriveMetalByPlatingRules(...values: string[]): string | null {
-  const combined = buildMetalFingerprint(...values);
+  const [rawPurity = "", rawMetal = "", rawMetalColor = "", rawName = "", rawDescription = ""] = values;
+  const structured = buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor);
+  const combined = buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription);
   const goldPlated = hasGoldPlating(combined);
   const silverPlated = hasSilverPlating(combined);
   const plated = goldPlated || silverPlated;
@@ -93,27 +94,29 @@ function deriveMetalByPlatingRules(...values: string[]): string | null {
   if (!plated) return null;
 
   // Rule 1: Gold plating on silver must remain Silver.
-  if (goldPlated && hasSilverBase(combined)) return "Silver";
+  if (goldPlated && hasSilverBase(structured)) return "Silver";
+
+  // Rule 1.5: Explicit steel base should remain Steel even when gold-plated.
+  if (/stainless\s*steel|\bsteel\b/i.test(structured)) return "Steel";
 
   // Rule 2: Any plating on silver/gold/platinum keeps the base metal.
-  if (hasSilverBase(combined)) return "Silver";
-  if (hasGoldBase(combined)) return "Gold";
-  if (hasPlatinumBase(combined)) return "Platinum";
+  if (hasSilverBase(structured)) return "Silver";
+  if (hasGoldBase(structured)) return "Gold";
+  if (hasPlatinumBase(structured)) return "Platinum";
 
-  // Rule 3 and 4: Plating on non-precious/unknown base becomes plated metal.
-  if (goldPlated) return "Gold Plated";
-  if (silverPlated) return "Silver Plated";
+  if (goldPlated || silverPlated) return "Steel";
 
   return null;
 }
 
-function derivePlatedMetal(rawPurity: string, rawMetal: string, rawMetalColor: string): PlatedMetal | null {
+function derivePlatedMetal(rawPurity: string, rawMetal: string, rawMetalColor: string): "Gold" | "Silver" | "Steel" | null {
   const combined = buildMetalFingerprint(rawPurity, rawMetal, rawMetalColor);
 
   if (!isPlated(combined)) return null;
   if (hasSilverBaseWithGoldPlating(rawPurity, rawMetal, rawMetalColor)) return null;
-  if (/rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k\b/i.test(combined)) return "Gold Plated";
-  if (/silver|rhodium|stainless\s*steel|\bsteel\b|white/i.test(combined)) return "Silver Plated";
+  if (/stainless\s*steel|\bsteel\b/i.test(combined)) return "Steel";
+  if (/rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k\b/i.test(combined)) return "Gold";
+  if (/silver|rhodium|white/i.test(combined)) return "Silver";
 
   return null;
 }
@@ -141,7 +144,7 @@ function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: str
   if (fallbackPlatedMetal) return fallbackPlatedMetal;
 
   const normalized = normalizeMalformedSilverPurity(rawMetal);
-  if (!normalized) return "";
+  if (!normalized) return "Steel";
 
   if (/silver925/i.test(normalized)) return "Silver";
 
@@ -151,10 +154,21 @@ function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: str
   if (/platinum|\b950\s*KT\b/i.test(normalized)) return "Platinum";
   if (/\b\d+\s*KT\b/i.test(normalized)) return "Gold";
   if (/rhodium/i.test(normalized)) return "Silver";
-  if (/stainless\s*steel|\bsteel\b/i.test(normalized)) return "Silver";
+  if (/stainless\s*steel|\bsteel\b/i.test(normalized)) return "Steel";
   if (/silver|sterling/i.test(normalized)) return "Silver";
 
-  return normalized;
+  return "Steel";
+}
+
+function canonicalizeMetalCategory(rawMetal: string): "Gold" | "Silver" | "Platinum" | "Steel" {
+  const combined = normalizeMalformedSilverPurity(rawMetal).toLowerCase();
+
+  if (/platinum|\b950\s*k(?:t)?\b/.test(combined)) return "Platinum";
+  if (/silver|sterling|silver925|\b925\b|rhodium|white/.test(combined)) return "Silver";
+  if (/rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k(?:t)?\b/.test(combined)) return "Gold";
+  if (/stainless\s*steel|\bsteel\b/.test(combined)) return "Steel";
+
+  return "Steel";
 }
 
 function shouldForceSilverMetal(purity: string): boolean {
@@ -162,13 +176,18 @@ function shouldForceSilverMetal(purity: string): boolean {
 }
 
 function deriveMetalColor(rawColor: string, rawMetal: string, rawPurity: string): string {
-  if (hasSilverBaseWithGoldPlating(rawPurity, rawMetal, rawColor)) return "Gold";
+  const normalizedColor = rawColor.replace(/\s+/g, " ").trim();
+
+  // Preserve explicit color intent first.
+  if (/rose\s*gold/i.test(normalizedColor)) return "Rose Gold";
+  if (/yellow\s*gold|^gold\b/i.test(normalizedColor)) return "Gold";
+  if (/silver|rhodium|steel/i.test(normalizedColor)) return "Silver";
+  if (/platinum/i.test(normalizedColor)) return "Platinum";
 
   const platedMetal = derivePlatedMetal(rawPurity, rawMetal, rawColor);
-  if (platedMetal === "Gold Plated") return "Gold";
-  if (platedMetal === "Silver Plated") return "Silver";
-
-  const normalizedColor = rawColor.replace(/\s+/g, " ").trim();
+  if (platedMetal === "Gold") return "Gold";
+  if (platedMetal === "Silver") return "Silver";
+  if (platedMetal === "Steel") return "Silver";
 
   if (/^\d+\s*K\s*gold plated$/i.test(normalizedColor) || /^gold plated$/i.test(normalizedColor) || /^yellow$/i.test(normalizedColor) || /^yellow gold$/i.test(normalizedColor)) {
     return "Gold";
@@ -296,9 +315,10 @@ export function mergeProducts(): JsonRecord[] {
 
       normalized.brand = normalizeBrand(rawBrand);
       normalized.purity = normalizedPurity;
-      normalized.metal = shouldForceSilverMetal(normalizedPurity)
+      const derivedMetal = shouldForceSilverMetal(normalizedPurity)
         ? "Silver"
         : deriveBaseMetal(rawMetal, rawPurity, rawMetalColor, rawName, rawDescription);
+      normalized.metal = canonicalizeMetalCategory(derivedMetal);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
       normalized.image = normalizeImageUrl(asString(product.image));
 

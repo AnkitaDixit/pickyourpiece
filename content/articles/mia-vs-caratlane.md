@@ -25,8 +25,8 @@ Budget baseline first: [engagement ring budget guide](/articles/engagement-ring-
 
 Quick browse links:
 
-- [Everyday ring options for comparison](/ring?occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=quick_answer_everyday)
-- [Modern engagement styles for comparison](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=quick_answer_engagement)
+- [Everyday ring options for comparison](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=quick_answer_everyday)
+- [Modern engagement styles for comparison](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=quick_answer_engagement)
 
 ---
 
@@ -48,9 +48,9 @@ Compare same-style products at equivalent specs to get a fair value view.
 
 Useful links:
 
-- [Everyday rings under Rs 50,000](/ring?occasion=Everyday&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_under_50k)
-- [Everyday rings Rs 50,000 to Rs 1,50,000](/ring?occasion=Everyday&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_50k_150k)
-- [Premium everyday options](/ring?occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_premium_compare)
+- [Everyday rings under Rs 50,000](/ring?sort=price-desc&occasion=Everyday&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_under_50k)
+- [Everyday rings Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&occasion=Everyday&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_50k_150k)
+- [Premium everyday options](/ring?sort=price-desc&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=budget_premium_compare)
 
 ---
 
@@ -63,8 +63,8 @@ Use your wardrobe and usage habits as the first filter.
 
 Style links:
 
-- [Minimal solitaire-led styles](/ring?occasion=Everyday&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=design_minimal)
-- [Statement halo-led styles](/ring?occasion=Everyday&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=design_statement)
+- [Minimal solitaire-led styles](/ring?sort=price-desc&occasion=Everyday&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=design_minimal)
+- [Statement halo-led styles](/ring?sort=price-desc&occasion=Everyday&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=design_statement)
 
 Need setting clarity? Read [solitaire vs halo](/articles/solitaire-vs-halo?utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=design_solitaire_vs_halo).
 
@@ -172,4 +172,4 @@ Use matched comparisons and you will choose with much more confidence.
 
 ---
 
-> Ready to compare now? [Browse modern ring options with filters](/ring?occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=final_cta).
+> Ready to compare now? [Browse modern ring options with filters](/ring?sort=price-desc&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=mia_vs_caratlane&utm_content=final_cta).

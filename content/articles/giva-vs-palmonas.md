@@ -25,8 +25,8 @@ Need a quick budget framework? Read [engagement ring budget guide](/articles/eng
 
 Quick browse links:
 
-- [Everyday ring options for comparison](/ring?occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=quick_answer_everyday)
-- [Gift-focused ring options](/ring?occasion=Gift&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=quick_answer_gift)
+- [Everyday ring options for comparison](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=quick_answer_everyday)
+- [Gift-focused ring options](/ring?sort=price-desc&occasion=Gift&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=quick_answer_gift)
 
 ---
 
@@ -48,9 +48,9 @@ For daily-wear categories, value should be measured by design longevity, finish 
 
 Useful links:
 
-- [Everyday rings under Rs 25,000](/ring?occasion=Everyday&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_under_25k)
-- [Everyday rings Rs 25,000 to Rs 75,000](/ring?occasion=Everyday&minPrice=25000&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_25k_75k)
-- [Premium everyday options](/ring?occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_premium_compare)
+- [Everyday rings under Rs 25,000](/ring?sort=price-desc&occasion=Everyday&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_under_25k)
+- [Everyday rings Rs 25,000 to Rs 75,000](/ring?sort=price-desc&occasion=Everyday&minPrice=25000&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_25k_75k)
+- [Premium everyday options](/ring?sort=price-desc&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=budget_premium_compare)
 
 ---
 
@@ -63,8 +63,8 @@ Choose based on wardrobe and usage patterns.
 
 Style links:
 
-- [Minimal everyday styles](/ring?occasion=Everyday&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=design_minimal)
-- [Statement styles](/ring?occasion=Everyday&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=design_statement)
+- [Minimal everyday styles](/ring?sort=price-desc&occasion=Everyday&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=design_minimal)
+- [Statement styles](/ring?sort=price-desc&occasion=Everyday&style=Halo&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=design_statement)
 
 ---
 
@@ -170,4 +170,4 @@ Pick the brand that matches your style intent, repeat-use needs, and policy conf
 
 ---
 
-> Ready to compare now? [Browse everyday options with filters](/ring?occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=final_cta).
+> Ready to compare now? [Browse everyday options with filters](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=giva_vs_palmonas&utm_content=final_cta).

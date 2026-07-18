@@ -22,8 +22,8 @@ If you are still choosing a ring style, start with our [engagement ring buying g
 
 Quick shop links:
 
-- [Gold rings collection](/ring?metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=quick_answer_gold)
-- [Platinum rings collection](/ring?metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=quick_answer_platinum)
+- [Gold rings collection](/ring?sort=price-desc&metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=quick_answer_gold)
+- [Platinum rings collection](/ring?sort=price-desc&metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=quick_answer_platinum)
 
 ---
 
@@ -51,8 +51,8 @@ If your ring will see heavy daily use, durability also depends on design shape a
 
 Explore durable daily-wear options:
 
-- [Platinum daily-wear rings](/ring?metal=Platinum&purity=Platinum950&metalColor=Platinum&style=Everyday&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=durability_platinum_daily)
-- [14K gold daily-wear rings](/ring?metal=Gold&purity=14KT&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=durability_14k_gold)
+- [Platinum daily-wear rings](/ring?sort=price-desc&metal=Platinum&purity=Platinum950&metalColor=Platinum&style=Everyday&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=durability_platinum_daily)
+- [14K gold daily-wear rings](/ring?sort=price-desc&metal=Gold&purity=14KT&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=durability_14k_gold)
 
 ---
 
@@ -110,8 +110,8 @@ Platinum can justify premium pricing for buyers who value:
 
 Compare within your target budget:
 
-- [Gold engagement rings under Rs 1,00,000](/ring?metal=Gold&metalColor=Gold&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=price_gold_under_1l)
-- [Platinum engagement rings by budget](/ring?metal=Platinum&purity=Platinum950&metalColor=Platinum&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=price_platinum_budget)
+- [Gold engagement rings under Rs 1,00,000](/ring?sort=price-desc&metal=Gold&metalColor=Gold&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=price_gold_under_1l)
+- [Platinum engagement rings by budget](/ring?sort=price-desc&metal=Platinum&purity=Platinum950&metalColor=Platinum&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=price_platinum_budget)
 
 If budget planning is still open, use this framework: [Engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=price_budget_guide).
 
@@ -184,4 +184,4 @@ Before you buy, validate ring fit too: [Ring size guide](/articles/ring-size-gui
 
 ---
 
-> Ready to compare both metals now? [Browse gold rings](/ring?metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=final_cta_gold) and [browse platinum rings](/ring?metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=final_cta_platinum).
+> Ready to compare both metals now? [Browse gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=final_cta_gold) and [browse platinum rings](/ring?sort=price-desc&metal=Platinum&purity=Platinum950&metalColor=Platinum&utm_source=internal_article&utm_medium=article&utm_campaign=gold_vs_platinum&utm_content=final_cta_platinum).

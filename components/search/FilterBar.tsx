@@ -153,7 +153,7 @@ const FILTERS = [
   {
     key: "metal",
     label: "Metal",
-    options: ["Gold", "Gold Plated", "Platinum", "Silver", "Silver Plated"],
+    options: ["Gold", "Platinum", "Silver", "Steel"],
   },
   {
     key: "gemstone",

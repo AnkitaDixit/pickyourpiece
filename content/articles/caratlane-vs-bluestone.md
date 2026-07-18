@@ -25,8 +25,8 @@ If you want a budget-first foundation before brand comparison, read [engagement 
 
 Quick browse links:
 
-- [Engagement-style rings for comparison](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=quick_answer_engagement)
-- [Everyday rings for comparison](/ring?occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=quick_answer_everyday)
+- [Engagement-style rings for comparison](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=quick_answer_engagement)
+- [Everyday rings for comparison](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=quick_answer_everyday)
 
 ---
 
@@ -48,9 +48,9 @@ Both brands run across multiple price bands, so comparison should happen by equi
 
 Use these filters while comparing:
 
-- [Engagement rings under Rs 50,000](/ring?occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_under_50k)
-- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_50k_150k)
-- [Premium engagement rings](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_premium_compare)
+- [Engagement rings under Rs 50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_under_50k)
+- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_50k_150k)
+- [Premium engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=budget_premium_compare)
 
 ---
 
@@ -63,8 +63,8 @@ For many buyers, design language decides faster than specs.
 
 Style links:
 
-- [Solitaire engagement styles](/ring?occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=design_solitaire)
-- [Halo engagement styles](/ring?occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=design_halo)
+- [Solitaire engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=design_solitaire)
+- [Halo engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=design_halo)
 
 Need style clarity first? Read [solitaire vs halo](/articles/solitaire-vs-halo?utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=design_solitaire_vs_halo).
 
@@ -174,4 +174,4 @@ If you compare with a framework, you avoid impulse decisions and improve both sa
 
 ---
 
-> Ready to compare now? [Browse engagement options with filters](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=final_cta).
+> Ready to compare now? [Browse engagement options with filters](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_bluestone&utm_content=final_cta).

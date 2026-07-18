@@ -25,8 +25,8 @@ Before brand comparison, you can set a budget baseline with [engagement ring bud
 
 Quick browse links:
 
-- [Engagement ring options for comparison](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=quick_answer_engagement)
-- [Everyday ring options for comparison](/ring?occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=quick_answer_everyday)
+- [Engagement ring options for comparison](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=quick_answer_engagement)
+- [Everyday ring options for comparison](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=quick_answer_everyday)
 
 ---
 
@@ -48,9 +48,9 @@ Both brands have overlapping price bands. Compare equivalent style and quality s
 
 Use these filters:
 
-- [Engagement rings under Rs 50,000](/ring?occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_under_50k)
-- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_50k_150k)
-- [Premium engagement rings](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_premium_compare)
+- [Engagement rings under Rs 50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_under_50k)
+- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_50k_150k)
+- [Premium engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=budget_premium_compare)
 
 ---
 
@@ -63,8 +63,8 @@ A better brand for you is the one that aligns with your style language quickly.
 
 Style links:
 
-- [Solitaire engagement styles](/ring?occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=design_solitaire)
-- [Halo engagement styles](/ring?occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=design_halo)
+- [Solitaire engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=design_solitaire)
+- [Halo engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=design_halo)
 
 Need help picking the setting first? Read [solitaire vs halo](/articles/solitaire-vs-halo?utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=design_solitaire_vs_halo).
 
@@ -172,4 +172,4 @@ Use a structured comparison and you will make a more confident purchase.
 
 ---
 
-> Ready to compare now? [Browse engagement styles with filters](/ring?occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=final_cta).
+> Ready to compare now? [Browse engagement styles with filters](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=caratlane_vs_candere&utm_content=final_cta).
