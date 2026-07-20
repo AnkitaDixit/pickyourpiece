@@ -19,7 +19,12 @@ type VisualGlyph =
   | "warning"
   | "splitRings"
   | "promiseBand"
-  | "timeline";
+  | "timeline"
+  | "certification"
+  | "smallHand"
+  | "bigLook"
+  | "fluorescence"
+  | "mythBurst";
 
 type VisualSpec = {
   label: string;
@@ -272,6 +277,51 @@ const ARTICLE_VISUALS: Record<string, VisualSpec> = {
     accent: "#1d4ed8",
     accentSoft: "#6d28d9",
   },
+  "diamond-certification-gia-vs-igi": {
+    label: "GIA VS IGI",
+    sublabel: "CERTIFICATION GUIDE",
+    glyph: "certification",
+    bgStart: "#eaf2ff",
+    bgEnd: "#eefcf7",
+    accent: "#1d4ed8",
+    accentSoft: "#0f766e",
+  },
+  "best-diamond-shape-for-small-hands": {
+    label: "BEST SHAPE",
+    sublabel: "FOR SMALL HANDS",
+    glyph: "smallHand",
+    bgStart: "#fef2f2",
+    bgEnd: "#f5f3ff",
+    accent: "#be185d",
+    accentSoft: "#6d28d9",
+  },
+  "which-diamond-looks-biggest": {
+    label: "BIGGEST LOOK",
+    sublabel: "DIAMOND GUIDE",
+    glyph: "bigLook",
+    bgStart: "#eef2ff",
+    bgEnd: "#fff7ed",
+    accent: "#4338ca",
+    accentSoft: "#b45309",
+  },
+  "diamond-fluorescence-explained": {
+    label: "FLUORESCENCE",
+    sublabel: "EXPLAINED",
+    glyph: "fluorescence",
+    bgStart: "#ecfeff",
+    bgEnd: "#eef2ff",
+    accent: "#0e7490",
+    accentSoft: "#6366f1",
+  },
+  "diamond-myths-debunked": {
+    label: "DIAMOND MYTHS",
+    sublabel: "DEBUNKED",
+    glyph: "mythBurst",
+    bgStart: "#fff7ed",
+    bgEnd: "#fef2f2",
+    accent: "#c2410c",
+    accentSoft: "#b91c1c",
+  },
   "gold-vs-platinum": {
     label: "METAL COMPARISON",
     sublabel: "GOLD VS PLATINUM",
@@ -339,6 +389,53 @@ const ARTICLE_VISUALS: Record<string, VisualSpec> = {
 
 function renderVisualGlyph(glyph: VisualGlyph, accent: string, accentSoft: string) {
   switch (glyph) {
+    case "certification":
+      return (
+        <g transform="translate(206 114)">
+          <rect x="26" y="22" width="126" height="156" rx="16" fill="none" stroke={accent} strokeWidth="5" />
+          <rect x="170" y="22" width="126" height="156" rx="16" fill="none" stroke={accentSoft} strokeWidth="5" />
+          <text x="89" y="64" textAnchor="middle" fill={accent} fontSize="18" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">GIA</text>
+          <text x="233" y="64" textAnchor="middle" fill={accentSoft} fontSize="18" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">IGI</text>
+          <path d="M62 92H116M62 114H116M62 136H104" stroke={accent} strokeWidth="3.5" strokeLinecap="round" />
+          <path d="M206 92H260M206 114H260M206 136H248" stroke={accentSoft} strokeWidth="3.5" strokeLinecap="round" />
+        </g>
+      );
+    case "smallHand":
+      return (
+        <g transform="translate(210 118)">
+          <path d="M64 168C54 126 54 84 78 64C102 44 136 56 150 84C166 62 196 56 216 76C238 98 236 132 220 166" fill="none" stroke={accent} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          <ellipse cx="150" cy="82" rx="22" ry="14" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <path d="M144 58L150 48L156 58L152 66H148L144 58Z" fill="none" stroke={accentSoft} strokeWidth="3" />
+        </g>
+      );
+    case "bigLook":
+      return (
+        <g transform="translate(206 124)">
+          <path d="M46 134H266" stroke={accent} strokeWidth="5" strokeLinecap="round" />
+          <path d="M46 134L64 116M46 134L64 152" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+          <path d="M266 134L248 116M266 134L248 152" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+          <path d="M132 84L156 58L180 84L166 104H146L132 84Z" fill="none" stroke={accentSoft} strokeWidth="4" />
+          <circle cx="156" cy="84" r="44" fill="none" stroke={accentSoft} strokeWidth="3" strokeDasharray="4 8" />
+        </g>
+      );
+    case "fluorescence":
+      return (
+        <g transform="translate(216 120)">
+          <path d="M42 116L88 70L134 116L114 152H62L42 116Z" fill="none" stroke={accent} strokeWidth="5" />
+          <path d="M190 44V84M170 64H210" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+          <circle cx="190" cy="64" r="28" fill="none" stroke={accentSoft} strokeWidth="3" strokeDasharray="2 7" />
+          <path d="M230 122C208 132 186 142 170 160" fill="none" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+        </g>
+      );
+    case "mythBurst":
+      return (
+        <g transform="translate(214 122)">
+          <path d="M94 24L108 58L146 52L126 84L158 106L122 116L128 154L94 134L60 154L66 116L30 106L62 84L42 52L80 58Z" fill="none" stroke={accent} strokeWidth="5" strokeLinejoin="round" />
+          <text x="94" y="110" textAnchor="middle" fill={accentSoft} fontSize="24" fontWeight="700" fontFamily="'Trebuchet MS', Verdana, sans-serif">MYTH</text>
+          <path d="M174 92L250 92" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+          <path d="M174 112L230 112" stroke={accentSoft} strokeWidth="4" strokeLinecap="round" />
+        </g>
+      );
     case "coinStack":
       return (
         <g transform="translate(228 118)">
