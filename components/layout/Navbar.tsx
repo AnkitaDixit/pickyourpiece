@@ -169,7 +169,7 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
               priority
             />
             <span className="navbar-logo-text">
-              pick<span className="navbar-logo-red">Your</span>piece
+              Pick<span className="navbar-logo-red">Your</span>Piece
             </span>
           </button>
         ) : null}

@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "pickYourpiece",
+  applicationName: "PickYourPiece",
   manifest: "/manifest.webmanifest",
   category: "shopping",
   classification: "Jewellery comparison and discovery",
