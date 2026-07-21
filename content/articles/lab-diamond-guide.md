@@ -199,6 +199,11 @@ Usually yes, depending on setting style and metal. Confirm resizing policy befor
 
 ---
 
+## Related Guides for Deeper Research
+
+- [Diamond shapes guide](/articles/diamond-shapes-guide?utm_source=internal_article&utm_medium=article&utm_campaign=lab-diamond-guide&utm_content=related_shapes) - [Diamond certification GIA vs IGI](/articles/diamond-certification-gia-vs-igi?utm_source=internal_article&utm_medium=article&utm_campaign=lab-diamond-guide&utm_content=related_certification) - [Diamond fluorescence explained](/articles/diamond-fluorescence-explained?utm_source=internal_article&utm_medium=article&utm_campaign=lab-diamond-guide&utm_content=related_fluorescence) - [Which diamond looks biggest](/articles/which-diamond-looks-biggest?utm_source=internal_article&utm_medium=article&utm_campaign=lab-diamond-guide&utm_content=related_biggest) - [Diamond myths debunked](/articles/diamond-myths-debunked?utm_source=internal_article&utm_medium=article&utm_campaign=lab-diamond-guide&utm_content=related_myths)
+
+---
 ## Final Thoughts
 
 Lab diamonds are one of the strongest value options in modern ring buying when you prioritize cut, certification, and smart spec balancing.

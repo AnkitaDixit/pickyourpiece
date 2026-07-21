@@ -177,6 +177,11 @@ For quick fundamentals, review [how to choose an engagement ring](/articles/how-
 
 ---
 
+## Related Guides for Deeper Research
+
+- [How to choose an engagement ring](/articles/how-to-choose-engagement-ring?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-rings-under-25000&utm_content=related_how_to_choose) - [Engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-rings-under-25000&utm_content=related_budget) - [How much should an engagement ring cost](/articles/how-much-should-an-engagement-ring-cost?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-rings-under-25000&utm_content=related_cost) - [Engagement ring shopping checklist](/articles/engagement-ring-shopping-checklist?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-rings-under-25000&utm_content=related_checklist) - [How to measure ring size at home](/articles/how-to-measure-ring-size-at-home?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-rings-under-25000&utm_content=related_size)
+
+---
 ## Final Thoughts
 
 The best engagement rings under ₹25,000 are not the ones with the longest spec sheet. They are the ones with smart proportions, clean finish, and strong day-to-day wearability.

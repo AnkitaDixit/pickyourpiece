@@ -1,7 +1,7 @@
 ---
 title: "Engagement Ring Budget Guide (2026): How Much to Spend and Where to Save"
 description: "Use a practical engagement ring budget framework to choose the right spend range, allocate money between diamond and setting, and avoid common overspending mistakes."
-category: "Budget Guide"
+category: "Buying Guides"
 topic: "Buying Guides"
 readTime: "9 min read"
 image: "/heroImage.png"
@@ -187,6 +187,11 @@ A small reserve of 5% to 10% of your total ring budget is usually practical for 
 
 ---
 
+## Related Guides for Deeper Research
+
+- [How to choose an engagement ring](/articles/how-to-choose-engagement-ring?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-ring-budget&utm_content=related_how_to_choose) - [Engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-ring-budget&utm_content=related_budget) - [How much should an engagement ring cost](/articles/how-much-should-an-engagement-ring-cost?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-ring-budget&utm_content=related_cost) - [Engagement ring shopping checklist](/articles/engagement-ring-shopping-checklist?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-ring-budget&utm_content=related_checklist) - [How to measure ring size at home](/articles/how-to-measure-ring-size-at-home?utm_source=internal_article&utm_medium=article&utm_campaign=engagement-ring-budget&utm_content=related_size)
+
+---
 ## Final Thoughts
 
 A strong engagement ring budget is not about spending more. It is about spending correctly.

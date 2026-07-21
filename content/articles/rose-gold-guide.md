@@ -1,7 +1,7 @@
 ---
 title: "Rose Gold Guide: Who It Suits and How to Maintain It"
 description: "Learn who rose gold suits best, how it compares with yellow gold and platinum, what to expect for durability and maintenance, and how to choose the right rose gold ring style for daily wear."
-category: "Metal Guide"
+category: "Gold & Metals"
 topic: "Gold & Metals"
 readTime: "9 min read"
 image: "/heroImage.png"
@@ -168,6 +168,11 @@ Most rose gold rings can be resized, depending on design complexity and stone se
 
 ---
 
+## Related Guides for Deeper Research
+
+- [Gold purity guide](/articles/gold-purity-guide?utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-guide&utm_content=related_gold_purity) - [14KT vs 18KT gold](/articles/14kt-vs-18kt-gold?utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-guide&utm_content=related_14kt_18kt) - [Which gold is best for engagement rings](/articles/which-gold-is-best-for-engagement-rings?utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-guide&utm_content=related_best_gold_engagement) - [White gold vs yellow gold](/articles/white-gold-vs-yellow-gold?utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-guide&utm_content=related_white_yellow) - [Hallmark gold explained](/articles/hallmark-gold-explained?utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-guide&utm_content=related_hallmark)
+
+---
 ## Final Thoughts
 
 Rose gold is a strong choice if you want a romantic tone, everyday wearability, and a look that feels distinct without being loud.

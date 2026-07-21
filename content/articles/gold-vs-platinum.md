@@ -1,7 +1,7 @@
 ---
 title: "Gold vs Platinum for Rings (2026): Which Metal Is Better for Daily Wear, Budget, and Long-Term Value?"
 description: "Compare gold and platinum for engagement rings and daily jewelry with a practical breakdown of durability, maintenance, skin comfort, pricing, and value so you can choose confidently."
-category: "Metal Guide"
+category: "Gold & Metals"
 topic: "Gold & Metals"
 readTime: "9 min read"
 image: "/heroImage.png"

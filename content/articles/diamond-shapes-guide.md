@@ -341,6 +341,11 @@ Often yes. Many fancy shapes provide better value per carat compared with round 
 
 ---
 
+## Related Guides for Deeper Research
+
+- [Diamond shapes guide](/articles/diamond-shapes-guide?utm_source=internal_article&utm_medium=article&utm_campaign=diamond-shapes-guide&utm_content=related_shapes) - [Diamond certification GIA vs IGI](/articles/diamond-certification-gia-vs-igi?utm_source=internal_article&utm_medium=article&utm_campaign=diamond-shapes-guide&utm_content=related_certification) - [Diamond fluorescence explained](/articles/diamond-fluorescence-explained?utm_source=internal_article&utm_medium=article&utm_campaign=diamond-shapes-guide&utm_content=related_fluorescence) - [Which diamond looks biggest](/articles/which-diamond-looks-biggest?utm_source=internal_article&utm_medium=article&utm_campaign=diamond-shapes-guide&utm_content=related_biggest) - [Diamond myths debunked](/articles/diamond-myths-debunked?utm_source=internal_article&utm_medium=article&utm_campaign=diamond-shapes-guide&utm_content=related_myths)
+
+---
 ## Final Thoughts
 
 There is no single best diamond shape for everyone.

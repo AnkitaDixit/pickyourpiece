@@ -396,6 +396,11 @@ For most buyers, cut quality gives better visible impact than a small carat incr
 
 ---
 
+## Related Guides for Deeper Research
+
+- [How to choose an engagement ring](/articles/how-to-choose-engagement-ring?utm_source=internal_article&utm_medium=article&utm_campaign=how-to-choose-engagement-ring&utm_content=related_how_to_choose) - [Engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=how-to-choose-engagement-ring&utm_content=related_budget) - [How much should an engagement ring cost](/articles/how-much-should-an-engagement-ring-cost?utm_source=internal_article&utm_medium=article&utm_campaign=how-to-choose-engagement-ring&utm_content=related_cost) - [Engagement ring shopping checklist](/articles/engagement-ring-shopping-checklist?utm_source=internal_article&utm_medium=article&utm_campaign=how-to-choose-engagement-ring&utm_content=related_checklist) - [How to measure ring size at home](/articles/how-to-measure-ring-size-at-home?utm_source=internal_article&utm_medium=article&utm_campaign=how-to-choose-engagement-ring&utm_content=related_size)
+
+---
 ## Final Thoughts
 
 Choosing an engagement ring does not have to be stressful.
