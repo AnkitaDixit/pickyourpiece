@@ -7,6 +7,7 @@ import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 const GOOGLE_ANALYTICS_ID = "G-MLJZZSJ6WB";
+const isAnalyticsEnabled = process.env.NODE_ENV === "production";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -126,6 +127,11 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  verification: {
+    other: {
+      "p:domain_verify": "dc6f5629d760525293afbe428c79833b",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -178,18 +184,30 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GOOGLE_ANALYTICS_ID}');
-          `}
-        </Script>
+        {isAnalyticsEnabled ? (
+          <>
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                (function () {
+                  var host = window.location.hostname;
+                  var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+                  if (isLocalhost) return;
+
+                  var gaScript = document.createElement('script');
+                  gaScript.async = true;
+                  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}';
+                  document.head.appendChild(gaScript);
+
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){window.dataLayer.push(arguments);}
+                  window.gtag = gtag;
+                  gtag('js', new Date());
+                  gtag('config', '${GOOGLE_ANALYTICS_ID}');
+                })();
+              `}
+            </Script>
+          </>
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
