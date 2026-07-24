@@ -35,6 +35,14 @@ const formatLabel = (value: string) => {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
+const normalizeToken = (value: string) => value.trim().toLowerCase();
+
+const countSharedValues = (left: string[] = [], right: string[] = []) => {
+  if (!left.length || !right.length) return 0;
+  const rightSet = new Set(right.map(normalizeToken));
+  return left.reduce((count, item) => (rightSet.has(normalizeToken(item)) ? count + 1 : count), 0);
+};
+
 export default function ProductPreviewPanel({ product, onClose, onProductSelect }: Props) {
   const [detail, setDetail] = useState<DetailRecord | null>(null);
   const [similarItems, setSimilarItems] = useState<Product[]>([]);
@@ -136,12 +144,20 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
 
     const loadSimilarItems = async () => {
       try {
+        const currentPrice = typeof product.price === "number" ? product.price : 0;
+        const minAllowedPrice = currentPrice > 0 ? Math.floor(currentPrice * 0.75) : 0;
+        const maxAllowedPrice = currentPrice > 0 ? Math.ceil(currentPrice * 1.25) : 0;
+
         const params = new URLSearchParams({
-          brand,
           category: product.category,
-          limit: "60",
+          limit: "240",
           sort: "price-asc",
         });
+
+        if (currentPrice > 0) {
+          params.set("minPrice", String(minAllowedPrice));
+          params.set("maxPrice", String(maxAllowedPrice));
+        }
 
         const response = await fetch(`/api/products?${params.toString()}`, {
           signal: controller.signal,
@@ -154,34 +170,61 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
 
         const payload = (await response.json()) as { items?: Product[] };
         const candidates = Array.isArray(payload.items) ? payload.items : [];
-        const currentPrice = typeof product.price === "number" ? product.price : 0;
+        const maxAllowedPriceForFilter = currentPrice > 0 ? currentPrice * 1.25 : Number.POSITIVE_INFINITY;
+        const maxAllowedDelta = currentPrice > 0 ? currentPrice * 0.25 : 1;
         const currentGemstones = Array.isArray(product.gemstone) ? product.gemstone : [];
-        const currentBrandSegment = getBrandSegment(product.brand);
+        const currentStyles = Array.isArray(product.style) ? product.style : [];
+        const currentBrandSegment = getBrandSegment(product.brand) ?? normalizeToken(product.brand);
+        const normalizedProductMetal = normalizeToken(product.metal ?? "");
+        const normalizedProductColor = normalizeToken(product.metalColor ?? "");
 
         const ranked = candidates
-          .filter((candidate) => candidate.id !== product.id)
+          .filter((candidate) => {
+            if (candidate.id === product.id) return false;
+
+            const candidatePrice = typeof candidate.price === "number" ? candidate.price : 0;
+            return candidatePrice >= minAllowedPrice && candidatePrice <= maxAllowedPriceForFilter;
+          })
           .map((candidate) => {
-            let score = 0;
-
-            const candidateBrandSegment = getBrandSegment(candidate.brand);
-
-            if (candidateBrandSegment && currentBrandSegment && candidateBrandSegment === currentBrandSegment) score += 4;
-            if (candidate.category === product.category) score += 3;
-            if (candidate.metal === product.metal) score += 2;
-            if (candidate.purity && product.purity && candidate.purity === product.purity) score += 1;
-            if (candidate.metalColor && product.metalColor && candidate.metalColor === product.metalColor) score += 1;
-
-            const sharedGemstones = (candidate.gemstone ?? []).filter((gem) => currentGemstones.includes(gem)).length;
-            score += sharedGemstones * 1.5;
-
+            const sharedStyleCount = countSharedValues(candidate.style, currentStyles);
+            const sharedGemstoneCount = countSharedValues(candidate.gemstone, currentGemstones);
+            const metalMatch = Number(normalizeToken(candidate.metal ?? "") === normalizedProductMetal);
             const priceDelta = Math.abs((candidate.price ?? 0) - currentPrice);
-            const priceDeltaRatio = currentPrice > 0 ? priceDelta / currentPrice : 1;
-            score += Math.max(0, 2 - priceDeltaRatio * 4);
+            const priceCloseness = Math.max(0, 1 - priceDelta / maxAllowedDelta);
+            const colorMatch = Number(normalizeToken(candidate.metalColor ?? "") === normalizedProductColor);
+            const candidateBrandSegment = getBrandSegment(candidate.brand) ?? normalizeToken(candidate.brand);
+            const differentBrandBonus = Number(candidateBrandSegment !== currentBrandSegment);
+            const weightedScore =
+              sharedGemstoneCount * 10 +
+              sharedStyleCount * 4 +
+              metalMatch * 2 +
+              priceCloseness * 1.5 +
+              colorMatch +
+              differentBrandBonus * 2;
 
-            return { candidate, score, priceDelta };
+            return {
+              candidate,
+              sharedStyleCount,
+              sharedGemstoneCount,
+              weightedScore,
+              differentBrandBonus,
+              metalMatch,
+              priceCloseness,
+              colorMatch,
+              priceDelta,
+            };
           })
           .sort((a, b) => {
-            if (b.score !== a.score) return b.score - a.score;
+            // Strong relevance score with style/gemstone leading.
+            if (b.weightedScore !== a.weightedScore) return b.weightedScore - a.weightedScore;
+
+            // Deterministic fallback with explicit priority order.
+            if (b.sharedGemstoneCount !== a.sharedGemstoneCount) return b.sharedGemstoneCount - a.sharedGemstoneCount;
+            if (b.sharedStyleCount !== a.sharedStyleCount) return b.sharedStyleCount - a.sharedStyleCount;
+            if (b.differentBrandBonus !== a.differentBrandBonus) return b.differentBrandBonus - a.differentBrandBonus;
+            if (b.metalMatch !== a.metalMatch) return b.metalMatch - a.metalMatch;
+            if (b.priceCloseness !== a.priceCloseness) return b.priceCloseness - a.priceCloseness;
+            if (b.colorMatch !== a.colorMatch) return b.colorMatch - a.colorMatch;
             return a.priceDelta - b.priceDelta;
           })
           .slice(0, 6)
@@ -257,6 +300,8 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
               <div className="catalog-preview-similar-grid">
                 {similarItems.map((item) => {
                   const itemName = item.name.split("(")[0]?.trim() || item.name;
+                  const itemBrandSegment = getBrandSegment(item.brand)?.toLowerCase() ?? "";
+                  const itemBrandLogo = BRAND_LOGOS[itemBrandSegment] ?? null;
                   return (
                     <button
                       key={item.id}
@@ -266,6 +311,12 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
                     >
                       <img src={item.image} alt={itemName} loading="lazy" className="catalog-preview-similar-image" />
                       <span className="catalog-preview-similar-name">{itemName}</span>
+                      <span className="catalog-preview-similar-brand-row">
+                        {itemBrandLogo
+                          ? <img src={itemBrandLogo} alt="" loading="lazy" aria-hidden="true" className="catalog-preview-similar-brand-logo" />
+                          : <span className="catalog-preview-similar-brand-fallback" aria-hidden="true">{item.brand[0]}</span>}
+                        <span className="catalog-preview-similar-brand">{item.brand}</span>
+                      </span>
                       <span className="catalog-preview-similar-price">{item.currency} {item.price.toLocaleString("en-IN")}</span>
                     </button>
                   );

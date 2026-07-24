@@ -252,6 +252,21 @@ export default function ProductsExplorer({
     setPriceRange({ min: minPrice, max: maxPrice });
   };
 
+  const handleClosePreview = () => {
+    if (typeof window !== "undefined") {
+      const currentUrl = new URL(window.location.href);
+      const nextParams = new URLSearchParams(currentUrl.search);
+      nextParams.delete("preview");
+      const nextQuery = nextParams.toString();
+      const nextPathWithQuery = nextQuery ? `${currentUrl.pathname}?${nextQuery}` : currentUrl.pathname;
+
+      // Keep the latest live filter/query state and only remove preview.
+      catalogUrlRef.current = nextPathWithQuery;
+    }
+
+    setSelectedProduct(null);
+  };
+
   // Keep object identity stable for memo-sensitive children.
   const stableFilters = useMemo(() => filters, [filters]);
 
@@ -291,9 +306,7 @@ export default function ProductsExplorer({
             key={selectedProduct.id}
             product={selectedProduct}
             onProductSelect={setSelectedProduct}
-            onClose={() => {
-              setSelectedProduct(null);
-            }}
+            onClose={handleClosePreview}
           />
         )}
       </div>

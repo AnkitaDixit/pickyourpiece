@@ -5091,6 +5091,47 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   overflow: hidden;
 }
 
+.catalog-preview-similar-brand-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.catalog-preview-similar-brand-logo,
+.catalog-preview-similar-brand-fallback {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  flex: 0 0 14px;
+}
+
+.catalog-preview-similar-brand-logo {
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+.catalog-preview-similar-brand-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-subtle);
+  background: color-mix(in srgb, var(--color-border) 55%, transparent);
+  text-transform: uppercase;
+}
+
+.catalog-preview-similar-brand {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .catalog-preview-similar-price {
   font-size: var(--font-size-caption);
   color: var(--color-text-secondary);

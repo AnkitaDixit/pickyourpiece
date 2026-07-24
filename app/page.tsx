@@ -9,6 +9,25 @@ import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 const INITIAL_PAGE_SIZE = 48;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
+const TRACKING_PARAM_NAMES = new Set([
+  "gclid",
+  "fbclid",
+  "msclkid",
+  "twclid",
+  "ttclid",
+  "dclid",
+  "gbraid",
+  "wbraid",
+  "igshid",
+  "li_fat_id",
+  "srsltid",
+]);
+
+function isTrackingParamKey(key: string): boolean {
+  const normalized = key.trim().toLowerCase();
+  return normalized === "utm" || normalized.startsWith("utm_") || TRACKING_PARAM_NAMES.has(normalized);
+}
+
 export const metadata: Metadata = {
   title: "PickYourPiece | Compare Jewellery Prices Across Brands",
   description:
@@ -183,8 +202,10 @@ export default async function Home({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const resolvedSearchParams = (await searchParams) ?? {};
-  const previewIgnoredKeys = Object.keys(resolvedSearchParams).filter((key) => key !== "preview");
-  const keys = previewIgnoredKeys.filter((key) => key !== "mode");
+  const meaningfulKeys = Object.keys(resolvedSearchParams).filter((key) => {
+    if (key === "preview" || key === "mode") return false;
+    return !isTrackingParamKey(key);
+  });
   const previewRaw = resolvedSearchParams.preview;
   const previewValue = Array.isArray(previewRaw) ? previewRaw[0] : previewRaw;
   const modeRaw = resolvedSearchParams.mode;
@@ -196,7 +217,7 @@ export default async function Home({
   const maxPrice = all.length > 0 ? all[all.length - 1].price : 0;
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
-  const isCatalogMode = keys.length > 0 || Boolean(previewValue) || modeValue === "catalog";
+  const isCatalogMode = meaningfulKeys.length > 0 || Boolean(previewValue) || modeValue === "catalog";
   const initialSelectedProduct = previewValue
     ? all.find((product) => buildProductDetailPath(product) === previewValue) ?? null
     : null;
