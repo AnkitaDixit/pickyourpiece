@@ -5121,37 +5121,37 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 }
 
 .catalog-preview-carousel-arrow {
-  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-black) 48%, transparent);
+  color: var(--color-white);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.catalog-preview-carousel-arrow-left {
+  left: 10px;
+}
+
+.catalog-preview-carousel-arrow-right {
+  right: 10px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .catalog-preview-carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
     background: color-mix(in srgb, var(--color-black) 55%, transparent);
-    color: var(--color-white);
-    z-index: 3;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0;
     pointer-events: none;
-    cursor: pointer;
     transition: opacity .2s ease, background-color .2s ease;
-    font-size: 22px;
-    line-height: 1;
-  }
-
-  .catalog-preview-carousel-arrow-left {
-    left: 10px;
-  }
-
-  .catalog-preview-carousel-arrow-right {
-    right: 10px;
   }
 
   .catalog-preview-media:hover .catalog-preview-carousel-arrow,

@@ -50,30 +50,49 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isHeroImageLoading, setIsHeroImageLoading] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
+  const panelInnerRef = useRef<HTMLDivElement>(null);
   const dragStartY = useRef(0);
   const dragDelta = useRef(0);
   const dragging = useRef(false);
+  const dragFromSheetRef = useRef(false);
   const imageTouchStartXRef = useRef<number | null>(null);
   const imageTouchStartYRef = useRef<number | null>(null);
   const imageHorizontalSwipeRef = useRef(false);
 
-  const onDragStart = (e: React.TouchEvent) => {
+  const onDragStart = (e: React.TouchEvent, force = false) => {
+    if (!force) {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest(".catalog-preview-media")) {
+        return;
+      }
+
+      const isAtTop = (panelInnerRef.current?.scrollTop ?? 0) <= 2;
+      if (!isAtTop) {
+        return;
+      }
+    }
+
     dragStartY.current = e.touches[0].clientY;
     dragDelta.current = 0;
     dragging.current = true;
+    dragFromSheetRef.current = true;
     if (panelRef.current) panelRef.current.style.transition = "none";
   };
 
   const onDragMove = (e: React.TouchEvent) => {
-    if (!dragging.current) return;
+    if (!dragging.current || !dragFromSheetRef.current) return;
     const delta = Math.max(0, e.touches[0].clientY - dragStartY.current);
+    if (delta > 0 && e.cancelable) {
+      e.preventDefault();
+    }
     dragDelta.current = delta;
     if (panelRef.current) panelRef.current.style.transform = `translateY(${delta}px)`;
   };
 
   const onDragEnd = () => {
-    if (!dragging.current) return;
+    if (!dragging.current || !dragFromSheetRef.current) return;
     dragging.current = false;
+    dragFromSheetRef.current = false;
     const panel = panelRef.current;
     if (!panel) return;
     if (dragDelta.current > 80) {
@@ -353,10 +372,10 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
 
   return (
     <aside className="catalog-preview" aria-live="polite" ref={panelRef}>
-      <div className="catalog-preview-inner">
+      <div className="catalog-preview-inner" ref={panelInnerRef} onTouchStart={(event) => onDragStart(event)} onTouchMove={onDragMove} onTouchEnd={onDragEnd}>
         <div
           className="catalog-preview-sheet-handle"
-          onTouchStart={onDragStart}
+          onTouchStart={(event) => onDragStart(event, true)}
           onTouchMove={onDragMove}
           onTouchEnd={onDragEnd}
           aria-hidden="true"

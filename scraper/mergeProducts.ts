@@ -28,7 +28,7 @@ function normalizeMalformedSilverPurity(rawValue: string): string {
 function normalizeBrand(rawBrand: string): string {
   if (!rawBrand) return "";
 
-  if (/^giva\s*jewel+ery$/i.test(rawBrand) || /^giva\s*jewelry$/i.test(rawBrand)) {
+  if (/^giva(?:\s*(?:jewel+ery|jewelry))?$/i.test(rawBrand.trim())) {
     return "GIVA";
   }
 
@@ -258,7 +258,7 @@ function normalizeImageUrl(rawUrl: string): string {
 }
 
 function normalizePrimaryImageUrl(rawUrl: string, brand: string): string {
-  const normalized = normalizeImageUrl(rawUrl);
+  const normalized = normalizeMiaByTanishqImageUrl(normalizeImageUrl(rawUrl), brand);
 
   if (normalizeBrand(brand).toLowerCase() === "bluestone") {
     // BlueStone primary image should prefer the regular product image variant.
@@ -268,8 +268,22 @@ function normalizePrimaryImageUrl(rawUrl: string, brand: string): string {
   return normalized;
 }
 
+function isMiaByTanishqBrand(brand: string): boolean {
+  const normalizedBrand = normalizeBrand(brand).toLowerCase().replace(/\s+/g, "");
+  return normalizedBrand === "miabytanishq";
+}
+
+function normalizeMiaByTanishqImageUrl(url: string, brand: string): string {
+  if (!isMiaByTanishqBrand(brand)) return url;
+  return url.replace(/([?&])sw=480&sh=480\b/gi, "$1sw=640&sh=640");
+}
+
 function shouldDropBlueStoneAllImage(url: string): boolean {
   return /\/video-call-icon\.png$/i.test(url);
+}
+
+function isMp4Asset(url: string): boolean {
+  return /\.mp4(?:[?#].*)?$/i.test(url);
 }
 
 function normalizeAllImages(rawValue: unknown, brand: string): unknown {
@@ -279,13 +293,18 @@ function normalizeAllImages(rawValue: unknown, brand: string): unknown {
 
   if (Array.isArray(rawValue)) {
     return rawValue
-      .map((item) => normalizeImageUrl(asString(item)))
+      .map((item) => normalizeMiaByTanishqImageUrl(normalizeImageUrl(asString(item)), brand))
+      .filter((item) => !isMp4Asset(item))
       .filter((item) => !(isBlueStone && shouldDropBlueStoneAllImage(item)))
       .filter((item) => item !== "");
   }
 
   if (typeof rawValue === "string") {
-    const normalized = normalizeImageUrl(asString(rawValue));
+    const normalized = normalizeMiaByTanishqImageUrl(normalizeImageUrl(asString(rawValue)), brand);
+    if (isMp4Asset(normalized)) {
+      return "";
+    }
+
     if (isBlueStone && shouldDropBlueStoneAllImage(normalized)) {
       return "";
     }
