@@ -24,8 +24,6 @@ const BRAND_LOGOS: Record<string, string> = {
   candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
 };
 
-type DetailRecord = Record<string, unknown>;
-
 const formatLabel = (value: string) => {
   return value
     .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -45,7 +43,6 @@ const countSharedValues = (left: string[] = [], right: string[] = []) => {
 
 export default function ProductPreviewPanel({ product, onClose, onProductSelect }: Props) {
   const SWIPE_THRESHOLD = 36;
-  const [detail, setDetail] = useState<DetailRecord | null>(null);
   const [similarItems, setSimilarItems] = useState<Product[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isHeroImageLoading, setIsHeroImageLoading] = useState(false);
@@ -106,45 +103,11 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
     dragDelta.current = 0;
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const loadDetail = async () => {
-      try {
-        const params = new URLSearchParams({
-          brand: product.brand,
-          id: String(product.id),
-        });
-
-        const response = await fetch(`/api/product-detail?${params.toString()}`, {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          setDetail(null);
-          return;
-        }
-
-        const payload = (await response.json()) as { item?: DetailRecord };
-        setDetail(payload.item ?? null);
-      } catch {
-        if (!controller.signal.aborted) {
-          setDetail(null);
-        }
-      }
-    };
-
-    void loadDetail();
-
-    return () => controller.abort();
-  }, [product]);
-
-  const merged = (detail ?? product) as DetailRecord;
-  const name = typeof merged.name === "string" ? merged.name : product.name;
-  const brand = typeof merged.brand === "string" ? merged.brand : product.brand;
-  const image = typeof merged.image === "string" ? merged.image : product.image;
+  const name = product.name;
+  const brand = product.brand;
+  const image = product.image;
   const productImages = useMemo(() => {
-    const rawAllImages = merged.allImages ?? product.allImages;
+    const rawAllImages = product.allImages;
     const fromAllImages = Array.isArray(rawAllImages)
       ? rawAllImages
       : typeof rawAllImages === "string"
@@ -156,38 +119,44 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
       .filter((item) => item.length > 0);
 
     return Array.from(new Set(mergedImages));
-  }, [image, merged.allImages, product.allImages]);
+  }, [image, product.allImages]);
   const activeImage = productImages[activeImageIndex] ?? image;
-  const price = typeof merged.price === "number" ? merged.price : product.price;
-  const currency = typeof merged.currency === "string" ? merged.currency : product.currency;
-  const productUrl = typeof merged.productUrl === "string" ? merged.productUrl : product.productUrl;
+  const price = product.price;
+  const currency = product.currency;
+  const productUrl = product.productUrl;
   const trackedProductUrl = buildTrackedBrandUrl(productUrl, {
     context: "preview_panel",
     brand,
     productId: String(product.id),
   });
   console.log("Tracked product URL:", trackedProductUrl);
-  const availability = typeof merged.availability === "boolean" ? merged.availability : product.availability;
+  const availability = product.availability;
   const brandSegment = getBrandSegment(brand) ?? "";
   const detailPath = buildProductDetailPath(product);
   const logoSrc = BRAND_LOGOS[brandSegment.toLowerCase()] ?? null;
   const brandBrowseHref = `/ring/?brand=${encodeURIComponent(brand)}`;
 
-  useEffect(() => {
-    setActiveImageIndex(0);
-    setIsHeroImageLoading(false);
-  }, [product.id]);
-
-  useEffect(() => {
-    if (activeImageIndex < productImages.length) return;
-    setActiveImageIndex(0);
-  }, [activeImageIndex, productImages.length]);
-
   const detailRows = useMemo(() => {
-    return Object.entries(merged)
-      .filter(([key]) => !["allImages", "tags"].includes(key))
+    const mergedRecord = product as unknown as Record<string, unknown>;
+    return Object.entries(mergedRecord)
+      .filter(([key, value]) => {
+        if (["allImages", "tags"].includes(key)) return false;
+        if (value == null) return false;
+        if (typeof value === "string" && value.trim().length === 0) return false;
+        if (Array.isArray(value)) {
+          const visibleValues = value
+            .map((item) => (typeof item === "string" ? item.trim() : item))
+            .filter((item) => {
+              if (item == null) return false;
+              if (typeof item === "string") return item.length > 0;
+              return true;
+            });
+          return visibleValues.length > 0;
+        }
+        return true;
+      })
       .sort(([a], [b]) => a.localeCompare(b));
-  }, [merged]);
+  }, [product]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -579,7 +548,14 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
               <p>{formatLabel(key)}</p>
               <span>
                 {Array.isArray(value)
-                  ? value.join(", ")
+                  ? value
+                      .map((item) => (typeof item === "string" ? item.trim() : item))
+                      .filter((item) => {
+                        if (item == null) return false;
+                        if (typeof item === "string") return item.length > 0;
+                        return true;
+                      })
+                      .join(", ")
                   : String(value ?? "-")}
               </span>
             </div>

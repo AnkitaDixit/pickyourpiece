@@ -13,11 +13,12 @@ export const PRODUCT_FILTER_KEYS = [
 ] as const;
 
 export const PRODUCT_SORT_OPTIONS = [
+  "relevant",
   "price-asc",
   "price-desc",
 ] as const;
 
-export const DEFAULT_PRODUCT_SORT = "price-asc" as const;
+export const DEFAULT_PRODUCT_SORT = "relevant" as const;
 
 export type ProductFilterKey = (typeof PRODUCT_FILTER_KEYS)[number];
 export type ProductFilters = Record<ProductFilterKey, string[]>;

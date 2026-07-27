@@ -273,8 +273,12 @@ function isMiaByTanishqBrand(brand: string): boolean {
   return normalizedBrand === "miabytanishq";
 }
 
+function isTanishqBrand(brand: string): boolean {
+  return normalizeBrand(brand).toLowerCase().replace(/\s+/g, "") === "tanishq";
+}
+
 function normalizeMiaByTanishqImageUrl(url: string, brand: string): string {
-  if (!isMiaByTanishqBrand(brand)) return url;
+  if (!isMiaByTanishqBrand(brand) && !isTanishqBrand(brand)) return url;
   return url.replace(/([?&])sw=480&sh=480\b/gi, "$1sw=640&sh=640");
 }
 
@@ -286,30 +290,49 @@ function isMp4Asset(url: string): boolean {
   return /\.mp4(?:[?#].*)?$/i.test(url);
 }
 
-function normalizeAllImages(rawValue: unknown, brand: string): unknown {
+function extractImageSkuFromUrl(url: string): string {
+  const match = url.match(/\/([A-Z0-9]+)(?:_\d+)?\.(?:jpg|jpeg|png|webp)(?:[?#].*)?$/i);
+  return (match?.[1] ?? "").toLowerCase();
+}
+
+function isRelevantProductImageBySku(url: string, productId: string): boolean {
+  if (!productId) return true;
+  const imageSku = extractImageSkuFromUrl(url);
+  if (!imageSku) return true;
+  return imageSku === productId.toLowerCase();
+}
+
+function shouldEnforceAllImagesSkuMatch(brand: string): boolean {
+  const normalizedBrand = normalizeBrand(brand).toLowerCase().replace(/\s+/g, "");
+  return normalizedBrand === "tanishq" || normalizedBrand === "miabytanishq";
+}
+
+function normalizeAllImages(rawValue: unknown, brand: string, productId: string): unknown {
   if (rawValue == null) return rawValue;
 
   const isBlueStone = normalizeBrand(brand).toLowerCase() === "bluestone";
+  const enforceSkuMatch = shouldEnforceAllImagesSkuMatch(brand);
+
+  const normalizeAndFilter = (value: unknown): string =>
+    normalizeMiaByTanishqImageUrl(normalizeImageUrl(asString(value)), brand);
+
+  const shouldKeep = (url: string): boolean => {
+    if (url === "") return false;
+    if (isMp4Asset(url)) return false;
+    if (isBlueStone && shouldDropBlueStoneAllImage(url)) return false;
+    if (enforceSkuMatch && !isRelevantProductImageBySku(url, productId)) return false;
+    return true;
+  };
 
   if (Array.isArray(rawValue)) {
     return rawValue
-      .map((item) => normalizeMiaByTanishqImageUrl(normalizeImageUrl(asString(item)), brand))
-      .filter((item) => !isMp4Asset(item))
-      .filter((item) => !(isBlueStone && shouldDropBlueStoneAllImage(item)))
-      .filter((item) => item !== "");
+      .map((item) => normalizeAndFilter(item))
+      .filter((item) => shouldKeep(item));
   }
 
   if (typeof rawValue === "string") {
-    const normalized = normalizeMiaByTanishqImageUrl(normalizeImageUrl(asString(rawValue)), brand);
-    if (isMp4Asset(normalized)) {
-      return "";
-    }
-
-    if (isBlueStone && shouldDropBlueStoneAllImage(normalized)) {
-      return "";
-    }
-
-    return normalized;
+    const normalized = normalizeAndFilter(rawValue);
+    return shouldKeep(normalized) ? normalized : "";
   }
 
   return rawValue;
@@ -378,7 +401,7 @@ export function mergeProducts(): JsonRecord[] {
       normalized.image = normalizePrimaryImageUrl(asString(product.image), rawBrand);
 
       if (Object.prototype.hasOwnProperty.call(product, "allImages") && product.allImages != null) {
-        const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand);
+        const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand, asString(product.id));
         if (Array.isArray(normalizedAllImages)) {
           if (normalizedAllImages.length > 0) {
             normalized.allImages = normalizedAllImages;

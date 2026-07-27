@@ -296,7 +296,11 @@ export default function FilterBar({
 
   // Reset to first visible tab whenever the sheet opens — handled in the click handler below
 
-  const sortLabel = sortBy === "price-desc" ? "Price: High to Low" : "Price: Low to High";
+  const sortLabel = sortBy === "relevant"
+    ? "Relevant"
+    : sortBy === "price-desc"
+    ? "Price: High to Low"
+    : "Price: Low to High";
 
   useEffect(() => {
     const handleOutside = (event: MouseEvent) => {
@@ -420,7 +424,11 @@ export default function FilterBar({
     }));
   };
 
-  const mobileSortLabel = sortBy === "price-desc" ? "High to Low" : "Low to High";
+  const mobileSortLabel = sortBy === "relevant"
+    ? "Relevant"
+    : sortBy === "price-desc"
+    ? "High to Low"
+    : "Low to High";
 
   return (
     <>
@@ -535,6 +543,16 @@ export default function FilterBar({
 
             {isSortOpen && (
               <div className="filter-dropdown-menu filter-sort-menu" role="menu" aria-label="Sort by">
+                <button
+                  type="button"
+                  className={`filter-sort-option${sortBy === "relevant" ? " active" : ""}`}
+                  onClick={() => {
+                    onSortChange("relevant");
+                    setIsSortOpen(false);
+                  }}
+                >
+                  Relevant
+                </button>
                 <button
                   type="button"
                   className={`filter-sort-option${sortBy === "price-asc" ? " active" : ""}`}
@@ -745,6 +763,16 @@ export default function FilterBar({
             </button>
           </div>
           <div className="mobile-sheet-body mobile-sort-options">
+            <button
+              type="button"
+              className={`mobile-sort-option${sortBy === "relevant" ? " active" : ""}`}
+              onClick={() => {
+                onSortChange("relevant");
+                setIsMobileSortOpen(false);
+              }}
+            >
+              Relevant
+            </button>
             <button
               type="button"
               className={`mobile-sort-option${sortBy === "price-asc" ? " active" : ""}`}

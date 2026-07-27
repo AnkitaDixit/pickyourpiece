@@ -323,12 +323,101 @@ function scoreProductSearch(
   );
 }
 
+function hashText(value: string): number {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
+function getDailyRelevantSeed(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getBrandKey(product: SearchableProduct): string {
+  return (getBrandSegment(product.brand) ?? product.brand ?? "unknown").trim().toLowerCase() || "unknown";
+}
+
+function buildRelevantMixedProducts(
+  items: Array<{ product: SearchableProduct; score: number }>,
+  seed: string
+): Product[] {
+  const buckets = new Map<string, Array<{ product: SearchableProduct; score: number }>>();
+
+  for (const entry of items) {
+    const brandKey = getBrandKey(entry.product);
+    const list = buckets.get(brandKey);
+    if (list) {
+      list.push(entry);
+    } else {
+      buckets.set(brandKey, [entry]);
+    }
+  }
+
+  for (const [brandKey, entries] of buckets) {
+    entries.sort((a, b) => {
+      const aKey = `${seed}:${brandKey}:${a.product.id}:${a.product.name}`;
+      const bKey = `${seed}:${brandKey}:${b.product.id}:${b.product.name}`;
+      return hashText(aKey) - hashText(bKey);
+    });
+  }
+
+  const brandOrder = Array.from(buckets.keys()).sort(
+    (a, b) => hashText(`${seed}:${a}`) - hashText(`${seed}:${b}`)
+  );
+  const output: Product[] = [];
+  let hasItems = true;
+
+  while (hasItems) {
+    hasItems = false;
+
+    for (const brandKey of brandOrder) {
+      const queue = buckets.get(brandKey);
+      if (!queue || queue.length === 0) continue;
+
+      const next = queue.shift();
+      if (next) {
+        output.push(next.product);
+      }
+
+      if (queue.length > 0) {
+        hasItems = true;
+      }
+    }
+  }
+
+  return output;
+}
+
 function sortProducts(
   items: Array<{ product: SearchableProduct; score: number }>,
   sort: ProductSort,
   hasQuery: boolean,
-  hasExplicitSort: boolean
+  hasExplicitSort: boolean,
+  relevantSeed: string
 ): Product[] {
+  if (sort === "relevant") {
+    if (hasQuery) {
+      const querySorted = [...items].sort((a, b) => {
+        if (a.score !== b.score) return b.score - a.score;
+
+        const aPrice = typeof a.product.price === "number" ? a.product.price : Number.MAX_SAFE_INTEGER;
+        const bPrice = typeof b.product.price === "number" ? b.product.price : Number.MAX_SAFE_INTEGER;
+        if (aPrice !== bPrice) return aPrice - bPrice;
+
+        return hashText(`${relevantSeed}:${a.product.id}:${a.product.name}`) - hashText(`${relevantSeed}:${b.product.id}:${b.product.name}`);
+      });
+
+      return querySorted.map((entry) => entry.product);
+    }
+
+    return buildRelevantMixedProducts(items, relevantSeed);
+  }
+
   const copy = [...items];
   copy.sort((a, b) => {
     const aPrice = typeof a.product.price === "number" ? a.product.price : Number.MAX_SAFE_INTEGER;
@@ -363,6 +452,7 @@ export async function GET(request: NextRequest) {
   const sort = parseSort(searchParams.get("sort"));
   const priceRange = parsePriceRange(searchParams);
   const query = parseQuery(searchParams.get("q"));
+  const relevantSeed = getDailyRelevantSeed();
   const suggestedQuery = query ? buildSuggestedQuery(query) : null;
   const appliedQuery = suggestedQuery ?? query;
   const queryTerms = appliedQuery ? appliedQuery.split(" ").filter(Boolean) : [];
@@ -379,7 +469,7 @@ export async function GET(request: NextRequest) {
     }))
     .filter((entry) => entry.score >= 0);
 
-  const sorted = sortProducts(filtered, sort, Boolean(appliedQuery), hasExplicitSort);
+  const sorted = sortProducts(filtered, sort, Boolean(appliedQuery), hasExplicitSort, relevantSeed);
 
   const start = Math.min(cursor, sorted.length);
   const end = Math.min(start + limit, sorted.length);

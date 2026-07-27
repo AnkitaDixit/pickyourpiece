@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MainLayout from "@/components/layout/MainLayout";
 import HomeCatalogMode from "@/components/home/HomeCatalogMode";
 import products from "@/data/products.json";
-import { buildProductDetailPath } from "@/lib/product-seo";
+import { buildProductDetailPath, getBrandSegment } from "@/lib/product-seo";
 import type { Product } from "@/types/product";
 
 const INITIAL_PAGE_SIZE = 48;
@@ -30,14 +30,74 @@ export const metadata: Metadata = {
   },
 };
 
-function sortByPrice(items: Product[]) {
-  const copy = [...items];
-  copy.sort((a, b) => {
-    const aPrice = typeof a.price === "number" ? a.price : Number.MAX_SAFE_INTEGER;
-    const bPrice = typeof b.price === "number" ? b.price : Number.MAX_SAFE_INTEGER;
-    return aPrice - bPrice;
-  });
-  return copy;
+function hashText(value: string): number {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
+function getDailyRelevantSeed(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function sortByRelevant(items: Product[], seed: string) {
+  const buckets = new Map<string, Product[]>();
+
+  for (const item of items) {
+    const brandKey = (getBrandSegment(item.brand) ?? item.brand ?? "unknown").trim().toLowerCase() || "unknown";
+    const list = buckets.get(brandKey);
+    if (list) {
+      list.push(item);
+    } else {
+      buckets.set(brandKey, [item]);
+    }
+  }
+
+  for (const [brandKey, entries] of buckets) {
+    entries.sort((a, b) => hashText(`${seed}:${brandKey}:${a.id}:${a.name}`) - hashText(`${seed}:${brandKey}:${b.id}:${b.name}`));
+  }
+
+  const brandOrder = Array.from(buckets.keys()).sort((a, b) => hashText(`${seed}:${a}`) - hashText(`${seed}:${b}`));
+  const output: Product[] = [];
+  let hasItems = true;
+
+  while (hasItems) {
+    hasItems = false;
+
+    for (const brandKey of brandOrder) {
+      const queue = buckets.get(brandKey);
+      if (!queue || queue.length === 0) continue;
+
+      const next = queue.shift();
+      if (next) {
+        output.push(next);
+      }
+
+      if (queue.length > 0) {
+        hasItems = true;
+      }
+    }
+  }
+
+  return output;
+}
+
+function getPriceBounds(items: Product[]) {
+  return items.reduce(
+    (bounds, item) => {
+      const price = typeof item.price === "number" ? item.price : Number.MAX_SAFE_INTEGER;
+      return {
+        min: Math.min(bounds.min, price),
+        max: Math.max(bounds.max, price),
+      };
+    },
+    { min: Number.MAX_SAFE_INTEGER, max: 0 }
+  );
 }
 
 export default async function RingPage({
@@ -49,9 +109,11 @@ export default async function RingPage({
   const previewRaw = resolvedSearchParams.preview;
   const previewValue = Array.isArray(previewRaw) ? previewRaw[0] : previewRaw;
 
-  const all = sortByPrice(products as Product[]);
-  const minPrice = all.length > 0 ? all[0].price : 0;
-  const maxPrice = all.length > 0 ? all[all.length - 1].price : 0;
+  const relevantSeed = getDailyRelevantSeed();
+  const all = sortByRelevant(products as Product[], relevantSeed);
+  const bounds = getPriceBounds(all);
+  const minPrice = all.length > 0 ? bounds.min : 0;
+  const maxPrice = all.length > 0 ? bounds.max : 0;
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
   const initialSelectedProduct = previewValue
