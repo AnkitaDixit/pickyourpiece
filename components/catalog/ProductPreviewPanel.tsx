@@ -48,6 +48,7 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const [detail, setDetail] = useState<DetailRecord | null>(null);
   const [similarItems, setSimilarItems] = useState<Product[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isHeroImageLoading, setIsHeroImageLoading] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
   const dragStartY = useRef(0);
   const dragDelta = useRef(0);
@@ -155,6 +156,7 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
 
   useEffect(() => {
     setActiveImageIndex(0);
+    setIsHeroImageLoading(false);
   }, [product.id]);
 
   useEffect(() => {
@@ -275,13 +277,19 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const showPreviousImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
     event?.preventDefault();
     event?.stopPropagation();
-    setActiveImageIndex((current) => Math.max(current - 1, 0));
+    const nextIndex = Math.max(activeImageIndex - 1, 0);
+    if (nextIndex === activeImageIndex) return;
+    setIsHeroImageLoading(true);
+    setActiveImageIndex(nextIndex);
   };
 
   const showNextImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
     event?.preventDefault();
     event?.stopPropagation();
-    setActiveImageIndex((current) => Math.min(current + 1, productImages.length - 1));
+    const nextIndex = Math.min(activeImageIndex + 1, productImages.length - 1);
+    if (nextIndex === activeImageIndex) return;
+    setIsHeroImageLoading(true);
+    setActiveImageIndex(nextIndex);
   };
 
   const handleImageTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -370,7 +378,14 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
 
         <div className="catalog-preview-hero">
           <div className="catalog-preview-media" onTouchStart={handleImageTouchStart} onTouchMove={handleImageTouchMove} onTouchEnd={handleImageTouchEnd}>
-            <img src={activeImage} alt={name} className="catalog-preview-image" />
+            <img
+              src={activeImage}
+              alt={name}
+              className={`catalog-preview-image${isHeroImageLoading ? " is-loading" : ""}`}
+              onLoad={() => setIsHeroImageLoading(false)}
+              onError={() => setIsHeroImageLoading(false)}
+            />
+            {isHeroImageLoading ? <div className="catalog-preview-image-loading" aria-hidden="true" /> : null}
             {productImages.length > 1 ? (
               <>
                 <span
@@ -415,12 +430,16 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
                         onClick={(event) => {
                           event.preventDefault();
                           event.stopPropagation();
+                          if (index === activeImageIndex) return;
+                          setIsHeroImageLoading(true);
                           setActiveImageIndex(index);
                         }}
                         onKeyDown={(event) => {
                           if (event.key !== "Enter" && event.key !== " ") return;
                           event.preventDefault();
                           event.stopPropagation();
+                          if (index === activeImageIndex) return;
+                          setIsHeroImageLoading(true);
                           setActiveImageIndex(index);
                         }}
                       />

@@ -254,23 +254,43 @@ function normalizeImageUrl(rawUrl: string): string {
   // Generic cache segment cleanup for other sources.
   normalized = normalized.replace(/\/cache\/[^/]+/gi, "");
 
-  // BlueStone image variant normalization.
-  normalized = normalized.replace(/BP-PICS-00000/gi, "PICS-00001");
+  return normalized;
+}
+
+function normalizePrimaryImageUrl(rawUrl: string, brand: string): string {
+  const normalized = normalizeImageUrl(rawUrl);
+
+  if (normalizeBrand(brand).toLowerCase() === "bluestone") {
+    // BlueStone primary image should prefer the regular product image variant.
+    return normalized.replace(/BP-PICS-00000/gi, "PICS-00001");
+  }
 
   return normalized;
 }
 
-function normalizeAllImages(rawValue: unknown): unknown {
+function shouldDropBlueStoneAllImage(url: string): boolean {
+  return /\/video-call-icon\.png$/i.test(url);
+}
+
+function normalizeAllImages(rawValue: unknown, brand: string): unknown {
   if (rawValue == null) return rawValue;
+
+  const isBlueStone = normalizeBrand(brand).toLowerCase() === "bluestone";
 
   if (Array.isArray(rawValue)) {
     return rawValue
       .map((item) => normalizeImageUrl(asString(item)))
+      .filter((item) => !(isBlueStone && shouldDropBlueStoneAllImage(item)))
       .filter((item) => item !== "");
   }
 
   if (typeof rawValue === "string") {
-    return normalizeImageUrl(asString(rawValue));
+    const normalized = normalizeImageUrl(asString(rawValue));
+    if (isBlueStone && shouldDropBlueStoneAllImage(normalized)) {
+      return "";
+    }
+
+    return normalized;
   }
 
   return rawValue;
@@ -336,10 +356,21 @@ export function mergeProducts(): JsonRecord[] {
         : deriveBaseMetal(rawMetal, rawPurity, rawMetalColor, rawName, rawDescription);
       normalized.metal = canonicalizeMetalCategory(derivedMetal);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
-      normalized.image = normalizeImageUrl(asString(product.image));
+      normalized.image = normalizePrimaryImageUrl(asString(product.image), rawBrand);
 
       if (Object.prototype.hasOwnProperty.call(product, "allImages") && product.allImages != null) {
-        normalized.allImages = normalizeAllImages(product.allImages);
+        const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand);
+        if (Array.isArray(normalizedAllImages)) {
+          if (normalizedAllImages.length > 0) {
+            normalized.allImages = normalizedAllImages;
+          }
+        } else if (typeof normalizedAllImages === "string") {
+          if (normalizedAllImages) {
+            normalized.allImages = normalizedAllImages;
+          }
+        } else {
+          normalized.allImages = normalizedAllImages;
+        }
       }
 
       return normalized;

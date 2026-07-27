@@ -39,12 +39,14 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
     return Array.from(new Set(merged));
   }, [product.allImages, product.image]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isImageTransitionLoading, setIsImageTransitionLoading] = useState(false);
   const [suppressNextClick, setSuppressNextClick] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
 
   useEffect(() => {
     setActiveImageIndex(0);
+    setIsImageTransitionLoading(false);
   }, [product.id]);
 
   useEffect(() => {
@@ -112,16 +114,23 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
     onSelect?.(product);
   };
 
+  const goToImageAtIndex = (nextIndex: number) => {
+    const boundedNextIndex = Math.max(0, Math.min(nextIndex, productImages.length - 1));
+    if (boundedNextIndex === activeImageIndex) return;
+    setIsImageTransitionLoading(true);
+    setActiveImageIndex(boundedNextIndex);
+  };
+
   const showPreviousImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
     event?.preventDefault();
     event?.stopPropagation();
-    setActiveImageIndex((current) => Math.max(current - 1, 0));
+    goToImageAtIndex(activeImageIndex - 1);
   };
 
   const showNextImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
     event?.preventDefault();
     event?.stopPropagation();
-    setActiveImageIndex((current) => Math.min(current + 1, productImages.length - 1));
+    goToImageAtIndex(activeImageIndex + 1);
   };
 
   return (
@@ -141,11 +150,14 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
     >
       <div className="product-card-image-wrap" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         <img
-          className="product-card-image"
+          className={`product-card-image${isImageTransitionLoading ? " is-loading" : ""}`}
           src={activeImage}
           alt={displayName}
           loading={imageLoading}
+          onLoad={() => setIsImageTransitionLoading(false)}
+          onError={() => setIsImageTransitionLoading(false)}
         />
+        {isImageTransitionLoading ? <div className="product-card-image-loading" aria-hidden="true" /> : null}
         {productImages.length > 1 ? (
           <>
             <span
@@ -196,13 +208,13 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
                   onClick={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
-                    setActiveImageIndex(index);
+                    goToImageAtIndex(index);
                   }}
                   onKeyDown={(event) => {
                     if (event.key !== "Enter" && event.key !== " ") return;
                     event.preventDefault();
                     event.stopPropagation();
-                    setActiveImageIndex(index);
+                    goToImageAtIndex(index);
                   }}
                 />
               );
