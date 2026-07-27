@@ -3,13 +3,12 @@
 import { useId, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 const MIN_SEARCH_LENGTH = 3;
 const MIN_SUGGEST_LENGTH = 1;
 const MAX_SUGGESTIONS = 8;
 const RECENT_SEARCHES_KEY = "pickyourpiece.recentSearches";
-const CATALOG_MODE_PARAM = "mode";
-const CATALOG_MODE_VALUE = "catalog";
 
 const BASE_SUGGESTIONS = [
   "diamond ring",
@@ -142,14 +141,14 @@ export default function SearchBar({
 
     if (trimmed.length >= MIN_SEARCH_LENGTH) {
       params.set("q", trimmed);
-      params.delete(CATALOG_MODE_PARAM);
     } else if (trimmed.length === 0) {
-      params.delete("q");
-      const hasOtherParams = Array.from(params.keys()).some((key) => key !== CATALOG_MODE_PARAM);
-
-      if (targetPath === "/" && !hasOtherParams) {
-        params.set(CATALOG_MODE_PARAM, CATALOG_MODE_VALUE);
+      if (urlQuery.trim().length >= MIN_SEARCH_LENGTH) {
+        trackEvent("search_clear", {
+          element_section: pathname === "/" ? "homepage_search" : "catalog_search",
+          previous_query: urlQuery.trim(),
+        });
       }
+      params.delete("q");
     } else {
       return;
     }
@@ -160,6 +159,11 @@ export default function SearchBar({
 
     if (trimmed.length >= MIN_SEARCH_LENGTH) {
       saveRecentSearch(trimmed);
+      trackEvent("search_submit", {
+        element_section: pathname === "/" ? "homepage_search" : "catalog_search",
+        query: trimmed,
+        destination: nextUrl,
+      });
     }
 
     if (nextUrl !== currentUrl) {
@@ -235,6 +239,10 @@ export default function SearchBar({
           setActiveIndex(-1);
         }}
         aria-label={ariaLabel}
+        data-analytics-event="search_focus"
+        data-analytics-section={pathname === "/" ? "homepage_search" : "catalog_search"}
+        data-analytics-type="search_input"
+        data-analytics-label="search_focus"
       />
       {suggestionsOpen ? (
         <ul className="searchbar-suggest-list" id={listboxId} role="listbox" aria-label="Search suggestions">

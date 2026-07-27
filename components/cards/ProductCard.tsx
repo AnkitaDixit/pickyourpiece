@@ -40,6 +40,14 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
       data-product-id={product.id}
       className={`product-card${isSelected ? " is-selected" : ""}`}
       onClick={() => onSelect?.(product)}
+      data-analytics-event="product_card_open"
+      data-analytics-section="catalog_grid"
+      data-analytics-type="product_card"
+      data-analytics-label="open_product_preview"
+      data-analytics-brand={product.brand}
+      data-analytics-product-id={String(product.id)}
+      data-analytics-product-name={displayName}
+      data-analytics-category={product.category}
     >
       <div className="product-card-image-wrap">
         <img

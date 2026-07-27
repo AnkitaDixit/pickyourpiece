@@ -111,6 +111,12 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
               className="navbar-mobile-home-btn"
               onClick={goHome}
               aria-label="Back to home"
+              data-analytics-event="navbar_home_click"
+              data-analytics-section="navbar"
+              data-analytics-type="navigation"
+              data-analytics-label="home_logo_mobile"
+              data-analytics-destination="/"
+              data-analytics-category="home"
             >
               <Image
                 src="/logo.png"
@@ -141,6 +147,12 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
                       }
                       goTo(option.href);
                     }}
+                    data-analytics-event="navbar_category_switch_click"
+                    data-analytics-section="navbar"
+                    data-analytics-type="category_switcher"
+                    data-analytics-label={option.label}
+                    data-analytics-destination={option.href}
+                    data-analytics-category={option.id}
                   >
                     <Image
                       src={option.iconSrc}
@@ -159,7 +171,18 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
         </div>
 
         {shouldShowBrand ? (
-          <button type="button" className="navbar-logo" onClick={goHome} aria-label="Go to home">
+          <button
+            type="button"
+            className="navbar-logo"
+            onClick={goHome}
+            aria-label="Go to home"
+            data-analytics-event="navbar_home_click"
+            data-analytics-section="navbar"
+            data-analytics-type="navigation"
+            data-analytics-label="home_logo_desktop"
+            data-analytics-destination="/"
+            data-analytics-category="home"
+          >
             <Image
               src="/logo.png"
               alt="PickYourPiece"

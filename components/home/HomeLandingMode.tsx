@@ -94,7 +94,18 @@ export default function HomeLandingMode({
             <div className="landing-chip-row">
               <span className="landing-chip-label">Popular Searches</span>
               {POPULAR_SEARCHES.map((item) => (
-                <Link key={item.query} className="landing-chip" href={`/?q=${encodeURIComponent(item.query)}`}>
+                <Link
+                  key={item.query}
+                  className="landing-chip"
+                  href={`/?q=${encodeURIComponent(item.query)}`}
+                  data-analytics-event="home_quick_search_click"
+                  data-analytics-section="home_hero"
+                  data-analytics-type="quick_search"
+                  data-analytics-label={item.label}
+                  data-analytics-query={item.query}
+                  data-analytics-destination={`/?q=${encodeURIComponent(item.query)}`}
+                  data-analytics-category="home"
+                >
                   {item.label}
                 </Link>
               ))}
@@ -109,6 +120,12 @@ export default function HomeLandingMode({
                   className={`landing-cat-card${item.available ? "" : " is-soon"}`}
                   href={item.available ? item.href : "#"}
                   aria-disabled={!item.available}
+                  data-analytics-event="home_category_card_click"
+                  data-analytics-section="home_categories"
+                  data-analytics-type="category_card"
+                  data-analytics-label={item.label}
+                  data-analytics-destination={item.available ? item.href : "#"}
+                  data-analytics-category={item.id}
                 >
                   <div className="landing-cat-card-icon-wrap">
                     <img src={item.iconSrc} alt="" width={38} height={38} aria-hidden="true" className="landing-cat-card-icon" />
@@ -120,7 +137,16 @@ export default function HomeLandingMode({
                   {item.available && <MoveRight size={15} className="landing-cat-card-arrow" aria-hidden="true" />}
                 </Link>
               ))}
-              <Link className="landing-category-explore-all" href="/?sort=price-asc">
+              <Link
+                className="landing-category-explore-all"
+                href="/?sort=price-asc"
+                data-analytics-event="home_explore_all_categories_click"
+                data-analytics-section="home_categories"
+                data-analytics-type="cta"
+                data-analytics-label="explore_all_categories"
+                data-analytics-destination="/?sort=price-asc"
+                data-analytics-category="ring"
+              >
                 Explore all categories
                 <MoveRight size={13} aria-hidden="true" />
               </Link>
@@ -143,7 +169,16 @@ export default function HomeLandingMode({
                     <span aria-hidden="true">{shelf.emoji}</span>
                     {shelf.title}
                   </h3>
-                  <Link className="discovery-shelf-all" href={shelf.href}>
+                  <Link
+                    className="discovery-shelf-all"
+                    href={shelf.href}
+                    data-analytics-event="home_collection_view_all_click"
+                    data-analytics-section="home_collection"
+                    data-analytics-type="collection_cta"
+                    data-analytics-label={shelf.title}
+                    data-analytics-destination={shelf.href}
+                    data-analytics-category="ring"
+                  >
                     See all <MoveRight size={13} aria-hidden="true" />
                   </Link>
                 </div>
@@ -159,6 +194,15 @@ export default function HomeLandingMode({
                         href={productPath ?? "/?sort=price-asc"}
                         className={`discovery-product-card${selectedProduct?.id === product.id ? " is-selected" : ""}`}
                         onClick={(e) => { e.preventDefault(); setSelectedProduct(product); }}
+                        data-analytics-event="home_collection_product_click"
+                        data-analytics-section="home_collection"
+                        data-analytics-type="featured_product"
+                        data-analytics-label={shelf.title}
+                        data-analytics-brand={product.brand}
+                        data-analytics-product-id={String(product.id)}
+                        data-analytics-product-name={displayName}
+                        data-analytics-destination={productPath ?? "/?sort=price-asc"}
+                        data-analytics-category={product.category}
                       >
                         <div className="discovery-product-image">
                           <img src={product.image} alt={`${displayName} by ${product.brand}`} loading="lazy" />
@@ -195,13 +239,35 @@ export default function HomeLandingMode({
          <section className="landing-brand-strip" aria-labelledby="landing-brand-strip-title">
         <div className="landing-brand-strip-head">
           <h2 id="landing-brand-strip-title">Shop by Brand</h2>
-          <Link href="/ring">View all</Link>
+          <Link
+            href="/ring"
+            data-analytics-event="home_brand_strip_view_all_click"
+            data-analytics-section="home_brand_strip"
+            data-analytics-type="cta"
+            data-analytics-label="view_all_brands"
+            data-analytics-destination="/ring"
+            data-analytics-category="ring"
+          >
+            View all
+          </Link>
         </div>
         <div className="landing-brand-list">
           {BRAND_ENTRIES.map(([segment, brandName]) => {
             const logo = BRAND_LOGOS[segment] ?? null;
             return (
-              <Link key={segment} href={`/brands/${segment}`} className="landing-brand-card" aria-label={`Browse ${brandName}`}>
+              <Link
+                key={segment}
+                href={`/brands/${segment}`}
+                className="landing-brand-card"
+                aria-label={`Browse ${brandName}`}
+                data-analytics-event="home_brand_card_click"
+                data-analytics-section="home_brand_strip"
+                data-analytics-type="brand_card"
+                data-analytics-label={brandName}
+                data-analytics-brand={brandName}
+                data-analytics-destination={`/brands/${segment}`}
+                data-analytics-category="ring"
+              >
                 <div className="landing-brand-card-logo">
                   {logo ? (
                     <img src={logo} alt={`${brandName} logo`} loading="lazy" className="landing-brand-logo-image" />

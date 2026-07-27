@@ -286,11 +286,42 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
         />
 
         <nav className="product-detail-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
+          <Link
+            href="/"
+            data-analytics-event="breadcrumb_home_click"
+            data-analytics-section="product_detail_breadcrumb"
+            data-analytics-type="navigation"
+            data-analytics-label="home"
+            data-analytics-destination="/"
+            data-analytics-category="home"
+          >
+            Home
+          </Link>
           <span className="product-detail-breadcrumb-sep">&gt;</span>
-          <Link href="/?category=Ring">Rings</Link>
+          <Link
+            href="/?category=Ring"
+            data-analytics-event="breadcrumb_category_click"
+            data-analytics-section="product_detail_breadcrumb"
+            data-analytics-type="navigation"
+            data-analytics-label="rings"
+            data-analytics-destination="/?category=Ring"
+            data-analytics-category="ring"
+          >
+            Rings
+          </Link>
           <span className="product-detail-breadcrumb-sep">&gt;</span>
-          <Link href={brandBrowseHref}>{brandName}</Link>
+          <Link
+            href={brandBrowseHref}
+            data-analytics-event="breadcrumb_brand_click"
+            data-analytics-section="product_detail_breadcrumb"
+            data-analytics-type="navigation"
+            data-analytics-label={brandName}
+            data-analytics-brand={brandName}
+            data-analytics-destination={brandBrowseHref}
+            data-analytics-category={category || "ring"}
+          >
+            {brandName}
+          </Link>
           <span className="product-detail-breadcrumb-sep">&gt;</span>
           <span className="current" aria-current="page">{name}</span>
         </nav>
@@ -357,7 +388,19 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
               {description && <p className="product-detail-description">{description}</p>}
 
               <div className="product-detail-actions">
-                <Link href={brandBrowseHref} className="product-detail-back-link">
+                <Link
+                  href={brandBrowseHref}
+                  className="product-detail-back-link"
+                  data-analytics-event="brand_browse_click"
+                  data-analytics-section="product_detail"
+                  data-analytics-type="cta"
+                  data-analytics-label="browse_more_from_brand"
+                  data-analytics-brand={brandName}
+                  data-analytics-product-id={String(getPrimaryProductId(product) ?? "")}
+                  data-analytics-product-name={name}
+                  data-analytics-destination={brandBrowseHref}
+                  data-analytics-category={category || "ring"}
+                >
                   Browse more from {brandName}
                 </Link>
 
@@ -367,6 +410,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<Ro
                     target="_blank"
                     rel="noopener"
                     className="product-detail-visit-btn"
+                    data-analytics-event="brand_outbound_click"
+                    data-analytics-section="product_detail"
+                    data-analytics-type="cta"
+                    data-analytics-label="visit_brand_site"
+                    data-analytics-brand={brandName}
+                    data-analytics-product-id={String(getPrimaryProductId(product) ?? "")}
+                    data-analytics-product-name={name}
+                    data-analytics-destination={trackedProductUrl}
+                    data-analytics-category={category || "ring"}
                   >
                     View on {brandName}
                   </a>

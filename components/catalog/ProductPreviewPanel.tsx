@@ -281,15 +281,55 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
           {/* {description && <p className="catalog-preview-description">{description}</p>} */}
 
           <div className="catalog-preview-actions">
-            <Link href={brandBrowseHref} className="product-detail-back-link">
+            <Link
+              href={brandBrowseHref}
+              className="product-detail-back-link"
+              data-analytics-event="brand_browse_click"
+              data-analytics-section="product_preview"
+              data-analytics-type="cta"
+              data-analytics-label="browse_more_from_brand"
+              data-analytics-brand={brand}
+              data-analytics-product-id={String(product.id)}
+              data-analytics-product-name={name}
+              data-analytics-destination={brandBrowseHref}
+              data-analytics-category={product.category}
+            >
               Browse more from {brand}
             </Link>
             {detailPath ? (
-              <Link href={detailPath} target="_blank" rel="noopener noreferrer" className="catalog-preview-detail-link">
+              <Link
+                href={detailPath}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="catalog-preview-detail-link"
+                data-analytics-event="product_preview_detail_click"
+                data-analytics-section="product_preview"
+                data-analytics-type="cta"
+                data-analytics-label="view_product_details"
+                data-analytics-brand={brand}
+                data-analytics-product-id={String(product.id)}
+                data-analytics-product-name={name}
+                data-analytics-destination={detailPath}
+                data-analytics-category={product.category}
+              >
                 View details
               </Link>
             ) : null}
-            <a href={trackedProductUrl} target="_blank" rel="noopener" className="catalog-preview-source-link">
+            <a
+              href={trackedProductUrl}
+              target="_blank"
+              rel="noopener"
+              className="catalog-preview-source-link"
+              data-analytics-event="brand_outbound_click"
+              data-analytics-section="product_preview"
+              data-analytics-type="cta"
+              data-analytics-label="visit_brand_site"
+              data-analytics-brand={brand}
+              data-analytics-product-id={String(product.id)}
+              data-analytics-product-name={name}
+              data-analytics-destination={trackedProductUrl}
+              data-analytics-category={product.category}
+            >
               View on {brand}
             </a>
           </div>
@@ -308,6 +348,14 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
                       type="button"
                       className="catalog-preview-similar-card"
                       onClick={() => onProductSelect?.(item)}
+                      data-analytics-event="product_preview_similar_click"
+                      data-analytics-section="product_preview"
+                      data-analytics-type="similar_product"
+                      data-analytics-label="open_similar_product"
+                      data-analytics-brand={item.brand}
+                      data-analytics-product-id={String(item.id)}
+                      data-analytics-product-name={itemName}
+                      data-analytics-category={item.category}
                     >
                       <img src={item.image} alt={itemName} loading="lazy" className="catalog-preview-similar-image" />
                       <span className="catalog-preview-similar-name">{itemName}</span>
