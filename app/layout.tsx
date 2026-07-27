@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   title: {
-    default: "pickYourPiece (PyP) | Compare Jewellery Across Top Brands",
+    default: "PickYourPiece (PyP) | Compare Jewellery Across Top Brands",
     template: "%s | Pick Your Piece",
   },
   description:
@@ -184,6 +184,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <meta name="p:domain_verify" content="dc6f5629d760525293afbe428c79833b" />
+      </head>
       <body className="min-h-full flex flex-col">
         <GlobalAnalyticsTracker />
         {isAnalyticsEnabled ? (
