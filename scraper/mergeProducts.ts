@@ -260,6 +260,22 @@ function normalizeImageUrl(rawUrl: string): string {
   return normalized;
 }
 
+function normalizeAllImages(rawValue: unknown): unknown {
+  if (rawValue == null) return rawValue;
+
+  if (Array.isArray(rawValue)) {
+    return rawValue
+      .map((item) => normalizeImageUrl(asString(item)))
+      .filter((item) => item !== "");
+  }
+
+  if (typeof rawValue === "string") {
+    return normalizeImageUrl(asString(rawValue));
+  }
+
+  return rawValue;
+}
+
 function hasValidPrice(product: JsonRecord): boolean {
   return Number(product.price) > 0;
 }
@@ -321,6 +337,10 @@ export function mergeProducts(): JsonRecord[] {
       normalized.metal = canonicalizeMetalCategory(derivedMetal);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
       normalized.image = normalizeImageUrl(asString(product.image));
+
+      if (Object.prototype.hasOwnProperty.call(product, "allImages") && product.allImages != null) {
+        normalized.allImages = normalizeAllImages(product.allImages);
+      }
 
       return normalized;
     });

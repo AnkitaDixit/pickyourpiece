@@ -44,12 +44,17 @@ const countSharedValues = (left: string[] = [], right: string[] = []) => {
 };
 
 export default function ProductPreviewPanel({ product, onClose, onProductSelect }: Props) {
+  const SWIPE_THRESHOLD = 36;
   const [detail, setDetail] = useState<DetailRecord | null>(null);
   const [similarItems, setSimilarItems] = useState<Product[]>([]);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const panelRef = useRef<HTMLElement>(null);
   const dragStartY = useRef(0);
   const dragDelta = useRef(0);
   const dragging = useRef(false);
+  const imageTouchStartXRef = useRef<number | null>(null);
+  const imageTouchStartYRef = useRef<number | null>(null);
+  const imageHorizontalSwipeRef = useRef(false);
 
   const onDragStart = (e: React.TouchEvent) => {
     dragStartY.current = e.touches[0].clientY;
@@ -118,6 +123,21 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const name = typeof merged.name === "string" ? merged.name : product.name;
   const brand = typeof merged.brand === "string" ? merged.brand : product.brand;
   const image = typeof merged.image === "string" ? merged.image : product.image;
+  const productImages = useMemo(() => {
+    const rawAllImages = merged.allImages ?? product.allImages;
+    const fromAllImages = Array.isArray(rawAllImages)
+      ? rawAllImages
+      : typeof rawAllImages === "string"
+      ? [rawAllImages]
+      : [];
+
+    const mergedImages = [image, ...fromAllImages]
+      .map((item) => (typeof item === "string" ? item.trim() : ""))
+      .filter((item) => item.length > 0);
+
+    return Array.from(new Set(mergedImages));
+  }, [image, merged.allImages, product.allImages]);
+  const activeImage = productImages[activeImageIndex] ?? image;
   const price = typeof merged.price === "number" ? merged.price : product.price;
   const currency = typeof merged.currency === "string" ? merged.currency : product.currency;
   const productUrl = typeof merged.productUrl === "string" ? merged.productUrl : product.productUrl;
@@ -132,6 +152,15 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
   const detailPath = buildProductDetailPath(product);
   const logoSrc = BRAND_LOGOS[brandSegment.toLowerCase()] ?? null;
   const brandBrowseHref = `/ring/?brand=${encodeURIComponent(brand)}`;
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [product.id]);
+
+  useEffect(() => {
+    if (activeImageIndex < productImages.length) return;
+    setActiveImageIndex(0);
+  }, [activeImageIndex, productImages.length]);
 
   const detailRows = useMemo(() => {
     return Object.entries(merged)
@@ -243,6 +272,77 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
     return () => controller.abort();
   }, [product, brand]);
 
+  const showPreviousImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    setActiveImageIndex((current) => Math.max(current - 1, 0));
+  };
+
+  const showNextImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    setActiveImageIndex((current) => Math.min(current + 1, productImages.length - 1));
+  };
+
+  const handleImageTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (productImages.length < 2) return;
+    const touch = event.touches[0];
+    if (!touch) return;
+    imageTouchStartXRef.current = touch.clientX;
+    imageTouchStartYRef.current = touch.clientY;
+    imageHorizontalSwipeRef.current = false;
+  };
+
+  const handleImageTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (productImages.length < 2) return;
+
+    const startX = imageTouchStartXRef.current;
+    const startY = imageTouchStartYRef.current;
+    if (startX == null || startY == null) return;
+
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= 8;
+    imageHorizontalSwipeRef.current = isHorizontalSwipe;
+
+    if (isHorizontalSwipe && event.cancelable) {
+      event.preventDefault();
+    }
+  };
+
+  const handleImageTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (productImages.length < 2) return;
+
+    const startX = imageTouchStartXRef.current;
+    const startY = imageTouchStartYRef.current;
+    imageTouchStartXRef.current = null;
+    imageTouchStartYRef.current = null;
+
+    if (startX == null || startY == null) return;
+
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const isHorizontalSwipe = (imageHorizontalSwipeRef.current || Math.abs(deltaX) > Math.abs(deltaY)) && Math.abs(deltaX) >= SWIPE_THRESHOLD;
+    imageHorizontalSwipeRef.current = false;
+    if (!isHorizontalSwipe) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (deltaX < 0) {
+      showNextImage();
+      return;
+    }
+
+    showPreviousImage();
+  };
+
   return (
     <aside className="catalog-preview" aria-live="polite" ref={panelRef}>
       <div className="catalog-preview-inner">
@@ -269,7 +369,67 @@ export default function ProductPreviewPanel({ product, onClose, onProductSelect 
         </div>
 
         <div className="catalog-preview-hero">
-          <img src={image} alt={name} className="catalog-preview-image" />
+          <div className="catalog-preview-media" onTouchStart={handleImageTouchStart} onTouchMove={handleImageTouchMove} onTouchEnd={handleImageTouchEnd}>
+            <img src={activeImage} alt={name} className="catalog-preview-image" />
+            {productImages.length > 1 ? (
+              <>
+                <span
+                  className="catalog-preview-carousel-arrow catalog-preview-carousel-arrow-left"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Show previous image"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={(event) => showPreviousImage(event)}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    showPreviousImage(event);
+                  }}
+                >
+                  &lsaquo;
+                </span>
+                <span
+                  className="catalog-preview-carousel-arrow catalog-preview-carousel-arrow-right"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Show next image"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={(event) => showNextImage(event)}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    showNextImage(event);
+                  }}
+                >
+                  &rsaquo;
+                </span>
+                <div className="catalog-preview-carousel-dots" aria-label="Product image options">
+                  {productImages.map((img, index) => {
+                    const isActive = index === activeImageIndex;
+                    return (
+                      <span
+                        key={`${product.id}-${img}-${index}`}
+                        className={`catalog-preview-carousel-dot${isActive ? " is-active" : ""}`}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`View image ${index + 1}`}
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          setActiveImageIndex(index);
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key !== "Enter" && event.key !== " ") return;
+                          event.preventDefault();
+                          event.stopPropagation();
+                          setActiveImageIndex(index);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </>
+            ) : null}
+          </div>
           <h2>{name}</h2>
           <div className="catalog-preview-meta-row">
             <p className="catalog-preview-meta-label">Source: {brand}</p>

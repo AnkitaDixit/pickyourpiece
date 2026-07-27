@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type TouchEvent } from "react";
 import type { Product } from "@/types/product";
-import { PanelRightOpen } from "lucide-react";
+import { ChevronLeft, ChevronRight, PanelRightOpen } from "lucide-react";
 
 interface Props {
   product: Product;
@@ -23,7 +23,36 @@ const BRAND_LOGOS: Record<string, string> = {
 };
 
 export default function ProductCard({ product, imageLoading = "lazy", onSelect, isSelected = false }: Props) {
+  const SWIPE_THRESHOLD = 36;
   const brandKey = useMemo(() => product.brand.toLowerCase().replace(/\s+/g, ""), [product.brand]);
+  const productImages = useMemo(() => {
+    const fromAllImages = Array.isArray(product.allImages)
+      ? product.allImages
+      : typeof product.allImages === "string"
+      ? [product.allImages]
+      : [];
+
+    const merged = [product.image, ...fromAllImages]
+      .map((item) => (typeof item === "string" ? item.trim() : ""))
+      .filter((item) => item.length > 0);
+
+    return Array.from(new Set(merged));
+  }, [product.allImages, product.image]);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [suppressNextClick, setSuppressNextClick] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [product.id]);
+
+  useEffect(() => {
+    if (activeImageIndex < productImages.length) return;
+    setActiveImageIndex(0);
+  }, [activeImageIndex, productImages.length]);
+
+  const activeImage = productImages[activeImageIndex] ?? product.image;
   const displayName = useMemo(() => product.name.split("(")[0]?.trim() || product.name, [product.name]);
   const meta = useMemo(
     () => [product.purity ?? "", product.gemstone?.[0] ?? "", product.metalColor ?? ""].filter(Boolean).join(" · "),
@@ -34,12 +63,73 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
   const [brokenLogos, setBrokenLogos] = useState<Record<string, true>>({});
   const showLogo = Boolean(logoSrc) && !brokenLogos[brandKey];
   const brandClassName = `product-card-brand product-card-brand--${brandKey}`;
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    if (productImages.length < 2) return;
+    const touch = event.touches[0];
+    if (!touch) return;
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (productImages.length < 2) return;
+
+    const startX = touchStartXRef.current;
+    const startY = touchStartYRef.current;
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+
+    if (startX == null || startY == null) return;
+
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= SWIPE_THRESHOLD;
+    if (!isHorizontalSwipe) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    setSuppressNextClick(true);
+
+    setActiveImageIndex((current) => {
+      if (deltaX < 0) {
+        return Math.min(current + 1, productImages.length - 1);
+      }
+
+      return Math.max(current - 1, 0);
+    });
+  };
+
+  const handleCardClick = () => {
+    if (suppressNextClick) {
+      setSuppressNextClick(false);
+      return;
+    }
+
+    onSelect?.(product);
+  };
+
+  const showPreviousImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    setActiveImageIndex((current) => Math.max(current - 1, 0));
+  };
+
+  const showNextImage = (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    setActiveImageIndex((current) => Math.min(current + 1, productImages.length - 1));
+  };
+
   return (
     <button
       type="button"
       data-product-id={product.id}
       className={`product-card${isSelected ? " is-selected" : ""}`}
-      onClick={() => onSelect?.(product)}
+      onClick={handleCardClick}
       data-analytics-event="product_card_open"
       data-analytics-section="catalog_grid"
       data-analytics-type="product_card"
@@ -49,13 +139,76 @@ export default function ProductCard({ product, imageLoading = "lazy", onSelect, 
       data-analytics-product-name={displayName}
       data-analytics-category={product.category}
     >
-      <div className="product-card-image-wrap">
+      <div className="product-card-image-wrap" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         <img
           className="product-card-image"
-          src={product.image}
+          src={activeImage}
           alt={displayName}
           loading={imageLoading}
         />
+        {productImages.length > 1 ? (
+          <>
+            <span
+              className="product-card-carousel-arrow product-card-carousel-arrow-left"
+              role="button"
+              tabIndex={0}
+              aria-label="Show previous image"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={(event) => showPreviousImage(event)}
+              onKeyDown={(event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                showPreviousImage(event);
+              }}
+            >
+              <ChevronLeft size={16} strokeWidth={2.2} />
+            </span>
+            <span
+              className="product-card-carousel-arrow product-card-carousel-arrow-right"
+              role="button"
+              tabIndex={0}
+              aria-label="Show next image"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={(event) => showNextImage(event)}
+              onKeyDown={(event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                showNextImage(event);
+              }}
+            >
+              <ChevronRight size={16} strokeWidth={2.2} />
+            </span>
+          </>
+        ) : null}
+        {productImages.length > 1 ? (
+          <div className="product-card-carousel-dots" aria-label="Product image options">
+            {productImages.map((image, index) => {
+              const isActive = index === activeImageIndex;
+
+              return (
+                <span
+                  key={`${product.id}-${image}-${index}`}
+                  className={`product-card-carousel-dot${isActive ? " is-active" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View image ${index + 1}`}
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                  }}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setActiveImageIndex(index);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setActiveImageIndex(index);
+                  }}
+                />
+              );
+            })}
+          </div>
+        ) : null}
       </div>
 
       <div className="product-card-info">

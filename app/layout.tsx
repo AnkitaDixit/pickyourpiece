@@ -198,6 +198,10 @@ export default function RootLayout({
                   var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
                   if (isLocalhost) return;
 
+                  var path = window.location.pathname || '/';
+                  var isStudio = path === '/studio' || path.indexOf('/studio/') === 0;
+                  if (isStudio) return;
+
                   var gaScript = document.createElement('script');
                   gaScript.async = true;
                   gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}';

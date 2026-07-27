@@ -38,6 +38,10 @@ type AnalyticsContext = {
   catalog_category: string;
 };
 
+function isStudioPath(pathname: string) {
+  return pathname === "/studio" || pathname.startsWith("/studio/");
+}
+
 function normalizeParamValue(value: string | null | undefined): string | undefined {
   if (value == null) return undefined;
   const trimmed = value.trim();
@@ -105,6 +109,10 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
     return;
   }
 
+  if (isStudioPath(window.location.pathname)) {
+    return;
+  }
+
   const derivedContext = getAnalyticsContextFromPath(window.location.pathname);
 
   window.gtag("event", eventName, sanitizeParams({
@@ -117,6 +125,10 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
 }
 
 export function trackDataClick(element: HTMLElement) {
+  if (typeof window !== "undefined" && isStudioPath(window.location.pathname)) {
+    return;
+  }
+
   const eventName = normalizeParamValue(element.dataset.analyticsEvent);
   if (!eventName) return;
   const label = normalizeParamValue(element.dataset.analyticsLabel);

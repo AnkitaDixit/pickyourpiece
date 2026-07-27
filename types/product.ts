@@ -11,6 +11,7 @@ export interface Product {
   style: string[];
   gender: "Women" | "Men" | "Unisex";
   image: string;
+  allImages?: string[] | string;
   productUrl: string;
   availability: boolean;
   updatedAt: string;
