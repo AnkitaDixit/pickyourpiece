@@ -74,6 +74,23 @@ Every article should follow this order:
 
 Use `---` separators between major blocks.
 
+## 4.1) Opening emotion rule (mandatory)
+
+Every article introduction must emotionally validate the reader and reassure them they are making a thoughtful choice by researching before buying.
+
+Required intro behavior:
+
+- First 2-5 lines should feel human and emotionally reassuring.
+- Explicitly affirm buyer intent (example: "You are right to think carefully before buying this").
+- Bridge emotion to practical decision confidence.
+- Avoid fear-based hooks, shame language, or generic clickbait openers.
+
+Opening quality bar:
+
+- Reader should feel seen, not sold to.
+- Tone should be calm, confident, and advisory.
+- Intro must still include the primary keyword naturally.
+
 ## 5) Readability and UX standards
 
 - Short paragraphs (2-3 lines).
@@ -91,6 +108,22 @@ Use `---` separators between major blocks.
 - Cover both informational and transactional intent.
 - Include semantic related phrases naturally.
 - Keep copy useful first, optimized second.
+
+## 6.1) Image SEO rules (mandatory)
+
+Use real descriptive alt text for all article product visuals.
+
+Examples:
+
+- Good: "Oval solitaire engagement ring in 14KT rose gold"
+- Bad: "ring image 1"
+
+Additional requirements:
+
+- Alt text should describe product type + key material + style intent when available.
+- Do not use generic placeholders like "image", "photo", or numbered labels.
+- Add caption text under comparison image blocks.
+- Surround comparison visuals with relevant explanatory text because Google Images heavily uses nearby context.
 
 ## 7) Internal article linking rules
 
@@ -163,12 +196,43 @@ If an article-specific SVG is needed:
 - Match motif to topic (budget, diamonds, metals, sizing, style comparison).
 - Avoid visual clutter and keep mobile readability.
 
+## 12.1) Product graphic rules for article body (mandatory)
+
+When adding product visuals in article body, visuals must be informational and comparison-led, not decorative filler.
+
+Core rules:
+
+- Every product visual block must connect to the section's decision intent (style, budget, material, price-value, etc).
+- Do not insert random product images without explanatory context.
+- Prefer comparison examples over isolated hero shots.
+
+Inline shortcode rules:
+
+- Use `[product_grid ...]` for shortlist views.
+- Use `[product_compare ...]` for side-by-side evaluation examples.
+- `product_grid` should be filter-driven (for example `style`, `maxPrice`, etc via section link logic) and never query-text driven.
+- `product_compare` must use meaningful filters so chosen products represent the written point.
+
+Comparison integrity requirements:
+
+- Comparison examples must use products from different brands.
+- Price difference should be significant (target >= 30%) for price-value comparisons.
+- If no valid pair exists, skip the comparison block instead of forcing weak examples.
+
+Visual composition requirements:
+
+- Show brand, product name, and price in each product card.
+- Use reliable image fallback logic (`image` then `allImages`) when available.
+- Keep layouts responsive and readable on mobile.
+- Do not use the same product more than once in a single article's visual blocks.
+- If a product appears in one visual block, exclude it from later visual blocks in that same article.
+
 ## 13) Prompt template for creating a new article
 
 Use this prompt format:
 
 ```text
-Create a new article using scripts/ARTICLE_BUILDER_RULES.md.
+Create a new article using ARTICLE_BUILDER_RULES.md.
 
 Topic: <topic>
 Primary keyword: <keyword>

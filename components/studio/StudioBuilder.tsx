@@ -814,14 +814,37 @@ export default function StudioBuilder({
     try {
       const exportWidth = templateId === "instagram_post" ? 1080 : template.width;
       const exportHeight = templateId === "instagram_post" ? 1350 : template.height;
-      const exportPixelRatio = 4;
+      const exportPixelRatio = 2;
+
       if (document.fonts?.ready) {
         await document.fonts.ready;
       }
 
+      // Use currently loaded images to keep repeated exports visually identical.
+      const previewImages = Array.from(previewNode.querySelectorAll("img"));
+      await Promise.all(
+        previewImages.map(async (image) => {
+          if (!image.complete) {
+            await new Promise<void>((resolve) => {
+              image.addEventListener("load", () => resolve(), { once: true });
+              image.addEventListener("error", () => resolve(), { once: true });
+            });
+          }
+
+          if (typeof image.decode === "function") {
+            try {
+              await image.decode();
+            } catch {
+              // Ignore decode errors and fall back to whatever is currently painted.
+            }
+          }
+        })
+      );
+
       // Always render at ultra-high DPI for maximum export sharpness.
       const dataUrl = await toPng(previewNode, {
-        cacheBust: true,
+        cacheBust: false,
+        includeQueryParams: true,
         pixelRatio: exportPixelRatio,
         backgroundColor: "#ffffff",
         canvasWidth: exportWidth,

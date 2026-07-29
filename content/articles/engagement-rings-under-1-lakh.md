@@ -10,6 +10,8 @@ featured: false
 
 # Engagement Rings Under ₹1 Lakh: How to Maximize Value
 
+If you are evaluating engagement rings under ₹1 lakh, you are making a meaningful decision with both heart and long-term intent.
+
 If your budget is under ₹1 lakh, you are in a sweet spot where quality and design can both be strong.
 
 This guide helps you allocate budget smartly, compare styles, and avoid expensive mistakes.
@@ -26,6 +28,8 @@ Under ₹1 lakh, prioritize:
 
 Start browsing: [Engagement rings under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=quick_answer).
 
+[product_compare title="Under ₹1 Lakh: Premium Engagement Comparison" caption="This side-by-side cross-brand comparison shows how value and premium finish can diverge under the same cap." occasion="Engagement" maxPrice="100000" sort="price_asc"]
+
 ---
 
 ## 1. What This Budget Unlocks
@@ -37,6 +41,10 @@ Compared to lower budgets, ₹1 lakh gives:
 - Improved finishing and detailing
 
 Use this with [engagement ring budget guide](/articles/engagement-ring-budget?utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section1_budget).
+
+Theory depth: this tier is where buyer discipline matters more than buyer budget.
+
+Without a scoring framework, it is easy to overpay for positioning language instead of measurable quality.
 
 ---
 
@@ -54,6 +62,8 @@ Try side-by-side filters:
 - [Solitaire under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_solitaire)
 - [Halo under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_halo)
 
+[product_compare title="₹1 Lakh Style Comparison: Solitaire vs Halo" caption="These examples compare two engagement style directions to assess presence, proportion, and price-value at this tier." occasion="Engagement" maxPrice="100000" sort="price_desc"]
+
 ---
 
 ## 3. Stone and Metal Priorities
@@ -67,9 +77,25 @@ Use this order:
 
 Metal guide: [gold vs platinum](/articles/gold-vs-platinum?utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section3_metal).
 
+Use a three-layer decision lens:
+
+- Visual quality: sparkle behavior and proportion balance
+- Build quality: comfort, setting precision, durability
+- Ownership quality: policy clarity, support, and maintenance path
+
+This layered approach usually outperforms one-metric decision making.
+
 ---
 
-## 4. Common Mistakes
+## 4. Highest-Priced in This Segment
+
+Reviewing top-priced options under ₹1 lakh helps you test whether premium pricing is supported by visible and practical quality signals.
+
+[product_grid title="Highest-Priced Engagement Rings Under ₹1 Lakh" caption="These highest-priced options under ₹1 lakh help benchmark premium claims against practical value." occasion="Engagement" maxPrice="100000" limit="4" sort="price_desc"]
+
+---
+
+## 5. Common Mistakes
 
 - Increasing carat without checking cut
 - Ignoring return/resize terms
@@ -80,7 +106,7 @@ Shape resource: [diamond shapes guide](/articles/diamond-shapes-guide?utm_source
 
 ---
 
-## 5. 60-Second Decision Framework
+## 6. 60-Second Decision Framework
 
 1. Fix cap at ₹1 lakh.
 2. Choose style + metal.

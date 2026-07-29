@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -8,10 +9,12 @@ import ArticleCardVisual from "@/components/cards/ArticleCardVisual";
 import MainLayout from "@/components/layout/MainLayout";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
+import { buildProductDetailPath } from "@/lib/product-seo";
 import products from "@/data/products.json";
 import type { Product } from "@/types/product";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
+const SIGNIFICANT_PRICE_GAP_RATIO = 0.3;
 
 type RouteParams = {
   slug: string;
@@ -23,6 +26,47 @@ type SearchIntent = {
   searchQuery: string;
   terms: string[];
 };
+
+type InferredArticleFilters = {
+  style?: string;
+  gemstone?: string;
+  occasion?: string;
+  metal?: string;
+  maxPrice?: number;
+};
+
+type ArticleInlineBlock =
+  | { type: "markdown"; content: string }
+  | {
+      type: "product_grid";
+      title?: string;
+      caption?: string;
+      style?: string;
+      gemstone?: string;
+      occasion?: string;
+      metal?: string;
+      metalColor?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      limit: number;
+      sort: "price_asc" | "price_desc";
+    }
+  | {
+      type: "product_compare";
+      title: string;
+      caption?: string;
+      style?: string;
+      gemstone?: string;
+      occasion?: string;
+      metal?: string;
+      metalColor?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      sort: "price_asc" | "price_desc";
+    };
+
+const PRODUCT_GRID_SHORTCODE_REGEX = /\[product_grid\s+([^\]]+)\]/gi;
+const PRODUCT_COMPARE_SHORTCODE_REGEX = /\[product_compare\s+([^\]]+)\]/gi;
 
 const RELATED_SEARCH_BY_SLUG: Record<string, SearchIntent> = {
   "how-to-choose-engagement-ring": {
@@ -83,6 +127,368 @@ const RELATED_SEARCH_BY_SLUG: Record<string, SearchIntent> = {
 
 function normalizeSearchText(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9\s]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function toCurrency(value: number): string {
+  return `INR ${value.toLocaleString("en-IN")}`;
+}
+
+function inferMaxPriceFromSlug(slug: string): number | undefined {
+  if (slug.includes("1-lakh")) return 100000;
+  const underMatch = slug.match(/under-(\d{4,6})/);
+  if (!underMatch) return undefined;
+  const parsed = Number(underMatch[1]);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function inferArticleFilters(slug: string, title: string): InferredArticleFilters {
+  const normalized = normalizeSearchText(`${slug} ${title}`);
+  const maxPrice = inferMaxPriceFromSlug(slug);
+  const filters: InferredArticleFilters = { maxPrice };
+
+  if (normalized.includes("engagement") || normalized.includes("proposal") || normalized.includes("promise")) {
+    filters.occasion = "Engagement";
+  }
+
+  if (normalized.includes("diamond")) {
+    filters.gemstone = "Diamond";
+  }
+
+  if (normalized.includes("silver")) {
+    filters.metal = "Silver";
+  } else if (normalized.includes("gold")) {
+    filters.metal = "Gold";
+  } else if (normalized.includes("platinum")) {
+    filters.metal = "Platinum";
+  }
+
+  if (normalized.includes("solitaire")) {
+    filters.style = "Solitaire";
+  } else if (normalized.includes("halo")) {
+    filters.style = "Halo";
+  } else if (normalized.includes("vintage")) {
+    filters.style = "Vintage";
+  } else if (normalized.includes("minimal")) {
+    filters.style = "Minimal";
+  } else if (normalized.includes("butterfly")) {
+    filters.style = "Butterfly";
+  }
+
+  return filters;
+}
+
+function buildFilteredCatalogHref(filters: InferredArticleFilters, utmCampaign: string, utmContent: string): string {
+  const params = new URLSearchParams();
+  params.set("sort", "price-desc");
+
+  if (filters.occasion) params.set("occasion", filters.occasion);
+  if (filters.style) params.set("style", filters.style);
+  if (filters.gemstone) params.set("gemstone", filters.gemstone);
+  if (filters.metal) params.set("metal", filters.metal);
+  if (typeof filters.maxPrice === "number" && Number.isFinite(filters.maxPrice)) {
+    params.set("maxPrice", String(filters.maxPrice));
+  }
+
+  params.set("utm_source", "internal_article");
+  params.set("utm_medium", "article");
+  params.set("utm_campaign", utmCampaign);
+  params.set("utm_content", utmContent);
+
+  return `/ring?${params.toString()}`;
+}
+
+function getArticleImageSrc(url: string): string {
+  if (/^https?:\/\//i.test(url)) {
+    return `/api/studio-image?url=${encodeURIComponent(url)}`;
+  }
+  return url;
+}
+
+const FULL_CATALOG_HREF = "/ring?sort=price-desc";
+
+function getProductCardImage(product: Product & Record<string, unknown>): string {
+  const candidates: string[] = [];
+
+  if (typeof product.image === "string") {
+    candidates.push(product.image);
+  }
+
+  if (Array.isArray(product.allImages)) {
+    for (const item of product.allImages) {
+      if (typeof item === "string") {
+        candidates.push(item);
+      }
+    }
+  } else if (typeof product.allImages === "string") {
+    candidates.push(product.allImages);
+  }
+
+  return candidates.map((item) => item.trim()).find((item) => item.length > 0) ?? "";
+}
+
+function buildDescriptiveProductAlt(product: Product & Record<string, unknown>): string {
+  const parts: string[] = [];
+  const name = (product.name ?? "").trim();
+  const purity = (product.purity ?? "").trim();
+  const metalColor = (product.metalColor ?? "").trim();
+  const metal = (product.metal ?? "").trim();
+  const style = Array.isArray(product.style) ? (product.style[0] ?? "").trim() : "";
+  const gemstone = Array.isArray(product.gemstone) ? (product.gemstone[0] ?? "").trim() : "";
+
+  if (name) {
+    parts.push(name);
+  }
+
+  const materialBits = [purity, metalColor, metal].filter(Boolean).join(" ");
+  if (materialBits) {
+    parts.push(`in ${materialBits}`);
+  }
+
+  if (style) {
+    parts.push(`${style.toLowerCase()} style`);
+  }
+
+  if (gemstone) {
+    parts.push(`${gemstone.toLowerCase()} accents`);
+  }
+
+  const alt = parts.join(" ").replace(/\s+/g, " ").trim();
+  return alt || "Jewellery product ring";
+}
+
+function getProductVisualId(product: Product & Record<string, unknown>): string {
+  const id = product.id;
+  if (typeof id === "string" || typeof id === "number") {
+    const value = String(id).trim();
+    if (value) {
+      return `id:${value}`;
+    }
+  }
+
+  const url = typeof product.productUrl === "string" ? product.productUrl.trim() : "";
+  if (url) {
+    return `url:${url}`;
+  }
+
+  const fallback = [product.brand ?? "", product.name ?? "", String(product.price ?? "")]
+    .map((value) => String(value).trim())
+    .filter(Boolean)
+    .join("|");
+
+  return `fallback:${fallback}`;
+}
+
+function parseShortcodeAttributes(raw: string): Record<string, string> {
+  const attrs: Record<string, string> = {};
+  const attrRegex = /(\w+)="([^"]*)"/g;
+
+  for (const match of raw.matchAll(attrRegex)) {
+    const key = match[1];
+    const value = match[2];
+    if (key) {
+      attrs[key] = value;
+    }
+  }
+
+  return attrs;
+}
+
+function normalizeFilterValue(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return normalizeSearchText(value);
+}
+
+function filterCatalogProducts(
+  items: Array<Product & Record<string, unknown>>,
+  criteria: {
+    style?: string;
+    gemstone?: string;
+    occasion?: string;
+    metal?: string;
+    metalColor?: string;
+    minPrice?: number;
+    maxPrice?: number;
+  }
+) {
+  const styleNeedle = normalizeFilterValue(criteria.style);
+  const gemstoneNeedle = normalizeFilterValue(criteria.gemstone);
+  const occasionNeedle = normalizeFilterValue(criteria.occasion);
+  const metalNeedle = normalizeFilterValue(criteria.metal);
+  const metalColorNeedle = normalizeFilterValue(criteria.metalColor);
+
+  return items.filter((product) => {
+    const styleValues = Array.isArray(product.style) ? product.style : [];
+    const gemstoneValues = Array.isArray(product.gemstone) ? product.gemstone : [];
+    const occasionValues = Array.isArray(product.occasion) ? product.occasion : [];
+
+    if (styleNeedle) {
+      const styleMatch = styleValues.some((style) => normalizeSearchText(style) === styleNeedle);
+      if (!styleMatch) return false;
+    }
+
+    if (gemstoneNeedle) {
+      const gemstoneMatch = gemstoneValues.some((gem) => normalizeSearchText(gem) === gemstoneNeedle);
+      if (!gemstoneMatch) return false;
+    }
+
+    if (occasionNeedle) {
+      const occasionMatch = occasionValues.some((occasion) => normalizeSearchText(occasion) === occasionNeedle);
+      if (!occasionMatch) return false;
+    }
+
+    if (metalNeedle && normalizeSearchText(product.metal ?? "") !== metalNeedle) {
+      return false;
+    }
+
+    if (metalColorNeedle && normalizeSearchText(product.metalColor ?? "") !== metalColorNeedle) {
+      return false;
+    }
+
+    if (typeof criteria.minPrice === "number" && Number.isFinite(criteria.minPrice) && product.price < criteria.minPrice) {
+      return false;
+    }
+
+    if (typeof criteria.maxPrice === "number" && Number.isFinite(criteria.maxPrice) && product.price > criteria.maxPrice) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+function pickSignificantCrossBrandPair(
+  items: Array<Product & Record<string, unknown>>
+): { left: Product & Record<string, unknown>; right: Product & Record<string, unknown> } | null {
+  let best:
+    | {
+        left: Product & Record<string, unknown>;
+        right: Product & Record<string, unknown>;
+        ratio: number;
+      }
+    | null = null;
+
+  for (let i = 0; i < items.length; i += 1) {
+    for (let j = i + 1; j < items.length; j += 1) {
+      const a = items[i];
+      const b = items[j];
+      if (!a || !b) continue;
+
+      const brandA = normalizeSearchText(a.brand ?? "");
+      const brandB = normalizeSearchText(b.brand ?? "");
+      if (!brandA || !brandB || brandA === brandB) continue;
+
+      const lower = Math.min(a.price, b.price);
+      if (!Number.isFinite(lower) || lower <= 0) continue;
+
+      const ratio = Math.abs(a.price - b.price) / lower;
+      if (ratio < SIGNIFICANT_PRICE_GAP_RATIO) continue;
+
+      if (!best || ratio > best.ratio) {
+        best = { left: a, right: b, ratio };
+      }
+    }
+  }
+
+  if (!best) return null;
+
+  return best.left.price >= best.right.price
+    ? { left: best.left, right: best.right }
+    : { left: best.right, right: best.left };
+}
+
+function parseArticleInlineBlocks(content: string): ArticleInlineBlock[] {
+  const blocks: ArticleInlineBlock[] = [];
+  const tokens: Array<{ start: number; end: number; block: ArticleInlineBlock }> = [];
+
+  PRODUCT_GRID_SHORTCODE_REGEX.lastIndex = 0;
+
+  for (const match of content.matchAll(PRODUCT_GRID_SHORTCODE_REGEX)) {
+    const full = match[0];
+    const attrsRaw = match[1] ?? "";
+    const attrs = parseShortcodeAttributes(attrsRaw);
+    const limitRaw = attrs.limit;
+    const start = match.index ?? 0;
+    const end = start + full.length;
+
+    const parsedLimit = Number(limitRaw);
+    const safeLimit = Number.isFinite(parsedLimit)
+      ? Math.min(20, Math.max(1, parsedLimit))
+      : 8;
+    const sort = attrs.sort === "price_asc" ? "price_asc" : "price_desc";
+    const minPrice = Number(attrs.minPrice);
+    const maxPrice = Number(attrs.maxPrice);
+
+    tokens.push({
+      start,
+      end,
+      block: {
+        type: "product_grid",
+        title: attrs.title?.trim(),
+        caption: attrs.caption?.trim(),
+        style: attrs.style?.trim(),
+        gemstone: attrs.gemstone?.trim(),
+        occasion: attrs.occasion?.trim(),
+        metal: attrs.metal?.trim(),
+        metalColor: attrs.metalColor?.trim(),
+        minPrice: Number.isFinite(minPrice) ? minPrice : undefined,
+        maxPrice: Number.isFinite(maxPrice) ? maxPrice : undefined,
+        limit: safeLimit,
+        sort,
+      },
+    });
+  }
+
+  PRODUCT_COMPARE_SHORTCODE_REGEX.lastIndex = 0;
+  for (const match of content.matchAll(PRODUCT_COMPARE_SHORTCODE_REGEX)) {
+    const full = match[0];
+    const attrsRaw = match[1] ?? "";
+    const attrs = parseShortcodeAttributes(attrsRaw);
+    const start = match.index ?? 0;
+    const end = start + full.length;
+
+    const title = attrs.title?.trim();
+    if (!title) continue;
+
+    const minPrice = Number(attrs.minPrice);
+    const maxPrice = Number(attrs.maxPrice);
+    const sort = attrs.sort === "price_desc" ? "price_desc" : "price_asc";
+
+    tokens.push({
+      start,
+      end,
+      block: {
+        type: "product_compare",
+        title,
+        caption: attrs.caption?.trim(),
+        style: attrs.style?.trim(),
+        gemstone: attrs.gemstone?.trim(),
+        occasion: attrs.occasion?.trim(),
+        metal: attrs.metal?.trim(),
+        metalColor: attrs.metalColor?.trim(),
+        minPrice: Number.isFinite(minPrice) ? minPrice : undefined,
+        maxPrice: Number.isFinite(maxPrice) ? maxPrice : undefined,
+        sort,
+      },
+    });
+  }
+
+  const orderedTokens = tokens.sort((a, b) => a.start - b.start);
+  let lastIndex = 0;
+  for (const token of orderedTokens) {
+    const markdownChunk = content.slice(lastIndex, token.start).trim();
+    if (markdownChunk) {
+      blocks.push({ type: "markdown", content: markdownChunk });
+    }
+    blocks.push(token.block);
+    lastIndex = token.end;
+  }
+
+  const tail = content.slice(lastIndex).trim();
+  if (tail) {
+    blocks.push({ type: "markdown", content: tail });
+  }
+
+  return blocks.length > 0 ? blocks : [{ type: "markdown", content }];
 }
 
 function getSearchIntent(slug: string): SearchIntent {
@@ -235,8 +641,15 @@ export default async function ArticleDetailPage({
   const relatedArticles = allArticles.filter((entry) => entry.slug !== article.slug).slice(0, 3);
   const intent = getSearchIntent(article.slug);
   const catalog = products as Array<Product & Record<string, unknown>>;
+  const articleBlocks = parseArticleInlineBlocks(article.content);
+  const inferredFilters = inferArticleFilters(article.slug, article.title);
+  const usedVisualProductIds = new Set<string>();
   const matchedProductCount = countMatchingProducts(catalog, intent.terms);
-  const relatedProductsHref = `/ring?q=${encodeURIComponent(intent.searchQuery)}`;
+  const relatedProductsHref = buildFilteredCatalogHref(
+    inferredFilters,
+    article.slug.replace(/-/g, "_"),
+    "related_products"
+  );
   const tocItems = article.content
     .split("\n")
     .map((line) => line.trim())
@@ -283,29 +696,193 @@ export default async function ArticleDetailPage({
             ) : null}
 
             <div className="article-detail-content article-markdown">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h2: ({ children }) => {
-                    const text = toPlainText(children);
-                    const id = slugify(text);
-                    return (
-                      <h2 id={id}>
-                        <a href={`#${id}`} aria-label={`Jump to section ${text}`}>
-                          {children}
-                        </a>
-                      </h2>
-                    );
-                  },
-                  h3: ({ children }) => {
-                    const text = toPlainText(children);
-                    const id = slugify(text);
-                    return <h3 id={id}>{children}</h3>;
-                  },
-                }}
-              >
-                {article.content}
-              </ReactMarkdown>
+              {articleBlocks.map((block, index) => {
+                if (block.type === "markdown") {
+                  return (
+                    <ReactMarkdown
+                      key={`md-block-${index}`}
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h2: ({ children }) => {
+                          const text = toPlainText(children);
+                          const id = slugify(text);
+                          return (
+                            <h2 id={id}>
+                              <a href={`#${id}`} aria-label={`Jump to section ${text}`}>
+                                {children}
+                              </a>
+                            </h2>
+                          );
+                        },
+                        h3: ({ children }) => {
+                          const text = toPlainText(children);
+                          const id = slugify(text);
+                          return <h3 id={id}>{children}</h3>;
+                        },
+                      }}
+                    >
+                      {block.content}
+                    </ReactMarkdown>
+                  );
+                }
+
+                if (block.type === "product_compare") {
+                  const filtered = filterCatalogProducts(catalog, {
+                    style: block.style,
+                    gemstone: block.gemstone,
+                    occasion: block.occasion,
+                    metal: block.metal,
+                    metalColor: block.metalColor,
+                    minPrice: block.minPrice,
+                    maxPrice: block.maxPrice,
+                  }).filter((product) => !usedVisualProductIds.has(getProductVisualId(product)));
+
+                  const ordered = [...filtered].sort((a, b) => {
+                    if (block.sort === "price_desc") return b.price - a.price;
+                    return a.price - b.price;
+                  });
+
+                  const pair = pickSignificantCrossBrandPair(ordered);
+                  if (!pair) {
+                    return null;
+                  }
+
+                  const { left, right } = pair;
+                  const delta = Math.abs(left.price - right.price);
+                  usedVisualProductIds.add(getProductVisualId(left));
+                  usedVisualProductIds.add(getProductVisualId(right));
+
+                  return (
+                    <section
+                      key={`product-compare-${block.title}-${index}`}
+                      className="article-inline-product-compare"
+                      aria-label={block.title}
+                    >
+                      <p className="article-inline-product-grid-kicker">Comparison Example</p>
+                      <h3>{block.title}</h3>
+                      <div className="article-inline-product-compare-row">
+                        {[left, right].map((product) => {
+                          const detailPath = buildProductDetailPath(product);
+                          const href = detailPath ?? product.productUrl;
+                          const isExternal = /^https?:\/\//i.test(href);
+                          const productImage = getProductCardImage(product);
+                          const productAlt = buildDescriptiveProductAlt(product);
+
+                          return (
+                            <a
+                              key={`${block.title}-${product.id}`}
+                              href={href}
+                              className="article-inline-product-card"
+                              {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
+                            >
+                              <div className="article-inline-product-thumb">
+                                {productImage ? (
+                                  <Image
+                                    src={getArticleImageSrc(productImage)}
+                                    alt={productAlt}
+                                    fill
+                                    unoptimized
+                                    sizes="(max-width: 900px) 44vw, 220px"
+                                  />
+                                ) : null}
+                              </div>
+                              <span className="article-inline-product-brand">{product.brand}</span>
+                              <strong className="article-inline-product-name">{product.name}</strong>
+                              <span className="article-inline-product-price">{toCurrency(product.price)}</span>
+                            </a>
+                          );
+                        })}
+                      </div>
+                      {block.caption ? (
+                        <p className="article-inline-product-compare-caption">{block.caption}</p>
+                      ) : null}
+                      <p className="article-inline-product-compare-note">
+                        Price gap in this example: <strong>{toCurrency(delta)}</strong>
+                      </p>
+                      <div className="article-inline-product-actions">
+                        <Link href={FULL_CATALOG_HREF} className="article-inline-see-all-link">
+                          See all in catalog
+                        </Link>
+                      </div>
+                    </section>
+                  );
+                }
+
+                const matches = filterCatalogProducts(catalog, {
+                  style: block.style,
+                  gemstone: block.gemstone,
+                  occasion: block.occasion,
+                  metal: block.metal,
+                  metalColor: block.metalColor,
+                  minPrice: block.minPrice,
+                  maxPrice: block.maxPrice,
+                })
+                  .filter((product) => !usedVisualProductIds.has(getProductVisualId(product)))
+                  .sort((a, b) => {
+                    if (block.sort === "price_asc") return a.price - b.price;
+                    return b.price - a.price;
+                  })
+                  .slice(0, block.limit);
+
+                if (matches.length === 0) {
+                  return null;
+                }
+
+                for (const product of matches) {
+                  usedVisualProductIds.add(getProductVisualId(product));
+                }
+
+                const kickerLabel = block.title?.trim() || (block.style ? `Filtered by style: ${block.style}` : "Product Shortlist");
+
+                return (
+                  <section
+                    key={`product-grid-${block.style ?? "mixed"}-${index}`}
+                    className="article-inline-product-grid"
+                    aria-label={`${kickerLabel} product cards`}
+                  >
+                    <p className="article-inline-product-grid-kicker">{kickerLabel}</p>
+                    <div className="article-inline-product-grid-list">
+                      {matches.map((product) => {
+                        const detailPath = buildProductDetailPath(product);
+                        const href = detailPath ?? product.productUrl;
+                        const isExternal = /^https?:\/\//i.test(href);
+                        const productImage = getProductCardImage(product);
+                        const productAlt = buildDescriptiveProductAlt(product);
+
+                        return (
+                          <a
+                            key={`${block.style}-${product.id}`}
+                            href={href}
+                            className="article-inline-product-card"
+                            {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
+                          >
+                            <div className="article-inline-product-thumb">
+                              {productImage ? (
+                                <Image
+                                  src={getArticleImageSrc(productImage)}
+                                  alt={productAlt}
+                                  fill
+                                  unoptimized
+                                  sizes="(max-width: 900px) 42vw, 180px"
+                                />
+                              ) : null}
+                            </div>
+                            <span className="article-inline-product-brand">{product.brand}</span>
+                            <strong className="article-inline-product-name">{product.name}</strong>
+                            <span className="article-inline-product-price">{toCurrency(product.price)}</span>
+                          </a>
+                        );
+                      })}
+                    </div>
+                    {block.caption ? <p className="article-inline-product-compare-caption">{block.caption}</p> : null}
+                    <div className="article-inline-product-actions">
+                      <Link href={FULL_CATALOG_HREF} className="article-inline-see-all-link">
+                        See all in catalog
+                      </Link>
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           </div>
         </article>
