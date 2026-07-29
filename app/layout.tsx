@@ -194,6 +194,27 @@ export default function RootLayout({
             <Script id="google-analytics" strategy="afterInteractive">
               {`
                 (function () {
+                  function isLikelyBotSession() {
+                    try {
+                      var ua = (navigator.userAgent || '').toLowerCase();
+                      var referrer = (document.referrer || '').toLowerCase();
+                      var search = (window.location.search || '').toLowerCase();
+
+                      var botUaPattern = /(bot|spider|crawler|headless|phantom|slurp|bingpreview|curl|wget|python|scrapy|httpclient|go-http-client|axios|node-fetch|lighthouse|pagespeed|monitor)/i;
+                      var botReferrerPattern = /(semrush|ahrefs|mj12|dotbot|petalbot|uptimerobot|statuscake|crawler|spider)/i;
+
+                      if (navigator.webdriver) return true;
+                      if (window.Cypress || window.__nightmare || window.callPhantom || window._phantom) return true;
+                      if (botUaPattern.test(ua)) return true;
+                      if (botReferrerPattern.test(referrer)) return true;
+                      if (search.indexOf('bot=1') >= 0 || search.indexOf('crawler=1') >= 0) return true;
+
+                      return false;
+                    } catch (_error) {
+                      return false;
+                    }
+                  }
+
                   var host = window.location.hostname;
                   var isLocalhost = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
                   if (isLocalhost) return;
@@ -201,6 +222,7 @@ export default function RootLayout({
                   var path = window.location.pathname || '/';
                   var isStudio = path === '/studio' || path.indexOf('/studio/') === 0;
                   if (isStudio) return;
+                  if (isLikelyBotSession()) return;
 
                   var gaScript = document.createElement('script');
                   gaScript.async = true;

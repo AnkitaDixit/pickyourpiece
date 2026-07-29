@@ -42,6 +42,31 @@ function isStudioPath(pathname: string) {
   return pathname === "/studio" || pathname.startsWith("/studio/");
 }
 
+function isLikelyBotClient() {
+  if (typeof window === "undefined") return false;
+
+  try {
+    const ua = (navigator.userAgent || "").toLowerCase();
+    const referrer = (document.referrer || "").toLowerCase();
+    const query = (window.location.search || "").toLowerCase();
+
+    const botUaPattern = /(bot|spider|crawler|headless|phantom|slurp|bingpreview|curl|wget|python|scrapy|httpclient|go-http-client|axios|node-fetch|lighthouse|pagespeed|monitor)/i;
+    const botReferrerPattern = /(semrush|ahrefs|mj12|dotbot|petalbot|uptimerobot|statuscake|crawler|spider)/i;
+
+    if (navigator.webdriver) return true;
+    if ("Cypress" in window || "__nightmare" in window || "callPhantom" in window || "_phantom" in window) {
+      return true;
+    }
+    if (botUaPattern.test(ua)) return true;
+    if (botReferrerPattern.test(referrer)) return true;
+    if (query.includes("bot=1") || query.includes("crawler=1")) return true;
+
+    return false;
+  } catch {
+    return false;
+  }
+}
+
 function normalizeParamValue(value: string | null | undefined): string | undefined {
   if (value == null) return undefined;
   const trimmed = value.trim();
@@ -109,6 +134,10 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
     return;
   }
 
+  if (isLikelyBotClient()) {
+    return;
+  }
+
   if (isStudioPath(window.location.pathname)) {
     return;
   }
@@ -126,6 +155,10 @@ export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParam
 
 export function trackDataClick(element: HTMLElement) {
   if (typeof window !== "undefined" && isStudioPath(window.location.pathname)) {
+    return;
+  }
+
+  if (isLikelyBotClient()) {
     return;
   }
 

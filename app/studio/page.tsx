@@ -11,9 +11,13 @@ type StudioProduct = {
   brand: string;
   price: number;
   image: string;
+  allImages?: string[] | string;
   productUrl: string;
   category: string;
   style: string[];
+  gemstone: string[];
+  metal: string;
+  color: string;
 };
 
 function toStudioProduct(product: Product): StudioProduct {
@@ -23,9 +27,13 @@ function toStudioProduct(product: Product): StudioProduct {
     brand: product.brand,
     price: product.price,
     image: product.image,
+    allImages: product.allImages,
     productUrl: product.productUrl,
     category: product.category,
     style: Array.isArray(product.style) ? product.style : [],
+    gemstone: Array.isArray(product.gemstone) ? product.gemstone : [],
+    metal: (product.metal || "").trim(),
+    color: (product.metalColor || "").trim(),
   };
 }
 
