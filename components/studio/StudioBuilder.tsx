@@ -116,6 +116,17 @@ const SIMILAR_SLOTS: { id: SimilarSlotId; label: string }[] = [
 
 const PICKYOURPIECE_SITE_URL = "https://www.pickyourpiece.com";
 
+const BRAND_LOGOS: Record<string, string> = {
+  bluestone: "/brands/bluestone-logo.png?v=20260709-2338",
+  caratlane: "/brands/caratlane-logo.jpg?v=20260709-2338",
+  tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
+  giva: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdiZUsR4K1BJmDa422342XYCtccq7OfbR9RFdwOuWWAz8IN3bgLWRBLw-_&s=10",
+  palmonas: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP_TFMjp4QLM89RGzLpBaGMmS9q4eX04dfFkihs9oa1rI_dhfgDvvEDlmN&s=10",
+  miabytanishq: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
+  orra: "http://upload.wikimedia.org/wikipedia/commons/3/3e/ORRAJewellery.jpg",
+  candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
+};
+
 function createDefaultSideFilter(): SideFilterState {
   return {
     query: "",
@@ -132,12 +143,24 @@ function toCurrency(value: number) {
   return `INR ${value.toLocaleString("en-IN")}`;
 }
 
+function getBrandBadgeText(brand: string) {
+  return brand
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("")
+    .slice(0, 2);
+}
+
+function getBrandKey(brand: string) {
+  return brand.toLowerCase().replace(/\s+/g, "");
+}
+
 function buildHashtags(parts: string[]) {
   return parts
     .map((item) => item.trim().toLowerCase().replace(/[^a-z0-9]+/g, ""))
     .filter(Boolean)
     .map((item) => `#${item}`)
-    .slice(0, 8)
     .join(" ");
 }
 
@@ -263,6 +286,16 @@ function getCaptionProductUrl(product: ProductOption | undefined) {
   return product.productUrl ?? "/";
 }
 
+function getCaptionImageUrl(imageUrl: string | undefined) {
+  if (!imageUrl) return "";
+  if (/^https?:\/\//i.test(imageUrl)) {
+    return imageUrl;
+  }
+
+  const normalizedPath = imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`;
+  return `${PICKYOURPIECE_SITE_URL}${normalizedPath}`;
+}
+
 function hasImage(product: ProductOption | undefined) {
   return Boolean(product?.image && product.image.trim().length > 0);
 }
@@ -300,6 +333,8 @@ export default function StudioBuilder({
 }: StudioBuilderProps) {
   const INITIAL_VISIBLE_PICKER_ITEMS = 120;
   const PICKER_BATCH_SIZE = 120;
+  const initialBudgetProducts = products.filter((product) => product.price <= 50000);
+  const initialBudgetFallback = initialBudgetProducts.length > 0 ? initialBudgetProducts : products;
 
   const previewCanvasRef = useRef<HTMLDivElement | null>(null);
   const [templateId, setTemplateId] = useState(TEMPLATES[0].id);
@@ -323,6 +358,19 @@ export default function StudioBuilder({
     slot3: createDefaultSideFilter(),
     slot4: createDefaultSideFilter(),
   });
+  const [budgetSelectionTarget, setBudgetSelectionTarget] = useState<SimilarSlotId>("slot1");
+  const [budgetSlotProductIds, setBudgetSlotProductIds] = useState<Record<SimilarSlotId, string>>({
+    slot1: initialBudgetFallback[0]?.id ?? products[0]?.id ?? "",
+    slot2: initialBudgetFallback[1]?.id ?? initialBudgetFallback[0]?.id ?? products[0]?.id ?? "",
+    slot3: initialBudgetFallback[2]?.id ?? initialBudgetFallback[0]?.id ?? products[0]?.id ?? "",
+    slot4: initialBudgetFallback[3]?.id ?? initialBudgetFallback[0]?.id ?? products[0]?.id ?? "",
+  });
+  const [budgetSideFilters, setBudgetSideFilters] = useState<Record<SimilarSlotId, SideFilterState>>({
+    slot1: createDefaultSideFilter(),
+    slot2: createDefaultSideFilter(),
+    slot3: createDefaultSideFilter(),
+    slot4: createDefaultSideFilter(),
+  });
   const [selectedBrandFilter, setSelectedBrandFilter] = useState("all");
   const [priceSort, setPriceSort] = useState<SortMode>("featured");
   const [instagramPostTemplate, setInstagramPostTemplate] = useState<InstagramPostTemplateType>("compare_cards");
@@ -332,6 +380,7 @@ export default function StudioBuilder({
   const [visiblePickerCount, setVisiblePickerCount] = useState(INITIAL_VISIBLE_PICKER_ITEMS);
   const [selectedImageIndexByProductId, setSelectedImageIndexByProductId] = useState<Record<string, number>>({});
   const [imageFrameByProductId, setImageFrameByProductId] = useState<Record<string, ProductImageFrame>>({});
+  const [brokenBrandLogos, setBrokenBrandLogos] = useState<Record<string, true>>({});
 
   const getProductDisplayImage = useCallback((product: ProductOption | undefined) => {
     const images = getProductImages(product);
@@ -407,6 +456,38 @@ export default function StudioBuilder({
     };
   }, [getProductImageFrame]);
 
+  const renderBrandBadge = useCallback((brand: string) => {
+    const brandKey = getBrandKey(brand);
+    const logoSrc = BRAND_LOGOS[brandKey];
+    const isBroken = Boolean(brokenBrandLogos[brandKey]);
+    const canShowLogo = Boolean(logoSrc) && !isBroken;
+
+    if (canShowLogo && logoSrc) {
+      return (
+        <span className="studio-ig-piece-brand-badge studio-ig-piece-brand-badge-has-image" aria-hidden="true">
+          <Image
+            src={getStudioImageSrc(logoSrc)}
+            alt=""
+            className="studio-ig-piece-brand-badge-img"
+            width={14}
+            height={14}
+            loading="lazy"
+            unoptimized
+            sizes="14px"
+            onError={() => {
+              setBrokenBrandLogos((current) => ({
+                ...current,
+                [brandKey]: true,
+              }));
+            }}
+          />
+        </span>
+      );
+    }
+
+    return <span className="studio-ig-piece-brand-badge" aria-hidden="true">{getBrandBadgeText(brand)}</span>;
+  }, [brokenBrandLogos]);
+
   const template = useMemo(
     () => TEMPLATES.find((item) => item.id === templateId) ?? TEMPLATES[0],
     [templateId]
@@ -424,6 +505,7 @@ export default function StudioBuilder({
   const interleavedRingProducts = useMemo(() => interleaveByBrand(ringProducts), [ringProducts]);
   const isCompareCardsTemplate = templateId === "instagram_post" && instagramPostTemplate === "compare_cards";
   const isSimilarPiecesTemplate = templateId === "instagram_post" && instagramPostTemplate === "similar_pieces";
+  const isBestUnderBudgetTemplate = templateId === "instagram_post" && instagramPostTemplate === "best_under_budget";
 
   const ringBrandOptions = useMemo<BrandOption[]>(() => {
     const brandMap = new Map<string, string>();
@@ -443,10 +525,21 @@ export default function StudioBuilder({
       .map(([value, label]) => ({ value, label }));
   }, [ringProducts]);
 
-  const allRingBrandHashtagParts = useMemo(
-    () => ringBrandOptions.map((brand) => brand.label),
-    [ringBrandOptions]
-  );
+  const allCatalogBrandHashtagParts = useMemo(() => {
+    const brandMap = new Map<string, string>();
+
+    for (const product of products) {
+      const rawBrand = (product.brand || "").trim();
+      if (!rawBrand) continue;
+
+      const key = normalizeBrand(rawBrand);
+      if (!brandMap.has(key)) {
+        brandMap.set(key, rawBrand);
+      }
+    }
+
+    return Array.from(brandMap.values()).sort((a, b) => a.localeCompare(b));
+  }, [products]);
 
   const similarStyleOptions = useMemo<BrandOption[]>(() => {
     const styles = ringProducts.flatMap((product) => product.style ?? []);
@@ -533,6 +626,16 @@ export default function StudioBuilder({
     return applySideFilter(interleavedRingProducts, activeSideFilter);
   }, [applySideFilter, interleavedRingProducts, similarSelectionTarget, similarSideFilters]);
 
+  const budgetEligibleProducts = useMemo(
+    () => interleavedRingProducts.filter((product) => product.price <= budgetCap),
+    [budgetCap, interleavedRingProducts]
+  );
+
+  const budgetPickerProducts = useMemo(() => {
+    const activeSideFilter = budgetSideFilters[budgetSelectionTarget];
+    return applySideFilter(budgetEligibleProducts, activeSideFilter);
+  }, [applySideFilter, budgetEligibleProducts, budgetSelectionTarget, budgetSideFilters]);
+
   const updateCompareSideFilter = useCallback((
     side: CompareSideId,
     key: keyof SideFilterState,
@@ -563,10 +666,27 @@ export default function StudioBuilder({
     setVisiblePickerCount(INITIAL_VISIBLE_PICKER_ITEMS);
   }, [INITIAL_VISIBLE_PICKER_ITEMS]);
 
+  const updateBudgetSideFilter = useCallback((
+    side: SimilarSlotId,
+    key: keyof SideFilterState,
+    value: string | SortMode
+  ) => {
+    setBudgetSideFilters((current) => ({
+      ...current,
+      [side]: {
+        ...current[side],
+        [key]: value,
+      },
+    }));
+    setVisiblePickerCount(INITIAL_VISIBLE_PICKER_ITEMS);
+  }, [INITIAL_VISIBLE_PICKER_ITEMS]);
+
   const pickerProducts = isCompareCardsTemplate
     ? comparePickerProducts
     : isSimilarPiecesTemplate
     ? similarPickerProducts
+    : isBestUnderBudgetTemplate
+    ? budgetPickerProducts
     : filteredProducts;
 
   const displayedPickerProducts = useMemo(
@@ -662,57 +782,80 @@ export default function StudioBuilder({
   }, [interleavedRingProducts, productById, selectedProduct, similarPickerProducts, similarSlotProductIds]);
 
   const budgetProducts = useMemo(() => {
-    const pool = (filteredProducts.length ? filteredProducts : products).filter((item) => item.price <= budgetCap);
-    return pool.slice(0, 4);
-  }, [budgetCap, filteredProducts, products]);
+    const fallbackPool = budgetEligibleProducts.length > 0 ? budgetEligibleProducts : interleavedRingProducts;
+
+    return SIMILAR_SLOTS.map((slot, index) => {
+      const chosenId = budgetSlotProductIds[slot.id];
+      const chosen = chosenId ? productById.get(chosenId) : undefined;
+      return chosen ?? fallbackPool[index] ?? interleavedRingProducts[index] ?? selectedProduct;
+    }).filter((item): item is ProductOption => Boolean(item));
+  }, [budgetEligibleProducts, budgetSlotProductIds, interleavedRingProducts, productById, selectedProduct]);
 
   const instagramPostInfo = useMemo(() => {
     const left = comparePair.left;
     const right = comparePair.right;
     const compareBrands = left && right ? `${left.brand} vs ${right.brand}` : "Compare Across Brands";
     const budgetStyle = "Rings";
+    const compareTemplateIntro =
+      "PickYourPiece helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.";
 
     if (instagramPostTemplate === "compare_cards") {
       const leftName = left?.name ?? "Product A";
       const rightName = right?.name ?? "Product B";
       const leftUrl = getCaptionProductUrl(left);
       const rightUrl = getCaptionProductUrl(right);
+      const leftImageUrl = getCaptionImageUrl(getProductDisplayImage(left));
+      const rightImageUrl = getCaptionImageUrl(getProductDisplayImage(right));
 
       return {
         title: compareBrands,
         subtitle: `${leftName} vs ${rightName}`,
-        caption: `PickYourPiece helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates. Compare ${left?.brand ?? "Brand A"} and ${right?.brand ?? "Brand B"} side by side before buying.\n\nProducts in this comparison:\n1. ${leftName} - ${leftUrl}\n2. ${rightName} - ${rightUrl}`,
-        hashtags: buildHashtags(["pickyourpiece", "CompareRings", "JewelleryComparison", ...allRingBrandHashtagParts]),
+        caption: `${compareTemplateIntro} Compare ${left?.brand ?? "Brand A"} and ${right?.brand ?? "Brand B"} side by side before buying.\n\nProducts in this comparison:\n1. ${leftName} - ${leftUrl}\n   Image URL: ${leftImageUrl || "N/A"}\n2. ${rightName} - ${rightUrl}\n   Image URL: ${rightImageUrl || "N/A"}`,
+        hashtags: buildHashtags(["pickyourpiece", "CompareRings", "JewelleryComparison", ...allCatalogBrandHashtagParts]),
         cta: "/?q=ring",
       };
     }
 
     if (instagramPostTemplate === "similar_pieces") {
       const similarProductsWithUrls = similarPieces
-        .map((product, index) => `${index + 1}. ${product.name} - ${getCaptionProductUrl(product)}`)
+        .map((product, index) => {
+          const productUrl = getCaptionProductUrl(product);
+          const imageUrl = getCaptionImageUrl(getProductDisplayImage(product));
+          return `${index + 1}. ${product.name} - ${productUrl}\n   Image URL: ${imageUrl || "N/A"}`;
+        })
         .join("\n");
 
       return {
         title: "Love this ring?",
         subtitle: "We found similar styles across top brands.",
-        caption: `PickYourPiece helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates before buying.\n\nFound a design you like? Compare similar alternatives in seconds.\n\nProducts in this template:\n${similarProductsWithUrls}`,
-        hashtags: buildHashtags([selectedProduct?.brand ?? "Jewellery", "SimilarRings", "RingAlternatives", "PickYourPiece"]),
+        caption: `${compareTemplateIntro} Found a design you like? Compare similar alternatives in seconds.\n\nProducts in this template:\n${similarProductsWithUrls}`,
+        hashtags: buildHashtags(["pickyourpiece", "SimilarRings", "RingAlternatives", ...allCatalogBrandHashtagParts]),
         cta: selectedProduct?.productUrl ?? "/",
       };
     }
 
+    const budgetProductsWithUrls = budgetProducts
+      .map((product, index) => {
+        const productUrl = getCaptionProductUrl(product);
+        const imageUrl = getCaptionImageUrl(getProductDisplayImage(product));
+        return `${index + 1}. ${product.name} - ${productUrl}\n   Image URL: ${imageUrl || "N/A"}`;
+      })
+      .join("\n");
+
     return {
       title: `Best ${budgetStyle}`,
       subtitle: `Under ${toCurrency(budgetCap)}`,
-      caption: `Top ${budgetStyle.toLowerCase()} picks under ${toCurrency(budgetCap)}.`,
-      hashtags: buildHashtags([budgetStyle, "UnderBudget", "SmartBuy", "PickYourPiece"]),
+      caption: `${compareTemplateIntro} Top ${budgetStyle.toLowerCase()} picks under ${toCurrency(budgetCap)}.\n\nProducts in this template:\n${budgetProductsWithUrls}`,
+      hashtags: buildHashtags(["pickyourpiece", budgetStyle, "UnderBudget", "SmartBuy", ...allCatalogBrandHashtagParts]),
       cta: `/?maxPrice=${budgetCap}`,
     };
   }, [
-    allRingBrandHashtagParts,
+    allCatalogBrandHashtagParts,
     budgetCap,
+    budgetProducts,
     comparePair.left,
     comparePair.right,
+    getProductDisplayImage,
     instagramPostTemplate,
     similarPieces,
     selectedProduct,
@@ -981,6 +1124,57 @@ export default function StudioBuilder({
 
             <p>Switch Image 1-4 capsules to edit that image and pick products from the list.</p>
           </div>
+        ) : isBestUnderBudgetTemplate ? (
+          <div className="studio-compare-picker-target" role="group" aria-label="Best under budget image selection">
+            <div className="studio-compare-capsules studio-compare-capsules--four" role="tablist" aria-label="Budget piece slot selector">
+              {SIMILAR_SLOTS.map((slot) => (
+                <button
+                  key={`budget-capsule-${slot.id}`}
+                  type="button"
+                  className={`studio-compare-capsule ${budgetSelectionTarget === slot.id ? "active" : ""}`}
+                  role="tab"
+                  aria-selected={budgetSelectionTarget === slot.id}
+                  onClick={() => {
+                    setBudgetSelectionTarget(slot.id);
+                    setVisiblePickerCount(INITIAL_VISIBLE_PICKER_ITEMS);
+                  }}
+                >
+                  {slot.label}
+                </button>
+              ))}
+            </div>
+
+            {(() => {
+              const slot = budgetSelectionTarget;
+              const slotFilter = budgetSideFilters[slot];
+              const slotLabel = SIMILAR_SLOTS.find((item) => item.id === slot)?.label ?? "Image";
+              const slotProduct = productById.get(budgetSlotProductIds[slot]) ?? budgetProducts[0];
+              const slotFrame: SideFrameState | undefined = slotProduct
+                ? getProductImageFrame(slotProduct)
+                : undefined;
+
+              return (
+                <StudioSideControlPanel
+                  title={`${slotLabel} Controls`}
+                  activeLabel={`Picking For ${slotLabel}`}
+                  sideId={`budget-${slot}`}
+                  filter={slotFilter}
+                  onFilterChange={(key, value) => updateBudgetSideFilter(slot, key, value)}
+                  brandOptions={ringBrandOptions}
+                  gemstoneOptions={similarGemstoneOptions}
+                  styleOptions={similarStyleOptions}
+                  metalOptions={compareMetalOptions}
+                  colorOptions={compareColorOptions}
+                  frame={slotFrame}
+                  onFrameChange={slotProduct ? (key, value) => updateProductImageFrame(slotProduct.id, key, value) : undefined}
+                  onResetFrame={slotProduct ? () => resetProductImageFrame(slotProduct.id) : undefined}
+                  frameLimits={IMAGE_FRAME_LIMITS}
+                />
+              );
+            })()}
+
+            <p>Switch Image 1-4 capsules to edit that image. Budget cap automatically limits every slot picker.</p>
+          </div>
         ) : (
           <div className="studio-picker-toolbar">
             <div className="studio-control-group">
@@ -1026,6 +1220,7 @@ export default function StudioBuilder({
             const isLeftSelected = isCompareCardsTemplate && product.id === selectedProductId;
             const isRightSelected = isCompareCardsTemplate && product.id === compareRightProduct?.id;
             const isSimilarSelected = isSimilarPiecesTemplate && product.id === similarSlotProductIds[similarSelectionTarget];
+            const isBudgetSelected = isBestUnderBudgetTemplate && product.id === budgetSlotProductIds[budgetSelectionTarget];
             const productImages = getProductImages(product);
             const activeThumbImage = getProductDisplayImage(product);
             const rawImageIndex = selectedImageIndexByProductId[product.id] ?? 0;
@@ -1034,6 +1229,7 @@ export default function StudioBuilder({
               isLeftSelected ? "active-left" : "",
               isRightSelected ? "active-right" : "",
               isSimilarSelected ? "active-similar" : "",
+              isBudgetSelected ? "active-similar" : "",
             ].filter(Boolean).join(" ");
 
             return (
@@ -1046,6 +1242,14 @@ export default function StudioBuilder({
                       setSimilarSlotProductIds((current) => ({
                         ...current,
                         [similarSelectionTarget]: product.id,
+                      }));
+                      return;
+                    }
+
+                    if (templateId === "instagram_post" && instagramPostTemplate === "best_under_budget") {
+                      setBudgetSlotProductIds((current) => ({
+                        ...current,
+                        [budgetSelectionTarget]: product.id,
                       }));
                       return;
                     }
@@ -1224,7 +1428,10 @@ export default function StudioBuilder({
                           />
                         ) : null}
                         <div className="studio-ig-piece-meta">
-                          <span className="studio-ig-piece-brand">{similarPieces[0].brand}</span>
+                          <span className="studio-ig-piece-brand-wrap">
+                            {renderBrandBadge(similarPieces[0].brand)}
+                            <span className="studio-ig-piece-brand">{similarPieces[0].brand}</span>
+                          </span>
                           <strong className="studio-ig-piece-price">{toCurrency(similarPieces[0].price)}</strong>
                         </div>
                       </article>
@@ -1244,7 +1451,10 @@ export default function StudioBuilder({
                             />
                           ) : null}
                           <div className="studio-ig-piece-meta">
-                            <span className="studio-ig-piece-brand">{product.brand}</span>
+                            <span className="studio-ig-piece-brand-wrap">
+                              {renderBrandBadge(product.brand)}
+                              <span className="studio-ig-piece-brand">{product.brand}</span>
+                            </span>
                             <strong className="studio-ig-piece-price">{toCurrency(product.price)}</strong>
                           </div>
                         </article>
@@ -1269,8 +1479,8 @@ export default function StudioBuilder({
                     <p>{instagramPostInfo.subtitle}</p>
                   </div>
                   <div className="studio-ig-grid-four">
-                    {budgetProducts.map((product) => (
-                      <article key={product.id} className="studio-ig-piece">
+                    {budgetProducts.map((product, index) => (
+                      <article key={`${product.id}-${index + 1}`} className="studio-ig-piece">
                         {getProductDisplayImage(product) ? (
                           <Image
                             src={getStudioImageSrc(getProductDisplayImage(product))}
@@ -1278,11 +1488,27 @@ export default function StudioBuilder({
                             fill
                             unoptimized
                             sizes="(max-width: 1000px) 35vw, 220px"
+                            style={getProductImageStyle(product)}
                           />
                         ) : null}
+                        <div className="studio-ig-piece-meta">
+                          <span className="studio-ig-piece-brand-wrap">
+                            {renderBrandBadge(product.brand)}
+                            <span className="studio-ig-piece-brand">{product.brand}</span>
+                          </span>
+                          <strong className="studio-ig-piece-price">{toCurrency(product.price)}</strong>
+                        </div>
                       </article>
                     ))}
                   </div>
+
+                  <StudioCompareFooter
+                    title="Compare Across Brands."
+                    highlight="Find Your Perfect Piece."
+                    ctaLabel="COMPARE NOW"
+                    ctaAriaLabel="Compare now"
+                    siteLabel="pickyourpiece.com"
+                  />
                 </>
               ) : null}
               </div>

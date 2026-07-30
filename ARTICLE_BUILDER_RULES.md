@@ -196,35 +196,6 @@ If an article-specific SVG is needed:
 - Match motif to topic (budget, diamonds, metals, sizing, style comparison).
 - Avoid visual clutter and keep mobile readability.
 
-## 12.1) Product graphic rules for article body (mandatory)
-
-When adding product visuals in article body, visuals must be informational and comparison-led, not decorative filler.
-
-Core rules:
-
-- Every product visual block must connect to the section's decision intent (style, budget, material, price-value, etc).
-- Do not insert random product images without explanatory context.
-- Prefer comparison examples over isolated hero shots.
-
-Inline shortcode rules:
-
-- Use `[product_grid ...]` for shortlist views.
-- Use `[product_compare ...]` for side-by-side evaluation examples.
-- `product_grid` should be filter-driven (for example `style`, `maxPrice`, etc via section link logic) and never query-text driven.
-- `product_compare` must use meaningful filters so chosen products represent the written point.
-
-Comparison integrity requirements:
-
-- Comparison examples must use products from different brands.
-- Price difference should be significant (target >= 30%) for price-value comparisons.
-- If no valid pair exists, skip the comparison block instead of forcing weak examples.
-
-Visual composition requirements:
-
-- Show brand, product name, and price in each product card.
-- Use reliable image fallback logic (`image` then `allImages`) when available.
-- Keep layouts responsive and readable on mobile.
-
 ## 13) Prompt template for creating a new article
 
 Use this prompt format:
