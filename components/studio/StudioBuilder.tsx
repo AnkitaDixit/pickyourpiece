@@ -43,7 +43,7 @@ type BrandOption = {
   label: string;
 };
 
-type InstagramPostTemplateType = "compare_cards" | "similar_pieces" | "price_comparison" | "best_under_budget";
+type InstagramPostTemplateType = "compare_cards" | "similar_pieces" | "best_under_budget";
 
 type StudioBuilderProps = {
   products: ProductOption[];
@@ -94,11 +94,6 @@ const INSTAGRAM_POST_TEMPLATE_OPTIONS: {
     id: "similar_pieces",
     label: "Similar Pieces",
     description: "Show 4 alternatives when someone likes a single design.",
-  },
-  {
-    id: "price_comparison",
-    label: "Price Comparison",
-    description: "Compare similar style prices across brands at a glance.",
   },
   {
     id: "best_under_budget",
@@ -666,23 +661,6 @@ export default function StudioBuilder({
     }).filter((item): item is ProductOption => Boolean(item));
   }, [interleavedRingProducts, productById, selectedProduct, similarPickerProducts, similarSlotProductIds]);
 
-  const priceComparisonRows = useMemo(() => {
-    const pool = relatedProducts.length ? relatedProducts : filteredProducts;
-    const byBrand = new Map<string, ProductOption>();
-
-    for (const product of pool) {
-      const existing = byBrand.get(product.brand);
-      if (!existing || product.price < existing.price) {
-        byBrand.set(product.brand, product);
-      }
-      if (byBrand.size >= 5) break;
-    }
-
-    return Array.from(byBrand.values())
-      .sort((a, b) => a.price - b.price)
-      .slice(0, 3);
-  }, [filteredProducts, relatedProducts]);
-
   const budgetProducts = useMemo(() => {
     const pool = (filteredProducts.length ? filteredProducts : products).filter((item) => item.price <= budgetCap);
     return pool.slice(0, 4);
@@ -720,16 +698,6 @@ export default function StudioBuilder({
         caption: `PickYourPiece helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates before buying.\n\nFound a design you like? Compare similar alternatives in seconds.\n\nProducts in this template:\n${similarProductsWithUrls}`,
         hashtags: buildHashtags([selectedProduct?.brand ?? "Jewellery", "SimilarRings", "RingAlternatives", "PickYourPiece"]),
         cta: selectedProduct?.productUrl ?? "/",
-      };
-    }
-
-    if (instagramPostTemplate === "price_comparison") {
-      return {
-        title: "Same Style",
-        subtitle: "Different prices across brands",
-        caption: "Price differences can be huge for similar styles. Compare before checkout.",
-        hashtags: buildHashtags(["Rings", "PriceComparison", "JewelleryDeals", "PickYourPiece"]),
-        cta: "/?sort=price-asc",
       };
     }
 
@@ -1291,23 +1259,6 @@ export default function StudioBuilder({
                     ctaAriaLabel="Compare now"
                     siteLabel="pickyourpiece.com"
                   />
-                </>
-              ) : null}
-
-              {instagramPostTemplate === "price_comparison" ? (
-                <>
-                  <div className="studio-ig-header">
-                    <h2>Same Style</h2>
-                  </div>
-                  <div className="studio-ig-price-list">
-                    {priceComparisonRows.map((product) => (
-                      <div key={product.id} className="studio-ig-price-row">
-                        <span>{product.brand}</span>
-                        <strong>{toCurrency(product.price)}</strong>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="studio-ig-cta">Compare all {"->"}</p>
                 </>
               ) : null}
 
