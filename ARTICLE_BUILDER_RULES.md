@@ -224,15 +224,13 @@ Visual composition requirements:
 - Show brand, product name, and price in each product card.
 - Use reliable image fallback logic (`image` then `allImages`) when available.
 - Keep layouts responsive and readable on mobile.
-- Do not use the same product more than once in a single article's visual blocks.
-- If a product appears in one visual block, exclude it from later visual blocks in that same article.
 
 ## 13) Prompt template for creating a new article
 
 Use this prompt format:
 
 ```text
-Create a new article using ARTICLE_BUILDER_RULES.md.
+Create a new article using scripts/ARTICLE_BUILDER_RULES.md.
 
 Topic: <topic>
 Primary keyword: <keyword>

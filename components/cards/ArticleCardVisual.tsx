@@ -1,6 +1,3 @@
-import products from "@/data/products.json";
-import type { Product } from "@/types/product";
-
 type VisualGlyph =
   | "ring"
   | "budget"
@@ -95,34 +92,6 @@ function getVisualImageSrc(url: string): string {
     return `/api/studio-image?url=${encodeURIComponent(url)}`;
   }
   return url;
-}
-
-function toCurrency(value: number): string {
-  return `INR ${value.toLocaleString("en-IN")}`;
-}
-
-function normalizeText(value: string): string {
-  return value.toLowerCase().replace(/[^a-z0-9\s]+/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function getProductCardImage(product: Product & Record<string, unknown>): string {
-  const candidates: string[] = [];
-
-  if (typeof product.image === "string") {
-    candidates.push(product.image);
-  }
-
-  if (Array.isArray(product.allImages)) {
-    for (const item of product.allImages) {
-      if (typeof item === "string") {
-        candidates.push(item);
-      }
-    }
-  } else if (typeof product.allImages === "string") {
-    candidates.push(product.allImages);
-  }
-
-  return candidates.map((item) => item.trim()).find((item) => item.length > 0) ?? "";
 }
 
 function buildComparisonSpecFromSlug(slug: string): VisualSpec | null {
@@ -623,167 +592,13 @@ const ARTICLE_VISUALS: Record<string, VisualSpec> = {
   },
 };
 
-type ArticleVisualImage = { src: string; label: string; sublabel: string };
-
-const ARTICLE_VISUAL_IMAGE_BY_SLUG: Record<string, ArticleVisualImage> = {
+const ARTICLE_VISUAL_IMAGE_BY_SLUG: Record<string, { src: string; label: string; sublabel: string }> = {
   "butterfly-rings": {
     src: "https://cdn.caratlane.com/media/catalog/product/J/R/JR04192-YGS3EB_11_listfront.jpg",
     label: "ONE WING BLUE BUTTERFLY DIAMOND RING",
     sublabel: "FEATURED PRODUCT",
   },
-  "engagement-ring-budget": {
-    src: "https://cdn.orra.co.in/media/catalog/product/h/r/hrg23026_1_1.jpg",
-    label: "ROMANTIC SOLITAIRE DIAMOND FINGER RING",
-    sublabel: "ORRA • INR 7,26,315",
-  },
-  "how-much-should-an-engagement-ring-cost": {
-    src: "https://cdn.caratlane.com/media/catalog/product/S/R/SR04477-YGP600_11_listfront.jpg",
-    label: "CLASSIC ELEGANCE SOLITAIRE RING",
-    sublabel: "CARATLANE • INR 6,48,744",
-  },
-  "engagement-rings-under-25000": {
-    src: "https://www.tanishq.co.in/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw4ca7f2ca/images/hi-res/SLS3I1FFTA438_1.jpg?sw=640&sh=640",
-    label: "SHIMMERING ELEGANCE CELESTE SOLITAIRE RING",
-    sublabel: "TANISHQ • INR 25,000",
-  },
-  "engagement-rings-under-50000": {
-    src: "https://www.miabytanishq.com/dw/image/v2/BKCK_PRD/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dwbc0297c8/images/hi-res/NOD1FAU.jpg?sw=640&sh=640",
-    label: "HAPPY TREASURES SOLITAIRE RING",
-    sublabel: "MIA BY TANISHQ • INR 49,322",
-  },
-  "engagement-rings-under-1-lakh": {
-    src: "https://www.candere.com/media/jewellery/images/KC05158YG_2.jpeg?type=image",
-    label: "SAMESH SOLITAIRE BAND",
-    sublabel: "CANDERE • INR 99,861",
-  },
 };
-
-const BUDGET_ARTICLE_MAX_PRICE_BY_SLUG: Record<string, number> = {
-  "best-diamond-rings-under-10000": 10000,
-  "best-diamond-rings-under-25000": 25000,
-  "best-diamond-rings-under-50000": 50000,
-  "best-diamond-rings-under-75000": 75000,
-  "best-diamond-rings-under-1-lakh": 100000,
-  "engagement-rings-under-25000": 25000,
-  "engagement-rings-under-50000": 50000,
-  "engagement-rings-under-1-lakh": 100000,
-};
-
-function inferMaxPriceFromSlug(slug: string): number | undefined {
-  if (BUDGET_ARTICLE_MAX_PRICE_BY_SLUG[slug]) {
-    return BUDGET_ARTICLE_MAX_PRICE_BY_SLUG[slug];
-  }
-  if (slug.includes("1-lakh")) {
-    return 100000;
-  }
-
-  const match = slug.match(/under-(\d{4,6})/);
-  if (!match) {
-    return undefined;
-  }
-
-  const parsed = Number(match[1]);
-  return Number.isFinite(parsed) ? parsed : undefined;
-}
-
-function resolveDynamicArticleVisualImage(slug: string, title: string): ArticleVisualImage | null {
-  const maxPrice = inferMaxPriceFromSlug(slug);
-  const normalizedSlug = normalizeText(slug.replace(/-/g, " "));
-  const normalizedTitle = normalizeText(title);
-  const keywordSet = new Set(
-    `${normalizedSlug} ${normalizedTitle}`
-      .split(" ")
-      .filter(Boolean)
-      .filter(
-        (word) =>
-          ![
-            "best",
-            "how",
-            "to",
-            "and",
-            "the",
-            "for",
-            "with",
-            "guide",
-            "rings",
-            "ring",
-            "under",
-            "vs",
-            "what",
-            "is",
-            "should",
-            "an",
-            "a",
-            "of",
-            "in",
-          ].includes(word)
-      )
-  );
-
-  const wantsEngagement = normalizedSlug.includes("engagement") || normalizedTitle.includes("engagement");
-  const wantsDiamond = normalizedSlug.includes("diamond") || normalizedTitle.includes("diamond");
-
-  const catalog = products as Array<Product & Record<string, unknown>>;
-  const match = catalog
-    .filter((product) => {
-      const image = getProductCardImage(product);
-      if (!image) return false;
-      if (!Number.isFinite(product.price)) return false;
-      if (typeof maxPrice === "number" && product.price > maxPrice) return false;
-      return true;
-    })
-    .map((product) => {
-      const haystack = normalizeText(
-        [
-          product.name,
-          product.brand,
-          product.category,
-          product.metal,
-          (product.gemstone ?? []).join(" "),
-          (product.style ?? []).join(" "),
-          (product.occasion ?? []).join(" "),
-        ]
-          .filter(Boolean)
-          .join(" ")
-      );
-
-      let score = 0;
-      for (const keyword of keywordSet) {
-        if (haystack.includes(keyword)) {
-          score += 2;
-        }
-      }
-
-      const occasions = Array.isArray(product.occasion) ? product.occasion : [];
-      const gemstones = Array.isArray(product.gemstone) ? product.gemstone : [];
-
-      if (wantsEngagement && occasions.some((item) => normalizeText(String(item)) === "engagement")) {
-        score += 5;
-      }
-
-      if (wantsDiamond && gemstones.some((item) => normalizeText(String(item)) === "diamond")) {
-        score += 3;
-      }
-
-      return { product, score };
-    })
-    .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      return b.product.price - a.product.price;
-    })
-    .map((entry) => entry.product)[0];
-
-  if (!match) return null;
-
-  const src = getProductCardImage(match);
-  if (!src) return null;
-
-  return {
-    src,
-    label: (match.name ?? "Diamond Ring").toUpperCase(),
-    sublabel: `${match.brand ?? "Featured"} • ${toCurrency(match.price)}`,
-  };
-}
 
 function renderVisualGlyph(glyph: VisualGlyph, accent: string, accentSoft: string) {
   switch (glyph) {
@@ -1070,7 +885,7 @@ export default function ArticleCardVisual({
   title: string;
   featured?: boolean;
 }) {
-  const visualImage = ARTICLE_VISUAL_IMAGE_BY_SLUG[slug] ?? resolveDynamicArticleVisualImage(slug, title);
+  const visualImage = ARTICLE_VISUAL_IMAGE_BY_SLUG[slug];
 
   if (visualImage) {
     const safeSlug = slug.replace(/[^a-z0-9-]/gi, "").toLowerCase() || "article";
