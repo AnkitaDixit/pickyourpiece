@@ -30,8 +30,8 @@ export function buildTrackedBrandUrl(rawUrl: string, options: BuildTrackedBrandU
   }
 
   parsed.searchParams.set("utm_source", "pickyourpiece");
-  parsed.searchParams.set("utm_medium", "referral");
-  parsed.searchParams.set("utm_campaign", "brand_redirect_pyp");
+  parsed.searchParams.set("utm_medium", "pickyourpiece_referral");
+  parsed.searchParams.set("utm_campaign", "pickyourpiece_brand_redirect");
   parsed.searchParams.set("utm_content", options.context);
   parsed.searchParams.set("utm_term", "pyp");
 
