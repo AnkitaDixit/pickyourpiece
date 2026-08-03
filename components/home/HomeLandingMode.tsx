@@ -30,17 +30,23 @@ const BRAND_ENTRIES = [
   ["giva", "GIVA"],
   ["mia", "Mia by Tanishq"],
   ["orra", "ORRA"],
+  ["joyalukkas", "Joyalukkas"],
+  ["melorra", "Melorra"],
   ["palmonas", "Palmonas"],
+  ["senco", "Senco"],
   ["tanishq", "Tanishq"],
 ] as const;
 
 const BRAND_LOGOS: Partial<Record<(typeof BRAND_ENTRIES)[number][0], string>> = {
   bluestone: "/brands/bluestone-logo.png?v=20260709-2338",
   candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
+  joyalukkas: "https://play-lh.googleusercontent.com/iJyXMNc-K3qZ2lO2Q4tXsdJMOEYQUb-oB35vlD383z_whP1hoV63KUOs8pqSfB3_SzMmsxmoWGDF2GLj2J_nJQ",
+  melorra: "https://play-lh.googleusercontent.com/rm0fhzoROT81QQwcrErnDdxAD7D4Ag8MuXJuhHTBKILS0LP9cniKbsNICZOWdehDRaYuHwW-D8nWZwz13s8fE5I",
+  senco: "https://s3-symbol-logo.tradingview.com/senco-gold-ltd--600.png",
   caratlane: "/brands/caratlane-logo.jpg?v=20260709-2338",
-  giva: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdiZUsR4K1BJmDa422342XYCtccq7OfbR9RFdwOuWWAz8IN3bgLWRBLw-_&s=10",
+  giva: "https://cdn.shopify.com/s/files/1/0061/8378/0442/files/Artboard_1_1_4.png?v=1755502668",
   mia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
-  orra: "https://upload.wikimedia.org/wikipedia/commons/3/3e/ORRAJewellery.jpg",
+  orra: "https://cdn0.weddingwire.in/vendor/3272/3_2/960/jpg/orra-logo.jpeg",
   palmonas: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP_TFMjp4QLM89RGzLpBaGMmS9q4eX04dfFkihs9oa1rI_dhfgDvvEDlmN&s=10",
   tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
 };
@@ -62,7 +68,6 @@ interface HomeLandingModeProps {
 
 export default function HomeLandingMode({
   allCount,
-  totalBrands,
   discoveryShelves,
 }: HomeLandingModeProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -76,9 +81,31 @@ export default function HomeLandingMode({
             <span>Compare every brand.</span>
           </h1>
           <p className="landing-hero-subtitle">
-            Explore {allCount.toLocaleString()}+ designs from {totalBrands}+ trusted brands. Filter by price,
-            metal, purity, and style in seconds.
+            Explore {allCount.toLocaleString()}+ designs across CaratLane, Tanishq, BlueStone, Giva, Orra and more trusted brands.
           </p>
+
+          <div className="landing-hero-brand-row" aria-label="Trusted brands available on PickYourPiece">
+            {BRAND_ENTRIES.map(([segment, brandName], index) => {
+              return (
+                <Link
+                  key={segment}
+                  href={`/brands/${segment}`}
+                  className="landing-hero-brand-pill"
+                  style={{ animationDelay: `${index * 0.16}s` }}
+                  aria-label={`Browse ${brandName}`}
+                  data-analytics-event="home_hero_brand_name_click"
+                  data-analytics-section="home_hero"
+                  data-analytics-type="brand_name"
+                  data-analytics-label={brandName}
+                  data-analytics-brand={brandName}
+                  data-analytics-destination={`/brands/${segment}`}
+                  data-analytics-category="ring"
+                >
+                  <span className="landing-hero-brand-text">{brandName}</span>
+                </Link>
+              );
+            })}
+          </div>
 
           <div className="landing-hero-search">
             <Suspense fallback={<div className="searchbar-wrap searchbar-hero" aria-hidden="true" />}>

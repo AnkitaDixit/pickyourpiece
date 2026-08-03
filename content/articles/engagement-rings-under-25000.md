@@ -41,7 +41,7 @@ At this price point, you are typically balancing three things: center stone size
 
 Typical outcomes:
 
-- Better design variety in silver and steel
+- Better design variety in silver
 - Simpler gold pieces in lightweight constructions
 - Small center stones with good styling can still look premium
 - Visual finish matters more than raw stone weight
@@ -79,7 +79,6 @@ In the sub-₹25,000 range, metal selection can change price more than people ex
 Quick guidance:
 
 - Silver: usually best value for design and finish quality
-- Steel: durable and budget-friendly for everyday wear
 - Gold: available in lighter builds and smaller designs
 - Platinum: limited in this bracket, usually very minimal styles
 

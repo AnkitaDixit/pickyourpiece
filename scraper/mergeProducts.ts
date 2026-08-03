@@ -1,11 +1,44 @@
 import fs from "fs";
 import path from "path";
+import { createHash } from "crypto";
 
 const BRAND_DATA_DIR = path.join(process.cwd(), "scraper", "data");
 const OUTPUT_FILE = path.join(process.cwd(), "data", "products.json");
-const TARGET_BRANDS = ["bluestone", "caratlane", "tanishq", "giva", "mia", "orra", "candere", "palmonas"] as const;
+const NORMALIZED_OUTPUT_FILE = path.join(process.cwd(), "data", "new_products.json");
+const CHANGELOG_OUTPUT_FILE = path.join(process.cwd(), "data", "products.changelog.json");
+const FILTER_OPTIONS_FILE = path.join(process.cwd(), "data", "filter-options.json");
+const TARGET_BRANDS = ["bluestone", "caratlane", "tanishq", "giva", "mia", "orra", "candere", "palmonas", "joyalukkas", "melorra", "senco"] as const;
 
 type JsonRecord = Record<string, unknown>;
+type EnrichedProduct = JsonRecord & {
+  id: string;
+  brand: string;
+  pyp_product_id: string;
+  first_seen_at: string;
+  current_price: number;
+  previous_price: number | null;
+  availability: boolean;
+};
+
+type ProductChangelogEntry = {
+  at: string;
+  type: "new" | "updated" | "price_changed" | "delisted" | "relisted";
+  id: string;
+  pyp_product_id: string;
+  brand: string;
+  name: string;
+  previous_price?: number | null;
+  current_price?: number | null;
+};
+
+const STYLE_OCCASION_BUNDLES = [
+  "Daily Wear",
+  "Engagement & Wedding",
+  "Party & Statement",
+  "Romantic & Gifting",
+  "Nature & Artistic",
+  "Modern & Classic",
+] as const;
 
 function buildMetalFingerprint(...values: string[]): string {
   return values
@@ -17,6 +50,114 @@ function buildMetalFingerprint(...values: string[]): string {
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function asNumber(value: unknown): number {
+  const numeric = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(numeric) ? numeric : 0;
+}
+
+function asStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => asString(item))
+      .filter(Boolean);
+  }
+
+  const single = asString(value);
+  return single ? [single] : [];
+}
+
+function normalizeTagKey(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/["']/g, "")
+    .replace(/\+/g, " plus ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function mapRawTagToStyleOccasionBundle(rawTag: string): (typeof STYLE_OCCASION_BUNDLES)[number] | null {
+  const key = normalizeTagKey(rawTag);
+  if (!key) return null;
+
+  if (
+    /^(adjustable|after sell|b2b|best seller sets(?: 2)?|december collection 2025|enamel changes|free gift|giva royale|less aov|september collection(?: 2025)?|trial|hot|new arrivals|our picks)$/.test(key)
+  ) {
+    return null;
+  }
+
+  if (/^(everyday|casual|work|kids jewelery|kids jewellery|lightweight|minimal|my staple|my staples|staple)$/.test(key)) {
+    return "Daily Wear";
+  }
+
+  if (/^(band|bridal|bridal inhouse|couple|couple bands|eternity|gold plus diamond|halo|solitaire|wedding collection|engagement|wedding)$/.test(key)) {
+    return "Engagement & Wedding";
+  }
+
+  if (/^(celebration|chunky|chunky collection|cluster|cocktail|party|sparkling|statement)$/.test(key)) {
+    return "Party & Statement";
+  }
+
+  if (/^(heart|infinity|knot|love|love all around|love in paris 2023|mothers day ready goods|red valentine 2024|valentine ready goods|valentines 2025|valentines 2026|valentines week|valentines)$/.test(key)) {
+    return "Romantic & Gifting";
+  }
+
+  if (/^(animal love|beach baby|bird collection|butterfly|cosmic vibes|floral|garden of eden|gem stone|leaf|moonstone readygoods|religious|shakti collection|teal|trail|gifting)$/.test(key)) {
+    return "Nature & Artistic";
+  }
+
+  if (/^(chevron|classic|classic collection|classic crown ring|glow in motion|layered|men collection|mens jewelery|mens jewelry|mens jewellery|modern|multi tone|signet|stackable|threads of elegance|twist|vanki|vintage)$/.test(key)) {
+    return "Modern & Classic";
+  }
+
+  return null;
+}
+
+function deriveStyleOccasionBundles(styleBrand: string[], occasionBrand: string[]): string[] {
+  const bundleSet = new Set<(typeof STYLE_OCCASION_BUNDLES)[number]>();
+  for (const rawTag of [...styleBrand, ...occasionBrand]) {
+    const mapped = mapRawTagToStyleOccasionBundle(rawTag);
+    if (mapped) bundleSet.add(mapped);
+  }
+
+  return STYLE_OCCASION_BUNDLES.filter((bundle) => bundleSet.has(bundle));
+}
+
+function normalizeBrandKey(brand: string): string {
+  return normalizeBrand(brand).toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function normalizeIdentityToken(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function buildSourceKey(brand: string, sourceProductId: string): string {
+  return `${normalizeBrandKey(brand)}::${normalizeIdentityToken(sourceProductId)}`;
+}
+
+function buildIdentityKey(brand: string, sourceProductId: string, productUrl: string): string {
+  const normalizedUrl = normalizeIdentityToken(productUrl);
+  return `${buildSourceKey(brand, sourceProductId)}::${normalizedUrl}`;
+}
+
+function buildDeterministicProductId(brand: string, sourceProductId: string, productUrl: string): string {
+  const identity = buildIdentityKey(brand, sourceProductId, productUrl);
+  const digest = createHash("sha1").update(identity).digest("hex").toUpperCase().slice(0, 18);
+  return `PYP${digest}`;
+}
+
+function loadExistingCatalog(): EnrichedProduct[] {
+  if (!fs.existsSync(OUTPUT_FILE)) return [];
+
+  try {
+    const parsed = JSON.parse(fs.readFileSync(OUTPUT_FILE, "utf-8"));
+    if (!Array.isArray(parsed)) return [];
+    return parsed as EnrichedProduct[];
+  } catch {
+    return [];
+  }
 }
 
 function normalizeMalformedSilverPurity(rawValue: string): string {
@@ -38,6 +179,18 @@ function normalizeBrand(rawBrand: string): string {
 
   if (/^palmonas$/i.test(rawBrand)) {
     return "Palmonas";
+  }
+
+  if (/^joyalukkas$/i.test(rawBrand)) {
+    return "Joyalukkas";
+  }
+
+  if (/^melorra?$/i.test(rawBrand)) {
+    return "Melorra";
+  }
+
+  if (/^senco?$/i.test(rawBrand)) {
+    return "Senco";
   }
 
   return rawBrand;
@@ -104,7 +257,7 @@ function deriveMetalByPlatingRules(...values: string[]): string | null {
   if (hasGoldBase(structured)) return "Gold";
   if (hasPlatinumBase(structured)) return "Platinum";
 
-  if (goldPlated || silverPlated) return "Steel";
+  if (goldPlated || silverPlated) return "Gold";
 
   return null;
 }
@@ -144,7 +297,7 @@ function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: str
   if (fallbackPlatedMetal) return fallbackPlatedMetal;
 
   const normalized = normalizeMalformedSilverPurity(rawMetal);
-  if (!normalized) return "Steel";
+  if (!normalized) return "Gold";
 
   if (/silver925/i.test(normalized)) return "Silver";
 
@@ -157,7 +310,7 @@ function deriveBaseMetal(rawMetal: string, rawPurity: string, rawMetalColor: str
   if (/stainless\s*steel|\bsteel\b/i.test(normalized)) return "Steel";
   if (/silver|sterling/i.test(normalized)) return "Silver";
 
-  return "Steel";
+  return "Gold";
 }
 
 function canonicalizeMetalCategory(rawMetal: string): "Gold" | "Silver" | "Platinum" | "Steel" {
@@ -168,7 +321,7 @@ function canonicalizeMetalCategory(rawMetal: string): "Gold" | "Silver" | "Plati
   if (/rose\s*gold|yellow\s*gold|\bgold\b|\b\d+\s*k(?:t)?\b/.test(combined)) return "Gold";
   if (/stainless\s*steel|\bsteel\b/.test(combined)) return "Steel";
 
-  return "Steel";
+  return "Gold";
 }
 
 function shouldForceSilverMetal(purity: string): boolean {
@@ -375,7 +528,7 @@ export function mergeProducts(): JsonRecord[] {
   }
 
   const sharedKeys = getSharedKeys(byBrand);
-  const merged = all
+  const normalizedProducts = all
     .filter((product) => hasValidImage(product) && hasValidPrice(product))
     .map((product) => {
       const normalized: JsonRecord = {};
@@ -389,9 +542,14 @@ export function mergeProducts(): JsonRecord[] {
       const rawMetalColor = asString(product.metalColor);
       const rawName = asString(product.name);
       const rawDescription = asString(product.description);
+      const styleBrand = asStringArray(product.style);
+      const occasionBrand = asStringArray(product.occasion);
+      const sourceProductId = asString(product.id) || asString(product.sku) || asString(product.productUrl);
       const normalizedPurity = derivePurity(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription);
+      const pypProductId = buildDeterministicProductId(rawBrand, sourceProductId, asString(product.productUrl));
 
       normalized.brand = normalizeBrand(rawBrand);
+      normalized.pyp_product_id = pypProductId;
       normalized.purity = normalizedPurity;
       const derivedMetal = shouldForceSilverMetal(normalizedPurity)
         ? "Silver"
@@ -399,9 +557,13 @@ export function mergeProducts(): JsonRecord[] {
       normalized.metal = canonicalizeMetalCategory(derivedMetal);
       normalized.metalColor = deriveMetalColor(rawMetalColor, rawMetal, rawPurity);
       normalized.image = normalizePrimaryImageUrl(asString(product.image), rawBrand);
+      normalized.style_brand = styleBrand;
+      normalized.occasion_brand = occasionBrand;
+      normalized.ocassion_brand = occasionBrand;
+      normalized.styleOccasion = deriveStyleOccasionBundles(styleBrand, occasionBrand);
 
       if (Object.prototype.hasOwnProperty.call(product, "allImages") && product.allImages != null) {
-        const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand, asString(product.id));
+        const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand, sourceProductId);
         if (Array.isArray(normalizedAllImages)) {
           if (normalizedAllImages.length > 0) {
             normalized.allImages = normalizedAllImages;
@@ -418,12 +580,302 @@ export function mergeProducts(): JsonRecord[] {
       return normalized;
     });
 
-  // Write merged output for the UI
-  fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(merged, null, 2), "utf-8");
+  fs.mkdirSync(path.dirname(NORMALIZED_OUTPUT_FILE), { recursive: true });
+  fs.writeFileSync(NORMALIZED_OUTPUT_FILE, JSON.stringify(normalizedProducts, null, 2), "utf-8");
+
+  const runAt = new Date().toISOString();
+  const existingCatalog = loadExistingCatalog();
+  const nextCatalog: EnrichedProduct[] = [];
+  const changelog: ProductChangelogEntry[] = [];
+
+  const existingByPypId = new Map<string, EnrichedProduct>();
+  const existingByIdentity = new Map<string, EnrichedProduct>();
+  const existingBySource = new Map<string, EnrichedProduct[]>();
+  const matchedExistingProductKeys = new Set<string>();
+
+  for (const existing of existingCatalog) {
+    const brand = asString(existing.brand);
+    const sourceProductId = asString((existing as JsonRecord).source_product_id) || asString(existing.id) || asString(existing.sku) || asString(existing.productUrl);
+    const productUrl = asString(existing.productUrl);
+    if (!brand || !sourceProductId || !productUrl) continue;
+
+    const existingPypId = asString((existing as JsonRecord).pyp_product_id);
+    if (existingPypId) existingByPypId.set(existingPypId, existing);
+
+    const identityKey = buildIdentityKey(brand, sourceProductId, productUrl);
+    const sourceKey = buildSourceKey(brand, sourceProductId);
+
+    existingByIdentity.set(identityKey, existing);
+    const bucket = existingBySource.get(sourceKey) ?? [];
+    bucket.push(existing);
+    existingBySource.set(sourceKey, bucket);
+  }
+
+  for (const fresh of normalizedProducts) {
+    const brand = asString(fresh.brand);
+    const sourceProductId = asString(fresh.id) || asString(fresh.sku) || asString(fresh.productUrl);
+    const productUrl = asString(fresh.productUrl);
+    const name = asString(fresh.name);
+    const price = asNumber(fresh.price);
+    const availability = Boolean(fresh.availability);
+
+    if (!brand || !sourceProductId || !productUrl) {
+      continue;
+    }
+
+    const identityKey = buildIdentityKey(brand, sourceProductId, productUrl);
+    const sourceKey = buildSourceKey(brand, sourceProductId);
+    const freshPypProductId = asString(fresh.pyp_product_id);
+
+    let matched = (freshPypProductId ? existingByPypId.get(freshPypProductId) : undefined) ?? existingByIdentity.get(identityKey);
+    const matchedKey = matched
+      ? asString((matched as JsonRecord).pyp_product_id) || asString(matched.id)
+      : "";
+    if (matched && matchedKey && matchedExistingProductKeys.has(matchedKey)) {
+      matched = undefined;
+    }
+
+    if (!matched) {
+      const sourceCandidates = (existingBySource.get(sourceKey) ?? []).filter(
+        (candidate) => !matchedExistingProductKeys.has(asString((candidate as JsonRecord).pyp_product_id) || asString(candidate.id))
+      );
+      if (sourceCandidates.length === 1) {
+        matched = sourceCandidates[0];
+      }
+    }
+
+    const existingId = matched ? asString(matched.id) : "";
+    const existingPypProductId = matched ? asString((matched as JsonRecord).pyp_product_id) : "";
+    const existingProductKey = matched ? (existingPypProductId || existingId) : "";
+    const existingCurrentPrice = matched ? asNumber((matched as JsonRecord).current_price ?? matched.price) : 0;
+    const existingAvailability = matched ? Boolean(matched.availability) : false;
+
+    const nextId = existingId || buildDeterministicProductId(brand, sourceProductId, productUrl);
+    const nextPypProductId = existingPypProductId || buildDeterministicProductId(brand, sourceProductId, productUrl);
+    const firstSeenAt = matched ? asString(matched.first_seen_at) || runAt : (asString(fresh.updatedAt) || runAt);
+    const previousPrice = matched ? existingCurrentPrice : null;
+
+    const enriched: EnrichedProduct = {
+      ...fresh,
+      id: nextId,
+      brand,
+      pyp_product_id: nextPypProductId,
+      first_seen_at: firstSeenAt,
+      current_price: price,
+      previous_price: previousPrice,
+      availability,
+      price,
+    };
+
+    nextCatalog.push(enriched);
+    if (existingProductKey) {
+      matchedExistingProductKeys.add(existingProductKey);
+    } else {
+      matchedExistingProductKeys.add(nextPypProductId);
+    }
+
+    if (!matched) {
+      changelog.push({
+        at: runAt,
+        type: "new",
+        id: nextId,
+        pyp_product_id: nextPypProductId,
+        brand,
+        name,
+        current_price: price,
+      });
+      continue;
+    }
+
+    const changed = JSON.stringify(fresh) !== JSON.stringify(
+      Object.fromEntries(Object.entries(matched as JsonRecord).filter(([key]) =>
+        !["id", "pyp_product_id", "first_seen_at", "current_price", "previous_price"].includes(key)
+      ))
+    );
+
+    if (changed) {
+      changelog.push({
+        at: runAt,
+        type: "updated",
+        id: nextId,
+        pyp_product_id: nextPypProductId,
+        brand,
+        name,
+      });
+    }
+
+    if (existingCurrentPrice !== price) {
+      changelog.push({
+        at: runAt,
+        type: "price_changed",
+        id: nextId,
+        pyp_product_id: nextPypProductId,
+        brand,
+        name,
+        previous_price: existingCurrentPrice,
+        current_price: price,
+      });
+    }
+
+    if (!existingAvailability && availability) {
+      changelog.push({
+        at: runAt,
+        type: "relisted",
+        id: nextId,
+        pyp_product_id: nextPypProductId,
+        brand,
+        name,
+      });
+    }
+  }
+
+  for (const existing of existingCatalog) {
+    const existingId = asString(existing.id);
+    const existingProductKey = asString((existing as JsonRecord).pyp_product_id) || existingId;
+    if (!existingProductKey || matchedExistingProductKeys.has(existingProductKey)) continue;
+
+    const delistedCurrentPrice = asNumber((existing as JsonRecord).current_price ?? existing.price);
+    const delistedPreviousPrice = ((existing as JsonRecord).previous_price as number | null | undefined) ?? null;
+    const delisted: EnrichedProduct = {
+      ...existing,
+      availability: false,
+      current_price: delistedCurrentPrice,
+      previous_price: delistedPreviousPrice ?? (delistedCurrentPrice > 0 ? delistedCurrentPrice : null),
+      first_seen_at: asString(existing.first_seen_at),
+      pyp_product_id: asString((existing as JsonRecord).pyp_product_id) || buildDeterministicProductId(asString(existing.brand), asString(existing.id), asString(existing.productUrl)),
+    };
+
+    nextCatalog.push(delisted);
+
+    if (Boolean(existing.availability)) {
+      changelog.push({
+        at: runAt,
+        type: "delisted",
+        id: existingId,
+        pyp_product_id: delisted.pyp_product_id,
+        brand: asString(existing.brand),
+        name: asString(existing.name),
+        current_price: asNumber((existing as JsonRecord).current_price ?? existing.price),
+      });
+    }
+  }
+
+  validateCatalog(nextCatalog, normalizedProducts);
+
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(nextCatalog, null, 2), "utf-8");
+  fs.writeFileSync(CHANGELOG_OUTPUT_FILE, JSON.stringify(changelog, null, 2), "utf-8");
+
+  // Generate filter options from the live catalog (available products only).
+  const available = nextCatalog.filter((p) => Boolean(p.availability));
+  function uniqueSorted(values: string[]): string[] {
+    return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b));
+  }
+  function collectArray(field: string): string[] {
+    const vals: string[] = [];
+    for (const p of available) {
+      const v = (p as JsonRecord)[field];
+      if (Array.isArray(v)) v.forEach((x) => { if (typeof x === "string" && x.trim()) vals.push(x.trim()); });
+      else if (typeof v === "string" && v.trim()) vals.push(v.trim());
+    }
+    return uniqueSorted(vals);
+  }
+  const filterOptions = {
+    brand: uniqueSorted(available.map((p) => asString(p.brand))),
+    metal: uniqueSorted(available.map((p) => asString((p as JsonRecord).metal as string))),
+    gemstone: collectArray("gemstone"),
+    purity: collectArray("purity"),
+    metalColor: collectArray("metalColor"),
+    styleOccasion: STYLE_OCCASION_BUNDLES.filter((bundle) =>
+      available.some((p) => {
+        const values = (p as JsonRecord).styleOccasion;
+        return Array.isArray(values) && values.includes(bundle);
+      })
+    ),
+    gender: uniqueSorted(available.map((p) => asString((p as JsonRecord).gender as string))),
+    diamondQuality: collectArray("diamondQuality"),
+  };
+  fs.writeFileSync(FILTER_OPTIONS_FILE, JSON.stringify(filterOptions, null, 2), "utf-8");
 
   console.log(
-    `Merged ${merged.length} products from ${files.length} brands with ${sharedKeys.length} shared fields → data/products.json`
+    `Normalized ${normalizedProducts.length} products -> data/new_products.json | Reconciled ${nextCatalog.length} products -> data/products.json | Changelog ${changelog.length} events -> data/products.changelog.json`
   );
-  return merged;
+
+  return nextCatalog;
 }
+
+// ---------------------------------------------------------------------------
+// Catalog validation — runs before any file is written
+// ---------------------------------------------------------------------------
+
+function validateCatalog(catalog: EnrichedProduct[], normalized: JsonRecord[]): void {
+  const VALID_BUNDLES = new Set<string>(STYLE_OCCASION_BUNDLES);
+  const errors: string[] = [];
+
+  // 1. Every active normalized product must have a pyp_product_id
+  for (const p of normalized) {
+    if (!asString(p.pyp_product_id)) {
+      errors.push(`Missing pyp_product_id for product: ${asString(p.name)} (brand: ${asString(p.brand)})`);
+    }
+  }
+
+  // 2. No duplicate pyp_product_id among available catalog products
+  const availablePypIds = catalog
+    .filter((p) => p.availability)
+    .map((p) => asString((p as JsonRecord).pyp_product_id));
+  const seen = new Set<string>();
+  for (const id of availablePypIds) {
+    if (id && seen.has(id)) {
+      errors.push(`Duplicate pyp_product_id in available products: ${id}`);
+    }
+    if (id) seen.add(id);
+  }
+
+  // 3. All available products must have current_price > 0
+  for (const p of catalog) {
+    if (p.availability && asNumber((p as JsonRecord).current_price) <= 0) {
+      errors.push(`Available product has zero/missing current_price: ${asString(p.id)} (${asString(p.brand)} - ${asString((p as JsonRecord).name as string)})`);
+    }
+  }
+
+  // 4. styleOccasion values must only contain valid bundle names
+  for (const p of normalized) {
+    const bundles = (p as JsonRecord).styleOccasion;
+    if (Array.isArray(bundles)) {
+      for (const b of bundles) {
+        if (typeof b === "string" && b && !VALID_BUNDLES.has(b)) {
+          errors.push(`Invalid styleOccasion bundle "${b}" on product: ${asString(p.name)}`);
+        }
+      }
+    }
+  }
+
+  // 5. All catalog products must have a non-empty brand
+  for (const p of catalog) {
+    if (!asString(p.brand)) {
+      errors.push(`Product missing brand: ${asString(p.id)}`);
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(
+      `Catalog validation failed with ${errors.length} error(s):\n${errors.slice(0, 20).map((e, i) => `  ${i + 1}. ${e}`).join("\n")}${errors.length > 20 ? `\n  ... and ${errors.length - 20} more` : ""}`
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Test exports — used by scraper/mergeProducts.test.ts only
+// ---------------------------------------------------------------------------
+
+export const _testExports = {
+  normalizeBrand,
+  normalizePurity,
+  derivePurity,
+  canonicalizeMetalCategory,
+  deriveMetalColor,
+  mapRawTagToStyleOccasionBundle,
+  deriveStyleOccasionBundles,
+  buildDeterministicProductId,
+  validateCatalog,
+  STYLE_OCCASION_BUNDLES,
+};

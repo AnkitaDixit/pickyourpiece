@@ -19,4 +19,8 @@ export interface Product {
   metalColor?: string;
   diamondCarat?: string;
   diamondQuality?: string;
+  style_brand?: string[];
+  occasion_brand?: string[];
+  ocassion_brand?: string[];
+  styleOccasion?: string[];
 }

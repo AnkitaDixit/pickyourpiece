@@ -13,6 +13,9 @@ const BRAND_ALIAS_TO_SEGMENT: Record<string, string> = {
   "mia by tanishq": "mia",
   miabytanishq: "mia",
   palmonas: "palmonas",
+  joyalukkas: "joyalukkas",
+  melorra: "melorra",
+  senco: "senco",
 };
 
 export const BRAND_SEGMENT_TO_DISPLAY: Record<string, string> = {
@@ -24,6 +27,9 @@ export const BRAND_SEGMENT_TO_DISPLAY: Record<string, string> = {
   orra: "ORRA",
   candere: "Candere",
   palmonas: "Palmonas",
+  joyalukkas: "Joyalukkas",
+  melorra: "Melorra",
+  senco: "Senco",
 };
 
 const slugify = (value: string): string => {

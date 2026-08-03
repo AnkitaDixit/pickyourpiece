@@ -1,28 +1,31 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { PriceRange, ProductFilterKey, ProductFilters } from "@/types/filters";
 import { hasActivePriceRange, PRODUCT_FILTER_KEYS, EMPTY_PRODUCT_FILTERS } from "@/types/filters";
 import type { ProductSort } from "@/types/filters";
+import filterOptionsRaw from "@/data/filter-options.json";
 
-// ── Compact price label (Indian K/L notation) ──────────────────────────────────
+const fo = filterOptionsRaw as Record<string, string[]>;
+
+// â”€â”€ Compact price label (Indian K/L notation) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function formatPriceCompact(value: number): string {
   if (value >= 100_000) {
     const l = value / 100_000;
-    return `₹${Number.isInteger(l) ? l : l.toFixed(1)}L`;
+    return `â‚¹${Number.isInteger(l) ? l : l.toFixed(1)}L`;
   }
   if (value >= 1_000) {
     const k = value / 1_000;
-    return `₹${Number.isInteger(k) ? k : k.toFixed(1)}K`;
+    return `â‚¹${Number.isInteger(k) ? k : k.toFixed(1)}K`;
   }
-  return `₹${value}`;
+  return `â‚¹${value}`;
 }
 
-// ── Log-scale helpers ──────────────────────────────────────────────────────────
+// â”€â”€ Log-scale helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Logarithmic scale so equal slider movement = equal % price change.
-// Without this, ₹800–₹1L (where most jewellery lives) is squished into
-// the leftmost 7% of a ₹800–₹14L slider.
+// Without this, â‚¹800â€“â‚¹1L (where most jewellery lives) is squished into
+// the leftmost 7% of a â‚¹800â€“â‚¹14L slider.
 function priceToLogPct(price: number, min: number, max: number): number {
   const logMin = Math.log(Math.max(1, min));
   const logMax = Math.log(Math.max(1, max));
@@ -39,7 +42,7 @@ function snapPrice(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, Math.round(value / step) * step));
 }
 
-// ── Custom dual-range slider ───────────────────────────────────────────────────
+// â”€â”€ Custom dual-range slider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function PriceRangeSlider({
   priceRange,
   priceBounds,
@@ -144,97 +147,48 @@ function PriceRangeSlider({
   );
 }
 
-const FILTERS = [
+const FILTERS: Array<{ key: ProductFilterKey; label: string; options: string[] }> = [
   {
     key: "brand",
     label: "Brand",
-    options: ["BlueStone", "Candere", "Caratlane", "GIVA", "Mia by Tanishq", "ORRA", "Palmonas", "Tanishq"],
+    options: fo.brand,
   },
   {
     key: "metal",
     label: "Metal",
-    options: ["Gold", "Platinum", "Silver", "Steel"],
+    options: fo.metal.filter((m) => m !== "Steel"),
   },
   {
     key: "gemstone",
     label: "Gemstone",
-    options: [
-      "Amethyst",
-      "Aquamarine",
-      "Citrine",
-      "Diamond",
-      "Emerald",
-      "Garnet",
-      "Gemstone",
-      "Gold",
-      "Opal",
-      "Pearl",
-      "Platinum",
-      "Ruby",
-      "Sapphire",
-      "Silver",
-      "Solitaire",
-      "Topaz",
-    ],
+    options: fo.gemstone,
   },
   {
     key: "purity",
     label: "Purity",
-    options: [
-      "9KT",
-      "14KT",
-      "18KT",
-      "22KT",
-      "Platinum950",
-      "Platinum950, 14KT",
-      "Platinum950, 18KT",
-      "Silver925",
-    ],
+    options: fo.purity,
   },
   {
     key: "metalColor",
     label: "Color",
-    options: ["Gold", "Platinum", "Rose Gold", "Silver", "Three Tone", "Two Tone", "White"],
+    options: fo.metalColor,
   },
   {
-    key: "style",
+    key: "styleOccasion",
     label: "Style",
-    options: [
-      "Band",
-      "Butterfly",
-      "Chevron",
-      "Cluster",
-      "Cocktail",
-      "Eternity",
-      "Everyday",
-      "Floral",
-      "Halo",
-      "Heart",
-      "Infinity",
-      "Minimal",
-      "Solitaire",
-      "Stackable",
-      "Statement",
-      "Vanki",
-      "Vintage",
-    ],
-  },
-  {
-    key: "occasion",
-    label: "Occasion",
-    options: ["Engagement", "Everyday", "Gifting"],
+    options: fo.styleOccasion ?? [],
   },
   {
     key: "gender",
     label: "Gender",
-    options: ["Men", "Women"],
+    options: fo.gender,
   },
   {
     key: "diamondQuality",
     label: "Diamond Quality",
-    options: ["EF-VVS", "FG-SI", "GH-SI", "GH-VS", "GH-VS H&A", "GH-VVS H&A", "IJ-SI", "White-Syndicate"],
+    options: fo.diamondQuality,
   },
-] as const;
+];
 
 interface Props {
   filters: ProductFilters;
@@ -264,7 +218,7 @@ export default function FilterBar({
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
   const [activeFilterTab, setActiveFilterTab] = useState<ProductFilterKey | "price">("brand");
-  // Draft state — only committed when "Done" is pressed
+  // Draft state â€” only committed when "Done" is pressed
   const [draftFilters, setDraftFilters] = useState<ProductFilters>(filters);
   const [draftPriceRange, setDraftPriceRange] = useState<PriceRange>(priceRange);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -294,7 +248,7 @@ export default function FilterBar({
     };
   }, []);
 
-  // Reset to first visible tab whenever the sheet opens — handled in the click handler below
+  // Reset to first visible tab whenever the sheet opens â€” handled in the click handler below
 
   const sortLabel = sortBy === "relevant"
     ? "Relevant"
@@ -629,7 +583,7 @@ export default function FilterBar({
           aria-label="Filters"
           ref={(el) => {
             if (!el) return;
-            // Swipe-down-to-close — standard mobile bottom sheet pattern
+            // Swipe-down-to-close â€” standard mobile bottom sheet pattern
             const handle = el.querySelector<HTMLElement>(".mobile-sheet-handle");
             if (!handle) return;
             let startY = 0;

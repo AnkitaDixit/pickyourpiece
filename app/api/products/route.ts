@@ -233,8 +233,7 @@ function matchesProductFilters(product: Product, filters: ProductFilters): boole
   if (!matchesScalarValue(product.category, filters.category)) return false;
   if (!matchesScalarValue(product.metal, filters.metal)) return false;
   if (filters.gemstone.length > 0 && !matchesArrayValue(product.gemstone, filters.gemstone)) return false;
-  if (filters.occasion.length > 0 && !matchesArrayValue(product.occasion, filters.occasion)) return false;
-  if (filters.style.length > 0 && !matchesArrayValue(product.style, filters.style)) return false;
+  if (filters.styleOccasion.length > 0 && !matchesArrayValue(product.styleOccasion, filters.styleOccasion)) return false;
   if (!matchesScalarValue(product.gender, filters.gender)) return false;
   if (!matchesScalarValue(product.availability, filters.availability)) return false;
   if (!matchesScalarValue(product.purity, filters.purity)) return false;

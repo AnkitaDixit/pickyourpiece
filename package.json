@@ -9,7 +9,9 @@
     "start": "next dev",
     "lint": "eslint",
     "scrape": "npx tsx scraper/run.ts",
-    "scrape:caratlane": "npx tsx scraper/brands/caratlane.ts"
+    "scrape:caratlane": "npx tsx scraper/brands/caratlane.ts",
+    "test:merger": "npx tsx --test scraper/mergeProducts.test.ts",
+    "merge": "npm run test:merger && npx tsx -e \"import { mergeProducts } from './scraper/mergeProducts.ts'; mergeProducts();\""
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

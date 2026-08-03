@@ -102,7 +102,7 @@ Depends on look intent. Halo gives bigger face-up presence; solitaire stays clas
 
 ### Which metal suits solitaire best?
 
-Gold, platinum, silver, and steel can all work depending on budget and taste. Compare [gold vs platinum](/articles/gold-vs-platinum?utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=faq_metal).
+Gold, platinum and silver can all work depending on budget and taste. Compare [gold vs platinum](/articles/gold-vs-platinum?utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=faq_metal).
 
 ### Can I buy a good solitaire under ₹50,000?
 
