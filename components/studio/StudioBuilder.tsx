@@ -117,17 +117,17 @@ const SIMILAR_SLOTS: { id: SimilarSlotId; label: string }[] = [
 const PICKYOURPIECE_SITE_URL = "https://www.pickyourpiece.com";
 
 const BRAND_LOGOS: Record<string, string> = {
-  bluestone: "/brands/bluestone-logo.png?v=20260709-2338",
-  caratlane: "/brands/caratlane-logo.jpg?v=20260709-2338",
-  tanishq: "https://images.assettype.com/nationalherald/2020-10/a42818da-499f-46fe-a8c2-e7d7a6ddc775/Tanishq.jpg",
-  giva: "https://cdn.shopify.com/s/files/1/0061/8378/0442/files/Artboard_1_1_4.png?v=1755502668",
-  palmonas: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP_TFMjp4QLM89RGzLpBaGMmS9q4eX04dfFkihs9oa1rI_dhfgDvvEDlmN&s=10",
-  miabytanishq: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWP4f6l2TWiPzB946zFtEE4PaG-MGgTRhsUAncCiQvkUZDkbpH8s_x0&s=10",
-  orra: "https://cdn0.weddingwire.in/vendor/3272/3_2/960/jpg/orra-logo.jpeg",
-  candere: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2cwP-ig0xZPxiyWdc_exZwE-jMrHO5374YMNS7iH5swqrOOYX289Qqc&s=10",
-  joyalukkas: "https://play-lh.googleusercontent.com/iJyXMNc-K3qZ2lO2Q4tXsdJMOEYQUb-oB35vlD383z_whP1hoV63KUOs8pqSfB3_SzMmsxmoWGDF2GLj2J_nJQ",
-  melorra: "https://play-lh.googleusercontent.com/rm0fhzoROT81QQwcrErnDdxAD7D4Ag8MuXJuhHTBKILS0LP9cniKbsNICZOWdehDRaYuHwW-D8nWZwz13s8fE5I",
-  senco: "https://s3-symbol-logo.tradingview.com/senco-gold-ltd--600.png",
+  bluestone: "/brands/bluestone-logo.png",
+  caratlane: "/brands/caratlane-logo.jpg",
+  tanishq: "/brands/tanishq-logo.jpg",
+  giva: "/brands/giva-logo.png",
+  palmonas: "/brands/palmonas-logo.jpg",
+  mia: "/brands/mia-logo.jpg",
+  orra: "/brands/orra-logo.jpeg",
+  candere: "/brands/candere-logo.jpg",
+  joyalukkas: "/brands/joyalukkas-logo.jpg",
+  melorra: "/brands/melorra-logo.jpg",
+  senco: "/brands/senco-logo.png",
 };
 
 function createDefaultSideFilter(): SideFilterState {
