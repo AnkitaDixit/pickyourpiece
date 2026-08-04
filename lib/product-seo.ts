@@ -24,6 +24,7 @@ export const BRAND_SEGMENT_TO_DISPLAY: Record<string, string> = {
   tanishq: "Tanishq",
   giva: "GIVA",
   mia: "Mia by Tanishq",
+  miabytanishq: "Mia by Tanishq",
   orra: "ORRA",
   candere: "Candere",
   palmonas: "Palmonas",

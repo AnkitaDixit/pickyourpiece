@@ -4784,6 +4784,21 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   align-items: start;
 }
 
+.content-grid-summary {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2px 12px;
+}
+
+.content-grid-count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.01em;
+}
+
 .search-suggestion-banner {
   margin: 0 32px 12px;
   padding: 14px 16px;

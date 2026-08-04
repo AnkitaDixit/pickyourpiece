@@ -29,7 +29,7 @@ const BRAND_LOGOS: Record<string, string> = {
   tanishq: "/brands/tanishq-logo.jpg",
   giva: "/brands/giva-logo.png",
   palmonas: "/brands/palmonas-logo.jpg",
-  mia: "/brands/mia-logo.jpg",
+  miabytanishq: "/brands/mia-logo.jpg",
   orra: "/brands/orra-logo.jpeg",
   candere: "/brands/candere-logo.jpg",
   joyalukkas: "/brands/joyalukkas-logo.jpg",

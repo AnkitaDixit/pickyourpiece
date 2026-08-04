@@ -71,6 +71,7 @@ const BRAND_VISUAL_PALETTES: Record<string, BrandPalette> = {
   candere: { bg: "#fff4ea", accent: "#c2410c" },
   giva: { bg: "#edf7ff", accent: "#0f766e" },
   mia: { bg: "#f7f1ff", accent: "#7c3aed" },
+  miabytanishq: { bg: "#f7f1ff", accent: "#7c3aed" },
   palmonas: { bg: "#fff3f8", accent: "#db2777" },
   tanishq: { bg: "#fff7df", accent: "#a16207" },
 };

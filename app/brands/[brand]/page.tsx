@@ -156,6 +156,7 @@ export default async function BrandPage({ params }: { params: Promise<RouteParam
   const maxPrice = all.length > 0 ? bounds.max : 0;
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
+  const initialTotalCount = all.length;
 
   const canonicalPath = `/brands/${brand}`;
   const collectionSchema = {
@@ -228,6 +229,7 @@ export default async function BrandPage({ params }: { params: Promise<RouteParam
       <ProductsExplorer
         initialItems={initialItems}
         initialNextCursor={initialNextCursor}
+        initialTotalCount={initialTotalCount}
         pageSize={INITIAL_PAGE_SIZE}
         minPrice={minPrice}
         maxPrice={maxPrice}

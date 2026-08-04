@@ -24,6 +24,7 @@ interface ProductsResponse {
 interface Props {
   initialItems: Product[];
   initialNextCursor: number | null;
+  initialTotalCount?: number;
   pageSize?: number;
   filters: ProductFilters;
   searchQuery: string;
@@ -41,6 +42,7 @@ const EMPTY_FORCED_FILTERS: Partial<ProductFilters> = {};
 export default function InfiniteProductGrid({
   initialItems,
   initialNextCursor,
+  initialTotalCount = initialItems.length,
   pageSize = 48,
   filters,
   searchQuery,
@@ -56,6 +58,7 @@ export default function InfiniteProductGrid({
 
   const [items, setItems] = useState<Product[]>(initialItems);
   const [nextCursor, setNextCursor] = useState<number | null>(initialNextCursor);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoadMoreError, setHasLoadMoreError] = useState(false);
   const [isBootstrapping, setIsBootstrapping] = useState(false);
@@ -129,6 +132,7 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems((prev) => [...prev, ...payload.items]);
       setNextCursor(payload.nextCursor);
+      setTotalCount(payload.total);
     } catch {
       setHasLoadMoreError(true);
     } finally {
@@ -146,6 +150,7 @@ export default function InfiniteProductGrid({
     if (!filtersActive && !sortActive && !queryActive) {
       setItems(initialItems);
       setNextCursor(initialNextCursor);
+      setTotalCount(initialTotalCount);
       setHasLoadMoreError(false);
       setHasBootstrapError(false);
       setIsBootstrapping(false);
@@ -163,7 +168,8 @@ export default function InfiniteProductGrid({
       const payload = (await response.json()) as ProductsResponse;
       setItems(payload.items);
       setNextCursor(payload.nextCursor);
-    } catch (err) {
+      setTotalCount(payload.total);
+    } catch {
       if (controller.signal.aborted) return; // superseded — leave loader running
       setHasBootstrapError(true);
       setItems([]);
@@ -173,7 +179,7 @@ export default function InfiniteProductGrid({
         setIsBootstrapping(false);
       }
     }
-  }, [buildUrl, filtersActive, initialItems, initialNextCursor, queryActive, sortActive]);
+  }, [buildUrl, filtersActive, initialItems, initialNextCursor, initialTotalCount, queryActive, sortActive]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -262,6 +268,10 @@ export default function InfiniteProductGrid({
   return (
     <>
       <div ref={gridRef} className="content-grid">
+        <div className="content-grid-summary" role="status" aria-live="polite">
+          <span className="content-grid-count">{totalCount.toLocaleString("en-IN")} items</span>
+        </div>
+
         {showFilterLoader
           ? (
             <div className="content-grid-loading" role="status" aria-live="polite">

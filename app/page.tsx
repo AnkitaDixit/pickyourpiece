@@ -166,7 +166,7 @@ const EDITOR_PICK_BRANDS = [
   "candere",
   "caratlane",
   "giva",
-  "mia",
+  "miabytanishq",
   "orra",
   "tanishq",
 ] as const;
@@ -175,7 +175,7 @@ const EDITOR_PICK_NAME_BY_BRAND: Partial<Record<(typeof EDITOR_PICK_BRANDS)[numb
   candere: "fab fit minimal diamond stackable ring",
   caratlane: "timeless splendor solitaire ring",
   giva: "silver glittering ring",
-  mia: "starlit heart 14 kt gold & diamond ring",
+  miabytanishq: "starlit heart 14 kt gold & diamond ring",
   tanishq: "harmony glow diamond ring",
 };
 
@@ -277,6 +277,7 @@ export default async function Home({
   const maxPrice = all.length > 0 ? bounds.max : 0;
   const initialItems = all.slice(0, INITIAL_PAGE_SIZE);
   const initialNextCursor = initialItems.length < all.length ? initialItems.length : null;
+  const initialTotalCount = all.length;
   const isCatalogMode = meaningfulKeys.length > 0 || Boolean(previewValue);
   const initialSelectedProduct = previewValue
     ? all.find((product) => buildProductDetailPath(product) === previewValue) ?? null
@@ -299,19 +300,45 @@ export default async function Home({
       bucket.push(p);
       byBrand.set(seg, bucket);
     }
+
     // Sort each brand's bucket by image quality (best first)
     for (const [seg, bucket] of byBrand) {
       byBrand.set(seg, bucket.sort((a, b) => scoreImageQuality(b.image) - scoreImageQuality(a.image)));
     }
 
-    // Round-robin across brands so the shelf is brand-diverse
+    const brandOrder = Array.from(byBrand.keys()).sort((a, b) => a.localeCompare(b));
     const result: Product[] = [];
-    for (let round = 0; round < maxPerBrand && result.length < limit; round++) {
-      for (const bucket of byBrand.values()) {
+    const brandCounts = new Map<string, number>();
+
+    for (let round = 0; result.length < limit && round < maxPerBrand; round++) {
+      let addedAny = false;
+
+      for (const brand of brandOrder) {
         if (result.length >= limit) break;
-        if (round < bucket.length) result.push(bucket[round]);
+
+        const bucket = byBrand.get(brand) ?? [];
+        const count = brandCounts.get(brand) ?? 0;
+
+        if (count >= maxPerBrand) continue;
+
+        if (round === 0) {
+          if (bucket.length === 0) continue;
+          result.push(bucket[0]);
+          brandCounts.set(brand, 1);
+          addedAny = true;
+          continue;
+        }
+
+        if (round < bucket.length) {
+          result.push(bucket[round]);
+          brandCounts.set(brand, count + 1);
+          addedAny = true;
+        }
       }
+
+      if (!addedAny) break;
     }
+
     return result;
   }
 
@@ -415,6 +442,7 @@ export default async function Home({
         <HomeCatalogMode
           initialItems={initialItems}
           initialNextCursor={initialNextCursor}
+          initialTotalCount={initialTotalCount}
           pageSize={INITIAL_PAGE_SIZE}
           minPrice={minPrice}
           maxPrice={maxPrice}

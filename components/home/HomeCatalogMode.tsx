@@ -4,6 +4,7 @@ import type { Product } from "@/types/product";
 interface HomeCatalogModeProps {
   initialItems: Product[];
   initialNextCursor: number | null;
+  initialTotalCount?: number;
   pageSize: number;
   minPrice: number;
   maxPrice: number;
@@ -13,6 +14,7 @@ interface HomeCatalogModeProps {
 export default function HomeCatalogMode({
   initialItems,
   initialNextCursor,
+  initialTotalCount,
   pageSize,
   minPrice,
   maxPrice,
@@ -22,6 +24,7 @@ export default function HomeCatalogMode({
     <ProductsExplorer
       initialItems={initialItems}
       initialNextCursor={initialNextCursor}
+      initialTotalCount={initialTotalCount}
       pageSize={pageSize}
       minPrice={minPrice}
       maxPrice={maxPrice}

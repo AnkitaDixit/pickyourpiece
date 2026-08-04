@@ -9,23 +9,23 @@ import filterOptionsRaw from "@/data/filter-options.json";
 
 const fo = filterOptionsRaw as Record<string, string[]>;
 
-// â”€â”€ Compact price label (Indian K/L notation) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// --- Compact price label (Indian K/L notation) ---
 function formatPriceCompact(value: number): string {
   if (value >= 100_000) {
     const l = value / 100_000;
-    return `â‚¹${Number.isInteger(l) ? l : l.toFixed(1)}L`;
+    return `₹${Number.isInteger(l) ? l : l.toFixed(1)}L`;
   }
   if (value >= 1_000) {
     const k = value / 1_000;
-    return `â‚¹${Number.isInteger(k) ? k : k.toFixed(1)}K`;
+    return `₹${Number.isInteger(k) ? k : k.toFixed(1)}K`;
   }
-  return `â‚¹${value}`;
+  return `₹${value}`;
 }
 
-// â”€â”€ Log-scale helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Log-scale helpers ───────────────────────────────────────────────
 // Logarithmic scale so equal slider movement = equal % price change.
-// Without this, â‚¹800â€“â‚¹1L (where most jewellery lives) is squished into
-// the leftmost 7% of a â‚¹800â€“â‚¹14L slider.
+// Without this, ₹800–₹1L (where most jewellery lives) is squished into
+// the leftmost 7% of a ₹800–₹14L slider.
 function priceToLogPct(price: number, min: number, max: number): number {
   const logMin = Math.log(Math.max(1, min));
   const logMax = Math.log(Math.max(1, max));
@@ -42,7 +42,7 @@ function snapPrice(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, Math.round(value / step) * step));
 }
 
-// â”€â”€ Custom dual-range slider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// --- Custom dual-range slider ---
 function PriceRangeSlider({
   priceRange,
   priceBounds,

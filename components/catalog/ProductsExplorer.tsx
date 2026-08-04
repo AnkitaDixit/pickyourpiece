@@ -46,6 +46,7 @@ function countActiveFilters(filters: ProductFilters, priceRange: PriceRange, bou
 interface Props {
   initialItems: Product[];
   initialNextCursor: number | null;
+  initialTotalCount?: number;
   pageSize: number;
   minPrice: number;
   maxPrice: number;
@@ -57,6 +58,7 @@ interface Props {
 export default function ProductsExplorer({
   initialItems,
   initialNextCursor,
+  initialTotalCount,
   pageSize,
   minPrice,
   maxPrice,
@@ -351,6 +353,7 @@ export default function ProductsExplorer({
           <InfiniteProductGrid
             initialItems={initialItems}
             initialNextCursor={initialNextCursor}
+            initialTotalCount={initialTotalCount}
             pageSize={pageSize}
             filters={stableFilters}
             searchQuery={searchQuery}
