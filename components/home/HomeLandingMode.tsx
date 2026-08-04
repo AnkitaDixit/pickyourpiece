@@ -29,6 +29,7 @@ const BRAND_ENTRIES = [
   ["caratlane", "CaratLane"],
   ["giva", "GIVA"],
   ["miabytanishq", "Mia by Tanishq"],
+  ["mia", "Mia by Tanishq"],
   ["orra", "ORRA"],
   ["joyalukkas", "Joyalukkas"],
   ["melorra", "Melorra"],
