@@ -2,7 +2,8 @@
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, UserRound } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Newspaper } from "lucide-react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@/components/search/SearchBar";
 
@@ -207,11 +208,23 @@ export default function Navbar({ showSearch = true, showBrand = false }: NavbarP
         ) : null}
       </div>
 
-      {/* Right — Avatar */}
+      {/* Right — Articles */}
       <div className="navbar-right">
-        <div className="navbar-avatar" aria-label="Guest profile">
-          <UserRound size={18} />
-        </div>
+        <Link
+          href="/articles"
+          className="navbar-articles-link"
+          aria-label="Articles"
+          title="Articles"
+          data-analytics-event="navbar_articles_click"
+          data-analytics-section="navbar"
+          data-analytics-type="navigation"
+          data-analytics-label="articles"
+          data-analytics-destination="/articles"
+          data-analytics-category="articles"
+        >
+          <Newspaper size={18} strokeWidth={1.9} aria-hidden="true" />
+          <span>Buying Guides</span>
+        </Link>
       </div>
     </nav>
   );

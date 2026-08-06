@@ -14,6 +14,7 @@ import { _testExports } from "./mergeProducts.ts";
 const {
   normalizeBrand,
   normalizePurity,
+  normalizeGemstones,
   derivePurity,
   canonicalizeMetalCategory,
   deriveMetalColor,
@@ -23,6 +24,49 @@ const {
   validateCatalog,
   STYLE_OCCASION_BUNDLES,
 } = _testExports;
+
+describe("normalizeGemstones", () => {
+  it("maps aliases and removes non-gemstone filter values", () => {
+    assert.deepEqual(
+      normalizeGemstones([
+        "Black onyx",
+        "Onyx",
+        "pearl",
+        "Gold",
+        "Gemstones",
+        "Ruby Cut",
+        "Glass Filled Ruby",
+      ]),
+      {
+        gemstones: ["Black Onyx", "Natural Pearl", "Ruby"],
+        origins: [],
+        treatments: ["Glass Filled"],
+        cuts: ["Ruby Cut"],
+        isSolitaire: false,
+      }
+    );
+  });
+
+  it("stores synthetic stones as origin metadata", () => {
+    assert.deepEqual(normalizeGemstones(["Synthetic Amethyst", "Synthetic Ruby"]), {
+      gemstones: ["Amethyst", "Ruby"],
+      origins: ["Amethyst", "Ruby"],
+      treatments: [],
+      cuts: [],
+      isSolitaire: false,
+    });
+  });
+
+  it("stores solitaire as a tag rather than a gemstone", () => {
+    assert.deepEqual(normalizeGemstones(["Solitaire", "Diamond"]), {
+      gemstones: ["Diamond"],
+      origins: [],
+      treatments: [],
+      cuts: [],
+      isSolitaire: true,
+    });
+  });
+});
 
 // ---------------------------------------------------------------------------
 // normalizeBrand

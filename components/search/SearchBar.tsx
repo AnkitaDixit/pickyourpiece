@@ -33,7 +33,6 @@ const BASE_SUGGESTIONS = [
   "bluestone",
   "caratlane",
   "giva",
-  "mia",
   "palmonas",
 ];
 

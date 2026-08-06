@@ -7,7 +7,7 @@ const OUTPUT_FILE = path.join(process.cwd(), "data", "products.json");
 const NORMALIZED_OUTPUT_FILE = path.join(process.cwd(), "data", "new_products.json");
 const CHANGELOG_OUTPUT_FILE = path.join(process.cwd(), "data", "products.changelog.json");
 const FILTER_OPTIONS_FILE = path.join(process.cwd(), "data", "filter-options.json");
-const TARGET_BRANDS = ["bluestone", "caratlane", "tanishq", "giva", "mia", "orra", "candere", "palmonas", "joyalukkas", "melorra", "senco"] as const;
+const TARGET_BRANDS = ["bluestone", "caratlane", "tanishq", "giva", "miabytanshiq", "orra", "candere", "palmonas", "joyalukkas", "melorra", "senco"] as const;
 
 type JsonRecord = Record<string, unknown>;
 type EnrichedProduct = JsonRecord & {
@@ -39,6 +39,152 @@ const STYLE_OCCASION_BUNDLES = [
   "Nature & Artistic",
   "Modern & Classic",
 ] as const;
+
+const CANONICAL_GEMSTONES = [
+  "Amethyst",
+  "Aquamarine",
+  "Black Onyx",
+  "Black Spinel",
+  "Blue Sapphire",
+  "Blue Topaz",
+  "Chalcedony",
+  "Chrome Diopside",
+  "Citrine",
+  "Crystal Quartz",
+  "Diamond",
+  "Emerald",
+  "Garnet",
+  "Green Agate",
+  "Green Chalcedony",
+  "Iolite",
+  "Kundan",
+  "Lapis Lazuli",
+  "Lemon Quartz",
+  "London Blue Topaz",
+  "Moonstone",
+  "Mother of Pearl",
+  "Natural Pearl",
+  "Opal",
+  "Orange Madeira Citrine",
+  "Peridot",
+  "Pink Chalcedony",
+  "Pink Sapphire",
+  "Pink Tourmaline",
+  "Polki",
+  "Pyrope Garnet",
+  "Quartz",
+  "Red Garnet",
+  "Rose Quartz",
+  "Ruby",
+  "Sapphire",
+  "Scolecite",
+  "Smoky Quartz",
+  "Sodalite",
+  "Spinel",
+  "Topaz",
+  "Turquoise",
+  "Uncut Diamond",
+  "White Chalcedony",
+  "Zircon",
+] as const;
+
+type GemstoneMetadata = {
+  gemstones: string[];
+  origins: string[];
+  treatments: string[];
+  cuts: string[];
+  isSolitaire: boolean;
+};
+
+function normalizeGemstones(rawValue: unknown): GemstoneMetadata {
+  const gemstones = new Set<string>();
+  const origins = new Set<string>();
+  const treatments = new Set<string>();
+  const cuts = new Set<string>();
+  let isSolitaire = false;
+
+  for (const raw of asStringArray(rawValue)) {
+    const key = normalizeTagKey(raw);
+    const synthetic = key.startsWith("synthetic ");
+    const baseKey = synthetic ? key.replace(/^synthetic /, "") : key;
+    const mapping: Record<string, string> = {
+      amethyst: "Amethyst",
+      aquamarine: "Aquamarine",
+      "natural aquamarine gemstone": "Aquamarine",
+      "black onyx": "Black Onyx",
+      onyx: "Black Onyx",
+      "black spinel": "Black Spinel",
+      "blue sapphire": "Blue Sapphire",
+      "blue topaz": "Blue Topaz",
+      "button pearl": "Natural Pearl",
+      chalcedony: "Chalcedony",
+      "chrome diopside": "Chrome Diopside",
+      citrine: "Citrine",
+      "crystal quartz": "Crystal Quartz",
+      diamond: "Diamond",
+      emerald: "Emerald",
+      garnet: "Garnet",
+      "green agate": "Green Agate",
+      "green chalcedony": "Green Chalcedony",
+      iolite: "Iolite",
+      kundan: "Kundan",
+      lapis: "Lapis Lazuli",
+      "lapis lazuli": "Lapis Lazuli",
+      "lemon quartz": "Lemon Quartz",
+      "london blue topaz": "London Blue Topaz",
+      "light blue topaz": "Blue Topaz",
+      moonstone: "Moonstone",
+      "mother of pearl": "Mother of Pearl",
+      "natural pearl": "Natural Pearl",
+      pearl: "Natural Pearl",
+      opal: "Opal",
+      "orange madeira citirine": "Orange Madeira Citrine",
+      "orange madeira citrine": "Orange Madeira Citrine",
+      peridot: "Peridot",
+      "pink chalcedony": "Pink Chalcedony",
+      "pink sapphire": "Pink Sapphire",
+      "pink tourmaline": "Pink Tourmaline",
+      polki: "Polki",
+      pyrope: "Pyrope Garnet",
+      "pyrope garnet": "Pyrope Garnet",
+      quartz: "Quartz",
+      "red garnet": "Red Garnet",
+      "rose quartz": "Rose Quartz",
+      ruby: "Ruby",
+      sapphire: "Sapphire",
+      scolecite: "Scolecite",
+      "smoky quartz": "Smoky Quartz",
+      sodalite: "Sodalite",
+      spinel: "Spinel",
+      topaz: "Topaz",
+      turquoise: "Turquoise",
+      "uncut diamond": "Uncut Diamond",
+      zircon: "Zircon",
+      "white chalcedony": "White Chalcedony",
+      "glass filled ruby": "Ruby",
+      "ruby cut": "Ruby",
+    };
+    if (baseKey === "solitaire") {
+      isSolitaire = true;
+      continue;
+    }
+    const canonical = mapping[baseKey];
+    if (!canonical) continue;
+
+    gemstones.add(canonical);
+    if (synthetic) origins.add(canonical);
+    if (baseKey === "glass filled ruby") treatments.add("Glass Filled");
+    if (baseKey === "ruby cut") cuts.add("Ruby Cut");
+  }
+
+  return {
+    gemstones: CANONICAL_GEMSTONES.filter((gemstone) => gemstones.has(gemstone)),
+    origins: Array.from(origins).sort((a, b) => a.localeCompare(b)),
+    treatments: Array.from(treatments).sort((a, b) => a.localeCompare(b)),
+    cuts: Array.from(cuts).sort((a, b) => a.localeCompare(b)),
+    isSolitaire,
+  };
+}
 
 function buildMetalFingerprint(...values: string[]): string {
   return values
@@ -542,6 +688,7 @@ export function mergeProducts(): JsonRecord[] {
       const rawMetalColor = asString(product.metalColor);
       const rawName = asString(product.name);
       const rawDescription = asString(product.description);
+      const gemstoneMetadata = normalizeGemstones(product.gemstone);
       const styleBrand = asStringArray(product.style);
       const occasionBrand = asStringArray(product.occasion);
       const sourceProductId = asString(product.id) || asString(product.sku) || asString(product.productUrl);
@@ -561,6 +708,11 @@ export function mergeProducts(): JsonRecord[] {
       normalized.occasion_brand = occasionBrand;
       normalized.ocassion_brand = occasionBrand;
       normalized.styleOccasion = deriveStyleOccasionBundles(styleBrand, occasionBrand);
+      normalized.gemstone = gemstoneMetadata.gemstones;
+      if (gemstoneMetadata.origins.length > 0) normalized.gemstoneOrigin = gemstoneMetadata.origins;
+      if (gemstoneMetadata.treatments.length > 0) normalized.gemstoneTreatment = gemstoneMetadata.treatments;
+      if (gemstoneMetadata.cuts.length > 0) normalized.gemstoneCut = gemstoneMetadata.cuts;
+      if (gemstoneMetadata.isSolitaire) normalized.is_solitaire = true;
 
       if (Object.prototype.hasOwnProperty.call(product, "allImages") && product.allImages != null) {
         const normalizedAllImages = normalizeAllImages(product.allImages, rawBrand, sourceProductId);
@@ -870,6 +1022,7 @@ function validateCatalog(catalog: EnrichedProduct[], normalized: JsonRecord[]): 
 export const _testExports = {
   normalizeBrand,
   normalizePurity,
+  normalizeGemstones,
   derivePurity,
   canonicalizeMetalCategory,
   deriveMetalColor,
@@ -878,4 +1031,5 @@ export const _testExports = {
   buildDeterministicProductId,
   validateCatalog,
   STYLE_OCCASION_BUNDLES,
+  CANONICAL_GEMSTONES,
 };

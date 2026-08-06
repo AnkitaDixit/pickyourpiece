@@ -346,21 +346,21 @@ export default async function Home({
     {
       id: "trending",
       title: "Trending Today",
-      emoji: "🔥",
+      artSrc: "/discovery/trending.svg",
       href: "/?sort=relevant",
       products: trendingProducts,
     },
     {
       id: "budget",
       title: "Under ₹10,000",
-      emoji: "💸",
+      artSrc: "/discovery/budget.svg",
       href: "/?maxPrice=10000",
       products: pickShelf(p => p.price <= 10_000),
     },
     {
       id: "engagement",
       title: "Engagement Rings",
-      emoji: "💍",
+      artSrc: "/discovery/engagement.svg",
       href: "/?q=engagement+ring",
       products: pickShelf(p =>
         p.occasion?.some(o => o.toLowerCase().includes("engagement")) ||
@@ -371,7 +371,7 @@ export default async function Home({
     {
       id: "giftsforher",
       title: "Gifts for Her",
-      emoji: "🌸",
+      artSrc: "/discovery/giftsforher.svg",
       href: "/?q=gift+jewellery",
       products: pickShelf(p =>
         p.occasion?.some(o => o.toLowerCase().includes("gift")) ||
@@ -381,7 +381,7 @@ export default async function Home({
     {
       id: "minimal",
       title: "Minimal Jewellery",
-      emoji: "✨",
+      artSrc: "/discovery/minimal.svg",
       href: "/?q=minimal",
       products: pickShelf(p =>
         p.style?.some(s => ["minimal", "simple", "solitaire", "classic"].includes(s.toLowerCase())) ||
@@ -392,7 +392,7 @@ export default async function Home({
     {
       id: "diamond",
       title: "Diamond Picks",
-      emoji: "💎",
+      artSrc: "/discovery/diamond.svg",
       href: "/?q=diamond",
       products: pickShelf(p => p.gemstone?.some(g => g.toLowerCase().includes("diamond"))),
     },
@@ -432,7 +432,7 @@ export default async function Home({
   };
 
   return (
-    <MainLayout showNavbarSearch={isCatalogMode} showNavbarBrand={!isCatalogMode}>
+    <MainLayout showNavbarSearch showNavbarBrand>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
@@ -459,4 +459,3 @@ export default async function Home({
     </MainLayout>
   );
 }
-

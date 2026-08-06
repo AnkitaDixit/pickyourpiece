@@ -1,6 +1,6 @@
 "use client";
 
-import { BookText, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
@@ -9,7 +9,6 @@ const NAV_ITEMS = [
   { id: "earrings", label: "Earrings", href: "/earrings", iconSrc: "/categories/earrings.png" },
   { id: "bracelet", label: "Bracelet", href: "/bracelet", iconSrc: "/categories/bracelet.png" },
   { id: "pendant", label: "Pendant", href: "/pendant", iconSrc: "/categories/pendant.png" },
-  { id: "articles", label: "Articles", href: "/articles", icon: BookText },
 ];
 
 export default function Sidebar() {
@@ -46,7 +45,6 @@ export default function Sidebar() {
   const isActiveItem = (id: string, href: string) => {
     if (id === "home") return pathname === "/";
     if (id === "ring") return pathname === "/ring";
-    if (id === "articles") return pathname?.startsWith("/articles") ?? false;
     if (id === "earrings") return pathname === "/earrings";
     if (id === "bracelet") return pathname === "/bracelet";
     if (id === "pendant") return pathname === "/pendant";
@@ -77,7 +75,7 @@ export default function Sidebar() {
                   width={22}
                   height={22}
                   aria-hidden="true"
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "contain", filter: "opacity(0.5)" }}
                 />
               ) : Icon ? (
                 <Icon size={22} strokeWidth={1.8} />
