@@ -221,14 +221,16 @@ export default function HomeLandingMode({
               <WalletCards className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
               <h2>Finds by Budget</h2>
               <p>Find the best pieces in your budget.</p>
-              <div className="landing-feature-card-actions">
-                <Link href="/?maxPrice=25000">Under ₹25k <MoveRight size={14} aria-hidden="true" /></Link>
-                <Link href="/?maxPrice=100000">Under ₹1 Lakh <MoveRight size={14} aria-hidden="true" /></Link>
-                <Link href="/?minPrice=100000">₹1 Lakh+ <MoveRight size={14} aria-hidden="true" /></Link>
+              <div className="landing-feature-card-budget-links">
+                <div className="landing-feature-card-actions">
+                  <Link href="/?maxPrice=25000">Under ₹25k <MoveRight size={14} aria-hidden="true" /></Link>
+                  <Link href="/?maxPrice=100000">Under ₹1 Lakh <MoveRight size={14} aria-hidden="true" /></Link>
+                  {/* <Link href="/?minPrice=100000">₹1 Lakh+ <MoveRight size={14} aria-hidden="true" /></Link> */}
+                </div>
+                <Link className="landing-feature-card-cta" href="/?sort=price-asc">
+                  Explore all <MoveRight size={16} aria-hidden="true" />
+                </Link>
               </div>
-              <Link className="landing-feature-card-cta" href="/?sort=price-asc">
-                Explore all <MoveRight size={16} aria-hidden="true" />
-              </Link>
             </article>
 
             {/* <article className="landing-feature-card landing-feature-card-gift">

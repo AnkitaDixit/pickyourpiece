@@ -2242,6 +2242,10 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   gap: 7px;
 }
 
+.landing-feature-card-budget-links {
+  display: contents;
+}
+
 .landing-feature-card-actions a {
   display: inline-flex;
   align-items: center;
@@ -3524,8 +3528,39 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 
   .landing-feature-card {
     min-height: 0;
-    padding: 16px;
+    padding: 12px;
+    gap: 10px;
   }
+
+  .landing-feature-card-budget-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .landing-feature-card-budget-links .landing-feature-card-cta {
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .landing-feature-card p {
+    margin: 4px 0 8px
+    /* display: none; */
+  }
+  .landing-feature-card-icon{
+    margin-bottom: 0;
+  }
+
 
   .landing-feature-card-heading {
     display: inline-flex;
