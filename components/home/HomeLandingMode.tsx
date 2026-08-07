@@ -133,6 +133,7 @@ interface HomeLandingModeProps {
 
 export default function HomeLandingMode({
   allCount,
+  trendingProducts,
   discoveryShelves,
 }: HomeLandingModeProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -215,6 +216,7 @@ export default function HomeLandingMode({
               <span><strong>Independent</strong><small>No Markup</small></span>
             </div>
           </div>
+          
 
           <div className="landing-feature-cards" aria-label="Ways to discover jewellery">
             <article className="landing-feature-card landing-feature-card-budget">
@@ -233,6 +235,36 @@ export default function HomeLandingMode({
               </div>
             </article>
 
+            
+            <article className="landing-feature-card landing-feature-card-personalized">
+              <Sparkles className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
+              <h2>Personalized Picks</h2>
+              <p>Answer 5 quick questions and get picks just for you.</p>
+              <button className="landing-feature-card-primary-cta" type="button" onClick={() => setFinderOpen(true)}>
+                Find My Perfect Piece
+              </button>
+              <small>◷ Takes 30 seconds</small>
+            </article>
+{/* 
+            <article className="landing-feature-card studio-ig-post studio-ig-post-compare_cards landing-feature-card-compare">
+            
+                <Sparkles className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
+          <h2>Compare and Choose</h2>
+             
+              <div className="landing-compare-row">
+                {trendingProducts.slice(0, 2).map((product, index) => (
+                  <div className="landing-compare-card" key={product.id}>
+                    <b>{index === 0 ? "A" : "B"}</b>
+                    <img src={product.image} alt="" loading="lazy" />
+                    <small>{product.brand}</small>
+                    <strong>₹{product.price.toLocaleString("en-IN")}</strong>
+                  </div>
+                ))}
+                <span className="landing-compare-vs">VS</span>
+              </div>
+              <Link className="landing-compare-cta" href="/ring">COMPARE NOW <MoveRight size={14} aria-hidden="true" /></Link>
+            </article> */}
+
             {/* <article className="landing-feature-card landing-feature-card-gift">
               <Gift className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
               <h2>Buying a Gift?</h2>
@@ -248,15 +280,6 @@ export default function HomeLandingMode({
               </Link>
             </article> */}
 
-            <article className="landing-feature-card landing-feature-card-personalized">
-              <Sparkles className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
-              <h2>Personalized Picks</h2>
-              <p>Answer 5 quick questions and get picks just for you.</p>
-              <button className="landing-feature-card-primary-cta" type="button" onClick={() => setFinderOpen(true)}>
-                Find My Perfect Piece
-              </button>
-              <small>◷ Takes 30 seconds</small>
-            </article>
           </div>
 
           {/* <div className="landing-hero-search">
