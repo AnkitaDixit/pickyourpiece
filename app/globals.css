@@ -2054,7 +2054,6 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   position: relative;
   overflow: hidden;
   min-height: 480px;
-  max-height: 95vh;
 }
 
 /* Fade overlay — keeps left-side text readable over the image */
