@@ -133,7 +133,6 @@ interface HomeLandingModeProps {
 
 export default function HomeLandingMode({
   allCount,
-  trendingProducts,
   discoveryShelves,
 }: HomeLandingModeProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -218,18 +217,49 @@ export default function HomeLandingMode({
           </div>
           
 
-          <div className="landing-feature-cards" aria-label="Ways to discover jewellery">
+          <div
+            className="landing-feature-cards"
+            aria-label="Ways to discover jewellery"
+            data-analytics-section="home_feature_cards"
+            data-analytics-type="feature_card_group"
+          >
             <article className="landing-feature-card landing-feature-card-budget">
               <WalletCards className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
               <h2>Finds by Budget</h2>
               <p>Find the best pieces in your budget.</p>
               <div className="landing-feature-card-budget-links">
                 <div className="landing-feature-card-actions">
-                  <Link href="/?maxPrice=25000">Under ₹25k <MoveRight size={14} aria-hidden="true" /></Link>
-                  <Link href="/?maxPrice=100000">Under ₹1 Lakh <MoveRight size={14} aria-hidden="true" /></Link>
+                  <Link
+                    href="/?maxPrice=25000"
+                    data-analytics-event="home_feature_card_budget_click"
+                    data-analytics-section="home_feature_cards"
+                    data-analytics-type="budget_option"
+                    data-analytics-label="under_25k"
+                    data-analytics-destination="/?maxPrice=25000"
+                  >
+                    Under ₹25k <MoveRight size={14} aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href="/?maxPrice=100000"
+                    data-analytics-event="home_feature_card_budget_click"
+                    data-analytics-section="home_feature_cards"
+                    data-analytics-type="budget_option"
+                    data-analytics-label="under_1_lakh"
+                    data-analytics-destination="/?maxPrice=100000"
+                  >
+                    Under ₹1 Lakh <MoveRight size={14} aria-hidden="true" />
+                  </Link>
                   {/* <Link href="/?minPrice=100000">₹1 Lakh+ <MoveRight size={14} aria-hidden="true" /></Link> */}
                 </div>
-                <Link className="landing-feature-card-cta" href="/?sort=price-asc">
+                <Link
+                  className="landing-feature-card-cta"
+                  href="/?sort=price-asc"
+                  data-analytics-event="home_feature_card_explore_all_click"
+                  data-analytics-section="home_feature_cards"
+                  data-analytics-type="feature_card_cta"
+                  data-analytics-label="explore_all_budget"
+                  data-analytics-destination="/?sort=price-asc"
+                >
                   Explore all <MoveRight size={16} aria-hidden="true" />
                 </Link>
               </div>
@@ -240,7 +270,16 @@ export default function HomeLandingMode({
               <Sparkles className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
               <h2>Personalized Picks</h2>
               <p>Answer 5 quick questions and get picks just for you.</p>
-              <button className="landing-feature-card-primary-cta" type="button" onClick={() => setFinderOpen(true)}>
+              <button
+                className="landing-feature-card-primary-cta"
+                type="button"
+                onClick={() => setFinderOpen(true)}
+                data-analytics-event="home_feature_card_finder_click"
+                data-analytics-section="home_feature_cards"
+                data-analytics-type="feature_card_cta"
+                data-analytics-label="find_my_perfect_piece"
+                data-analytics-destination="/ring"
+              >
                 Find My Perfect Piece
               </button>
               <small>◷ Takes 30 seconds</small>
@@ -537,9 +576,27 @@ export default function HomeLandingMode({
       </div>
 
       {finderOpen && (
-        <div className="finder-overlay" role="dialog" aria-modal="true" aria-labelledby="finder-title">
+        <div
+          className="finder-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="finder-title"
+          data-analytics-event="home_finder_open"
+          data-analytics-section="home_feature_cards"
+          data-analytics-type="finder"
+          data-analytics-label="find_my_perfect_piece"
+        >
           <div className="finder-modal">
-            <button className="finder-close" type="button" onClick={closeFinder} aria-label="Close finder">
+            <button
+              className="finder-close"
+              type="button"
+              onClick={closeFinder}
+              aria-label="Close finder"
+              data-analytics-event="home_finder_close"
+              data-analytics-section="home_feature_cards"
+              data-analytics-type="finder_control"
+              data-analytics-label="close"
+            >
               <X size={20} aria-hidden="true" />
             </button>
             <div className="finder-progress" aria-label={`Question ${finderStep + 1} of ${FINDER_QUESTIONS.length}`}>
@@ -557,6 +614,11 @@ export default function HomeLandingMode({
                   type="button"
                   className="finder-option"
                   onClick={() => selectFinderOption(value)}
+                  data-analytics-event="home_finder_question_answered"
+                  data-analytics-section="home_feature_cards"
+                  data-analytics-type="finder_question"
+                  data-analytics-label={`question_${finderStep + 1}`}
+                  data-analytics-value={value}
                 >
                   <span className="finder-option-emoji" aria-hidden="true">{visual}</span>
                   <span>{label}</span>
@@ -565,7 +627,15 @@ export default function HomeLandingMode({
             </div>
             <div className="finder-footer">
               {finderStep > 0 ? (
-                <button type="button" className="finder-back" onClick={() => setFinderStep((step) => step - 1)}>
+                <button
+                  type="button"
+                  className="finder-back"
+                  onClick={() => setFinderStep((step) => step - 1)}
+                  data-analytics-event="home_finder_back"
+                  data-analytics-section="home_feature_cards"
+                  data-analytics-type="finder_control"
+                  data-analytics-label={`question_${finderStep + 1}`}
+                >
                   <ArrowLeft size={15} aria-hidden="true" /> Back
                 </button>
               ) : <span />}

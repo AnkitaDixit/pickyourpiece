@@ -92,6 +92,13 @@ Notes:
 - `home_collection_product_click`
 - `home_brand_strip_view_all_click`
 - `home_brand_card_click`
+- `home_feature_card_budget_click`
+- `home_feature_card_explore_all_click`
+- `home_feature_card_finder_click`
+- `home_finder_open`
+- `home_finder_close`
+- `home_finder_back`
+- `home_finder_question_answered`
 
 ### Catalog and Product Discovery
 

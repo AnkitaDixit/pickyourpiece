@@ -15,6 +15,13 @@ type AnalyticsEventName =
   | "home_collection_product_click"
   | "home_collection_view_all_click"
   | "home_explore_all_categories_click"
+  | "home_feature_card_budget_click"
+  | "home_feature_card_explore_all_click"
+  | "home_feature_card_finder_click"
+  | "home_finder_back"
+  | "home_finder_close"
+  | "home_finder_open"
+  | "home_finder_question_answered"
   | "home_quick_search_click"
   | "navbar_category_switch_click"
   | "navbar_home_click"
@@ -172,6 +179,7 @@ export function trackDataClick(element: HTMLElement) {
   const productId = normalizeParamValue(element.dataset.analyticsProductId);
   const productName = normalizeParamValue(element.dataset.analyticsProductName);
   const query = normalizeParamValue(element.dataset.analyticsQuery);
+  const value = normalizeParamValue(element.dataset.analyticsValue);
   const category = normalizeAnalyticsCategory(element.dataset.analyticsCategory);
 
   trackEvent(eventName as AnalyticsEventName, {
@@ -183,6 +191,7 @@ export function trackDataClick(element: HTMLElement) {
     product_id: productId,
     product_name: productName,
     query,
+    option_value: value,
     catalog_category: category,
   });
 }
