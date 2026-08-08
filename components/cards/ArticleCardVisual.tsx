@@ -66,13 +66,17 @@ type BrandPalette = {
 };
 
 const BRAND_VISUAL_PALETTES: Record<string, BrandPalette> = {
+  melorra: { bg: "#f5e8df", accent: "#9a6043" },
   bluestone: { bg: "#e8f1ff", accent: "#1d4ed8" },
   caratlane: { bg: "#ffeef8", accent: "#be185d" },
   candere: { bg: "#fff4ea", accent: "#c2410c" },
   giva: { bg: "#edf7ff", accent: "#0f766e" },
+  joyalukkas: { bg: "#fff4c9", accent: "#876b21" },
   mia: { bg: "#f7f1ff", accent: "#7c3aed" },
   miabytanishq: { bg: "#f7f1ff", accent: "#7c3aed" },
+  orra: { bg: "#e9f0f5", accent: "#315d78" },
   palmonas: { bg: "#fff3f8", accent: "#db2777" },
+  senco: { bg: "#f5e8e8", accent: "#81515e" },
   tanishq: { bg: "#fff7df", accent: "#a16207" },
 };
 

@@ -104,7 +104,7 @@ export default function AboutPage() {
             <h2 id="about-seo-title">Why Pick Your Piece Helps You Buy Better</h2>
           </div>
           <ul className="articles-hero-metrics" aria-label="Benefits of Pick Your Piece">
-            <li>Compare jewellery prices across top brands in one place</li>
+            <li>Compare jewellery prices across top Indain brands in one place</li>
             <li>Discover rings by metal, purity, style, occasion, and budget</li>
             <li>Reduce decision fatigue with clean filters and comparison-first discovery</li>
             <li>Find better-value jewellery without jumping between multiple websites</li>
