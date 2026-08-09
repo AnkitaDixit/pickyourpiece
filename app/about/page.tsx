@@ -5,32 +5,32 @@ import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pickyourpiece.com";
 
 export const metadata: Metadata = {
-  title: "About Pick Your Piece (PYP)",
+  title: "About PickYourPiece (PYP)",
   description:
-    "Learn about Pick Your Piece (PYP), a one-stop jewellery comparison platform that helps shoppers compare brands, prices, styles, metals, and purity in one place.",
+    "Learn about PickYourPiece (PYP), a one-stop jewellery comparison platform that helps shoppers compare brands, prices, styles, metals, and purity in one place.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     type: "website",
     url: `${siteUrl}/about`,
-    title: "About Pick Your Piece (PYP)",
+    title: "About PickYourPiece (PYP)",
     description:
-      "Pick Your Piece (PYP) is a one-stop jewellery comparison platform that helps shoppers avoid decision overload by comparing top brands in one place.",
+      "PickYourPiece (PYP) is a one-stop jewellery comparison platform that helps shoppers avoid decision overload by comparing top brands in one place.",
     images: [
       {
         url: "/heroImage.png",
         width: 1200,
         height: 630,
-        alt: "About Pick Your Piece",
+        alt: "About PickYourPiece",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Pick Your Piece (PYP)",
+    title: "About PickYourPiece (PYP)",
     description:
-      "Pick Your Piece (PYP) helps shoppers compare jewellery across brands in one place so they can buy smarter and faster.",
+      "PickYourPiece (PYP) helps shoppers compare jewellery across brands in one place so they can buy smarter and faster.",
     images: ["/heroImage.png"],
   },
 };
@@ -39,7 +39,7 @@ export default function AboutPage() {
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About Pick Your Piece (PYP)",
+    name: "About PickYourPiece (PYP)",
     url: `${siteUrl}/about`,
     isPartOf: {
       "@type": "WebSite",
@@ -48,8 +48,8 @@ export default function AboutPage() {
     about: {
       "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
-      name: "Pick Your Piece",
-      alternateName: ["PYP", "PickYourPiece", "PyP"],
+      name: "PickYourPiece",
+      alternateName: ["PYP", "Pick Your Piece", "PyP"],
     },
   };
 
@@ -67,9 +67,9 @@ export default function AboutPage() {
 
         <header className="articles-hero" aria-labelledby="about-title">
           <p className="articles-kicker">About</p>
-          <h1 id="about-title">About Pick Your Piece (PYP)</h1>
+          <h1 id="about-title">About PickYourPiece (PYP)</h1>
           <p>
-            Pick Your Piece, also searched as PickYourPiece or PYP, is a one-stop jewellery comparison platform built
+            PickYourPiece, also searched as PickYourPiece or PYP, is a one-stop jewellery comparison platform built
             to help shoppers discover, compare, and choose jewellery with confidence.
           </p>
         </header>
@@ -90,7 +90,7 @@ export default function AboutPage() {
           </div>
           <p className="article-description">
             Online jewellery shopping can feel overwhelming when you open dozens of tabs across many brands,
-            marketplaces, and collections. Our vision is to make Pick Your Piece the one-stop solution where shoppers
+            marketplaces, and collections. Our vision is to make PickYourPiece the one-stop solution where shoppers
             do not get lost in endless browsing and instead make faster, smarter, and more confident decisions.
           </p>
           <p className="article-description">
@@ -101,9 +101,9 @@ export default function AboutPage() {
 
         <section className="articles-section" aria-labelledby="about-seo-title">
           <div className="articles-section-head">
-            <h2 id="about-seo-title">Why Pick Your Piece Helps You Buy Better</h2>
+            <h2 id="about-seo-title">Why PickYourPiece Helps You Buy Better</h2>
           </div>
-          <ul className="articles-hero-metrics" aria-label="Benefits of Pick Your Piece">
+          <ul className="articles-hero-metrics" aria-label="Benefits of PickYourPiece">
             <li>Compare jewellery prices across top Indain brands in one place</li>
             <li>Discover rings by metal, purity, style, occasion, and budget</li>
             <li>Reduce decision fatigue with clean filters and comparison-first discovery</li>
@@ -116,7 +116,7 @@ export default function AboutPage() {
             <h2 id="about-trust-title">Built for Modern Jewellery Shoppers</h2>
           </div>
           <p className="article-description">
-            Whether you are shopping for an engagement ring, a gift, or an everyday style upgrade, Pick Your Piece is
+            Whether you are shopping for an engagement ring, a gift, or an everyday style upgrade, PickYourPiece is
             designed to support practical, informed buying decisions with less confusion and more clarity.
           </p>
           <p className="article-description">
@@ -127,7 +127,7 @@ export default function AboutPage() {
 
         <section className="articles-section" aria-labelledby="about-platform-title">
           <div className="articles-section-head">
-            <h2 id="about-platform-title">What You Can Do on Pick Your Piece</h2>
+            <h2 id="about-platform-title">What You Can Do on PickYourPiece</h2>
           </div>
           <ul className="articles-hero-metrics" aria-label="Platform capabilities">
             <li>Compare jewellery listings across brands</li>

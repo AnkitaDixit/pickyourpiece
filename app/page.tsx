@@ -31,12 +31,12 @@ function isTrackingParamKey(key: string): boolean {
 export const metadata: Metadata = {
   title: "PickYourPiece | Compare Jewellery Prices Across Top Indian Brands",
   description:
-    "Pick Your Piece (PYP), also searched as PickYourPiece, lets you compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
+    "PickYourPiece (PYP), also searched as PickYourPiece, lets you compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
   keywords: [
     "pyp",
-    "pick your piece",
+    "PickYourPiece",
     "pickyourpiece",
-    "pick your piece jewellery",
+    "PickYourPiece jewellery",
     "pyp jewellery comparison",
     "compare jewellery across brands",
     "jewellery price comparison India",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "Pick Your Piece (PYP) | Compare Jewellery Prices Across top Indian Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Prices Across top Indian Brands",
     description:
       "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: [
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pick Your Piece (PYP) | Compare Jewellery Prices Across top Indian Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Prices Across top Indian Brands",
     description:
       "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: ["/heroImage.png"],

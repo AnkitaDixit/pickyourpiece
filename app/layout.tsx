@@ -34,15 +34,15 @@ export const metadata: Metadata = {
   },
   title: {
     default: "PickYourPiece (PyP) | Compare Jewellery Across Top Brands",
-    template: "%s | Pick Your Piece",
+    template: "%s | PickYourPiece",
   },
   description:
-    "Pick Your Piece (PyP), also searched as PickYourPiece, helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
+    "PickYourPiece (PyP), also searched as PickYourPiece, helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
   keywords: [
     "pyp",
-    "pick your piece",
+    "PickYourPiece",
     "pickyourpiece",
-    "pick your piece pyp",
+    "PickYourPiece pyp",
     "pyp jewellery",
     "pyp rings",
     "jewellery",
@@ -96,10 +96,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "Pick Your Piece (PYP) | Compare Jewellery Across Top Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category in one place.",
-    siteName: "Pick Your Piece",
+    siteName: "PickYourPiece",
     images: [
       {
         url: "/heroImage.png",
@@ -111,7 +111,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pick Your Piece (PYP) | Compare Jewellery Across Top Brands",
+    title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
       "Compare jewellery across brands with filters for price, metal, style, purity, and category.",
     images: ["/heroImage.png"],
@@ -144,10 +144,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
-    name: "Pick Your Piece",
-    alternateName: ["PYP", "PickYourPiece", "PyP"],
+    name: "PickYourPiece",
+    alternateName: ["PYP", "Pick Your Piece", "PyP"],
     url: siteUrl,
-    description: "Pick Your Piece helps shoppers compare jewellery across brands in one place with smart filtering and price discovery.",
+    description: "PickYourPiece helps shoppers compare jewellery across brands in one place with smart filtering and price discovery.",
     inLanguage: "en-IN",
     potentialAction: {
       "@type": "SearchAction",
@@ -160,8 +160,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
-    name: "Pick Your Piece",
-    alternateName: ["PYP", "PickYourPiece", "PyP"],
+    name: "PickYourPiece",
+    alternateName: ["PYP", "Pick Your Piece", "PyP"],
     url: siteUrl,
     logo: `${siteUrl}/favicon.ico`,
     sameAs: ["https://x.com/pickyourpiece"],
