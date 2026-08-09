@@ -49,12 +49,12 @@ type BrandOption = {
 
 type InstagramPostTemplateType = "compare_cards" | "similar_pieces" | "best_under_budget";
 type InstagramReelTemplateType = "spot_expensive";
-const REEL_DURATION_MS = 10000;
+const REEL_DURATION_MS = 15000;
 
 function getReelSceneForPosition(positionMs: number): StudioReelScene {
-  if (positionMs < 2000) return "hook";
-  if (positionMs < 6000) return "details";
-  if (positionMs < 8000) return "reveal";
+  if (positionMs < 3000) return "hook";
+  if (positionMs < 8000) return "details";
+  if (positionMs < 13000) return "reveal";
   return "end";
 }
 
@@ -412,6 +412,7 @@ export default function StudioBuilder({
   const [budgetCap, setBudgetCap] = useState(50000);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isRecordingReel, setIsRecordingReel] = useState(false);
+  const [reelProgress, setReelProgress] = useState(0);
   const [downloadError, setDownloadError] = useState("");
   const [visiblePickerCount, setVisiblePickerCount] = useState(INITIAL_VISIBLE_PICKER_ITEMS);
   const [selectedImageIndexByProductId, setSelectedImageIndexByProductId] = useState<Record<string, number>>({});
@@ -1075,10 +1076,24 @@ export default function StudioBuilder({
 
     setDownloadError("");
     setIsRecordingReel(true);
+    previewCanvasRef.current?.classList.add("studio-reel-exporting");
+
+    let recordingStream: MediaStream | null = null;
 
     try {
-      const stream = videoCanvas.captureStream(30);
-      const recorder = new MediaRecorder(stream, { mimeType });
+      recordingStream = videoCanvas.captureStream(0);
+      const videoTrack = recordingStream.getVideoTracks()[0];
+      if (!videoTrack || !("requestFrame" in videoTrack)) {
+        setDownloadError("This browser cannot capture Reel frames reliably. Try Chrome or Edge.");
+        return;
+      }
+      const requestVideoFrame = () => {
+        (videoTrack as CanvasCaptureMediaStreamTrack).requestFrame();
+      };
+      const recorder = new MediaRecorder(recordingStream, {
+        mimeType,
+        videoBitsPerSecond: 8_000_000,
+      });
       const chunks: Blob[] = [];
       recorder.ondataavailable = (event) => {
         if (event.data.size > 0) chunks.push(event.data);
@@ -1092,18 +1107,22 @@ export default function StudioBuilder({
         if (document.fonts?.ready) await document.fonts.ready;
       };
 
-      const drawDataUrlFor = async (dataUrl: string, durationMs: number) => {
+      const loadFrame = async (dataUrl: string) => {
         const image = document.createElement("img");
         image.src = dataUrl;
         await new Promise<void>((resolve, reject) => {
           image.onload = () => resolve();
           image.onerror = () => reject(new Error("Could not load Reel frame."));
         });
+        return image;
+      };
 
+      const drawImageFor = async (image: HTMLImageElement, durationMs: number) => {
         await new Promise<void>((resolve) => {
           const startedAt = performance.now();
           const drawFrame = (now: number) => {
             context.drawImage(image, 0, 0, videoCanvas.width, videoCanvas.height);
+            requestVideoFrame();
             if (now - startedAt >= durationMs) {
               resolve();
               return;
@@ -1114,41 +1133,68 @@ export default function StudioBuilder({
         });
       };
 
-      recorder.start();
       const scenes: Array<{ scene: Exclude<StudioReelScene, "storyboard">; durationMs: number }> = [
-        { scene: "hook", durationMs: 2000 },
-        { scene: "details", durationMs: 4000 },
-        { scene: "reveal", durationMs: 2000 },
+        { scene: "hook", durationMs: 3000 },
+        { scene: "details", durationMs: 5000 },
+        { scene: "reveal", durationMs: 5000 },
         { scene: "end", durationMs: 2000 },
       ];
 
-      for (const scene of scenes) {
+      // Paint the first frame before starting MediaRecorder so the captured
+      // canvas track has a real video frame from the beginning.
+      const firstScene = scenes[0];
+      setReelScene(firstScene.scene);
+      await waitForPreview();
+      const firstFrame = await toPng(previewNode, {
+        cacheBust: false,
+        includeQueryParams: true,
+        pixelRatio: 2,
+        backgroundColor: "#17131f",
+        canvasWidth: template.width,
+        canvasHeight: template.height,
+      });
+      const firstImage = await loadFrame(firstFrame);
+      context.drawImage(firstImage, 0, 0, videoCanvas.width, videoCanvas.height);
+      recorder.start(100);
+      requestVideoFrame();
+      await drawImageFor(firstImage, firstScene.durationMs);
+
+      for (let i = 1; i < scenes.length; i++) {
+        const scene = scenes[i];
+        setReelProgress(Math.round((i / scenes.length) * 100));
         setReelScene(scene.scene);
         await waitForPreview();
         const frame = await toPng(previewNode, {
           cacheBust: false,
           includeQueryParams: true,
-          pixelRatio: 1,
+          pixelRatio: 2,
           backgroundColor: "#17131f",
           canvasWidth: template.width,
           canvasHeight: template.height,
         });
-        await drawDataUrlFor(frame, scene.durationMs);
+        const image = await loadFrame(frame);
+        await drawImageFor(image, scene.durationMs);
       }
 
+      setReelProgress(100);
       recorder.stop();
       await recordingFinished;
       const videoBlob = new Blob(chunks, { type: mimeType });
       const anchor = document.createElement("a");
       anchor.href = URL.createObjectURL(videoBlob);
-      anchor.download = "instagram-reel-can-you-spot-the-expensive-one.webm";
+      anchor.download = `${comparePair.left?.brand ?? "brandA"}-vs-${comparePair.right?.brand ?? "brandB"}-instagram-reel.webm`
+        .toLowerCase()
+        .replace(/\s+/g, "-");
       anchor.click();
       window.setTimeout(() => URL.revokeObjectURL(anchor.href), 1000);
     } catch {
       setDownloadError("Could not generate the Reel video. Try replacing a product image if its source blocks capture.");
     } finally {
+      recordingStream?.getTracks().forEach((track) => track.stop());
+      previewCanvasRef.current?.classList.remove("studio-reel-exporting");
       setReelScene("storyboard");
       setReelPositionMs(0);
+      setReelProgress(0);
       setIsReelPlaying(true);
       setIsRecordingReel(false);
     }
@@ -1786,7 +1832,7 @@ export default function StudioBuilder({
                 }}
                 aria-label="Reel preview timeline"
               />
-              <span>{(reelPositionMs / 1000).toFixed(1)}s / 10.0s</span>
+              <span>{(reelPositionMs / 1000).toFixed(1)}s / 15.0s</span>
             </div>
           ) : null}
         </div>
@@ -1812,6 +1858,14 @@ export default function StudioBuilder({
             ) : null}
             <a href={draft.cta} target="_blank" rel="noopener noreferrer">Open Link</a>
           </div>
+          {isRecordingReel ? (
+            <div className="studio-reel-progress">
+              <div className="studio-reel-progress-bar">
+                <div className="studio-reel-progress-fill" style={{ width: `${reelProgress}%` }} />
+              </div>
+              <span>Rendering reel... {reelProgress}%</span>
+            </div>
+          ) : null}
           {downloadError ? <p className="studio-download-error">{downloadError}</p> : null}
         </div>
       </section>
