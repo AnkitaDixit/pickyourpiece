@@ -54,8 +54,8 @@ Avoid chasing only carat numbers in this range.
 
 Filtered picks:
 
-- [Minimal diamond rings under ₹10,000](/ring?sort=price-desc&gemstone=Diamond&style=Minimal&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=section2_minimal)
-- [Solitaire-style diamond rings under ₹10,000](/ring?sort=price-desc&gemstone=Diamond&style=Solitaire&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=section2_solitaire)
+- [Minimal diamond rings under ₹10,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Modern%20%26%20Classic&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=section2_minimal)
+- [Solitaire-style diamond rings under ₹10,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=section2_solitaire)
 
 ---
 
@@ -105,7 +105,7 @@ Choose solitaire for timeless simplicity, cluster for visible sparkle. Compare t
 
 ### Can I get daily-wear options under ₹10,000?
 
-Yes, but prioritize build quality and simple settings. Use [this filtered catalog](/ring?sort=price-desc&gemstone=Diamond&style=Minimal&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=faq_daily_wear).
+Yes, but prioritize build quality and simple settings. Use [this filtered catalog](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Modern%20%26%20Classic&maxPrice=10000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_10000&utm_content=faq_daily_wear).
 
 ### Should I jump to a higher budget tier?
 

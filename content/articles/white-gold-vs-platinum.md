@@ -26,7 +26,7 @@ Quick links:
 
 - [Browse white gold rings](/ring?sort=price-desc&metal=Gold&metalColor=White%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=quick_answer_white_gold)
 - [Browse platinum rings](/ring?sort=price-desc&metal=Platinum&metalColor=Platinum&purity=Platinum950&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=quick_answer_platinum)
-- [Browse engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=quick_answer_engagement)
+- [Browse engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=quick_answer_engagement)
 
 ---
 
@@ -218,4 +218,4 @@ Choose white gold if value and look are top priorities. Choose platinum if long-
 
 ---
 
-> Compare both now: [Shop white gold and platinum rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=final_cta).
+> Compare both now: [Shop white gold and platinum rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=white-gold-vs-platinum&utm_content=final_cta).

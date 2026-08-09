@@ -307,7 +307,7 @@ If you are deciding between ring concepts, compare [solitaire vs halo](/articles
 
 Round brilliant remains the most popular because of its sparkle and timeless look. Oval and cushion are also top choices for modern buyers.
 
-[Compare top Round, Oval and Cushion options](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_best_shape)
+[Compare top Round, Oval and Cushion options](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_shapes_guide&utm_content=faq_best_shape)
 
 ---
 

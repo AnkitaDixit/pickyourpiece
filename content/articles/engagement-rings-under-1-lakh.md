@@ -26,7 +26,7 @@ Under ₹1 lakh, prioritize:
 - Clean setting craftsmanship
 - A style that matches daily wear and long-term taste
 
-Start browsing: [Engagement rings under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=quick_answer).
+Start browsing: [Engagement rings under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=quick_answer).
 
 [product_compare title="Under ₹1 Lakh: Premium Engagement Comparison" caption="This side-by-side cross-brand comparison shows how value and premium finish can diverge under the same cap." occasion="Engagement" maxPrice="100000" sort="price_asc"]
 
@@ -59,8 +59,8 @@ Without a scoring framework, it is easy to overpay for positioning language inst
 
 Try side-by-side filters:
 
-- [Solitaire under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_solitaire)
-- [Halo under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_halo)
+- [Solitaire under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_solitaire)
+- [Halo under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=section2_halo)
 
 [product_compare title="₹1 Lakh Style Comparison: Solitaire vs Halo" caption="These examples compare two engagement style directions to assess presence, proportion, and price-value at this tier." occasion="Engagement" maxPrice="100000" sort="price_desc"]
 
@@ -113,7 +113,7 @@ Shape resource: [diamond shapes guide](/articles/diamond-shapes-guide?utm_source
 3. Compare 5-10 filtered options.
 4. Pick best sparkle-to-price ratio.
 
-Compare now: [Top engagement options under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=framework_compare).
+Compare now: [Top engagement options under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=framework_compare).
 
 ---
 
@@ -232,4 +232,4 @@ Under ₹1 lakh, you can buy a ring that looks premium and feels meaningful if y
 
 ---
 
-> Ready to shortlist? [Browse engagement rings under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=final_cta).
+> Ready to shortlist? [Browse engagement rings under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_1_lakh&utm_content=final_cta).

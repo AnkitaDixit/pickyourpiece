@@ -25,8 +25,8 @@ This guide explains 925 clearly so you can buy silver jewellery with confidence.
 Quick links:
 
 - [Browse silver rings](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=what-is-925-silver&utm_content=quick_answer_silver_rings)
-- [Browse daily-wear silver styles](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=what-is-925-silver&utm_content=quick_answer_daily)
-- [Browse silver engagement-style designs](/ring?sort=price-desc&metal=Silver&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=what-is-925-silver&utm_content=quick_answer_engagement)
+- [Browse daily-wear silver styles](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=what-is-925-silver&utm_content=quick_answer_daily)
+- [Browse silver engagement-style designs](/ring?sort=price-desc&metal=Silver&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=what-is-925-silver&utm_content=quick_answer_engagement)
 
 ---
 

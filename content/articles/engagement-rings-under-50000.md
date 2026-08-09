@@ -28,7 +28,7 @@ For most buyers under ₹50,000, the best value usually comes from:
 - Silver, steel, or lightweight gold settings
 - Strong cut/sparkle over bigger headline carat
 
-Browse now: [Engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=quick_answer).
+Browse now: [Engagement rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=quick_answer).
 
 [product_compare title="Under ₹50,000: Best Value Comparison" caption="These cross-brand examples under the same cap show how premium feel and pricing can differ in this engagement segment." occasion="Engagement" maxPrice="50000" sort="price_asc"]
 
@@ -61,8 +61,8 @@ The buyers who do best here compare like-for-like listings and score them for co
 
 Style filters:
 
-- [Solitaire engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=section2_solitaire)
-- [Halo engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=section2_halo)
+- [Solitaire engagement rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=section2_solitaire)
+- [Halo engagement rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=section2_halo)
 
 [product_compare title="₹50,000 Style Trade-off: Solitaire vs Halo" caption="This comparison visual helps evaluate timeless simplicity versus larger face-up presence within the same budget." occasion="Engagement" maxPrice="50000" sort="price_desc"]
 
@@ -118,7 +118,7 @@ For full fit prep, see [ring size guide](/articles/ring-size-guide?utm_source=in
 3. Compare 5 to 8 options with same filter set.
 4. Choose best finish + sparkle + policy value.
 
-Compare instantly: [Shortlist under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=framework_compare).
+Compare instantly: [Shortlist under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=framework_compare).
 
 ---
 
@@ -134,7 +134,7 @@ Halo gives a bigger look; solitaire gives timeless simplicity. Compare with [sol
 
 ### Can I get gold engagement rings under ₹50,000?
 
-Yes, especially in lightweight designs. Explore [gold engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&metal=Gold&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=faq_gold).
+Yes, especially in lightweight designs. Explore [gold engagement rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&metal=Gold&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=faq_gold).
 
 ### Should I consider lab diamonds at this budget?
 
@@ -208,4 +208,4 @@ The best engagement ring under ₹50,000 is the one that balances sparkle, struc
 
 ---
 
-> Ready to buy confidently? [Shop engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=final_cta).
+> Ready to buy confidently? [Shop engagement rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_50000&utm_content=final_cta).

@@ -53,8 +53,8 @@ Still, value depends on comparison discipline.
 
 Filter directly:
 
-- [Solitaire diamond rings under ₹1 lakh](/ring?sort=price-desc&gemstone=Diamond&style=Solitaire&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=section2_solitaire)
-- [Halo diamond rings under ₹1 lakh](/ring?sort=price-desc&gemstone=Diamond&style=Halo&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=section2_halo)
+- [Solitaire diamond rings under ₹1 lakh](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=section2_solitaire)
+- [Halo diamond rings under ₹1 lakh](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=section2_halo)
 
 ---
 
@@ -111,7 +111,7 @@ Yes, solitaire remains one of the most versatile long-term choices.
 
 ### Can I filter engagement-intent options only?
 
-Yes: [Engagement diamond rings under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=faq_engagement).
+Yes: [Engagement diamond rings under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_1_lakh&utm_content=faq_engagement).
 
 ---
 

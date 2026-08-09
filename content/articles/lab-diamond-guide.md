@@ -27,7 +27,7 @@ For most buyers, prioritize in this order:
 
 Quick starting points:
 
-- [Lab diamond engagement rings](/ring?sort=price-desc&gemstone=Diamond&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_lab_engagement)
+- [Lab diamond engagement rings](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_lab_engagement)
 - [Oval lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_oval)
 - [Round lab diamond rings](/ring?sort=price-desc&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=lab_diamond_guide&utm_content=quick_answer_round)
 

@@ -24,7 +24,7 @@ Quick links:
 
 - [Browse white gold rings](/ring?sort=price-desc&metal=Gold&metalColor=White%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=does-white-gold-fade&utm_content=quick_answer_white)
 - [Browse platinum alternatives](/ring?sort=price-desc&metal=Platinum&metalColor=Platinum&purity=Platinum950&utm_source=internal_article&utm_medium=article&utm_campaign=does-white-gold-fade&utm_content=quick_answer_platinum)
-- [Browse daily-wear ring styles](/ring?sort=price-desc&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=does-white-gold-fade&utm_content=quick_answer_daily)
+- [Browse daily-wear ring styles](/ring?sort=price-desc&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=does-white-gold-fade&utm_content=quick_answer_daily)
 
 ---
 

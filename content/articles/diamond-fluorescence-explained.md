@@ -22,7 +22,7 @@ This guide explains what it is, when it matters, and when it does not.
 
 Fluorescence is how a diamond can react to UV light. In many cases, it has little to no visible impact in daily wear.
 
-Compare diamonds by look first: [Diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=quick_answer).
+Compare diamonds by look first: [Diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=quick_answer).
 
 For most buyers, fluorescence should be a secondary decision factor after cut and overall visual performance.
 
@@ -89,7 +89,7 @@ Evaluation order that works:
 - Are you rejecting based on label without visual evidence?
 - Is the price-value tradeoff favorable?
 
-Compare options here: [Diamond engagement ring catalog](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=section5_checklist).
+Compare options here: [Diamond engagement ring catalog](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=section5_checklist).
 
 ---
 
@@ -109,7 +109,7 @@ Compare options here: [Diamond engagement ring catalog](/ring?sort=price-desc&oc
 3. Prioritize overall sparkle and clarity.
 4. Buy the best-looking stone in budget.
 
-Compare now: [Diamond engagement ring options](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=framework_compare).
+Compare now: [Diamond engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=framework_compare).
 
 ---
 
@@ -239,4 +239,4 @@ Fluorescence is one factor, not the decision itself.
 
 ---
 
-> Ready to evaluate by real beauty, not myths? [Browse diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=final_cta).
+> Ready to evaluate by real beauty, not myths? [Browse diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_fluorescence_explained&utm_content=final_cta).

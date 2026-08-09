@@ -26,7 +26,7 @@ Quick links:
 
 - [Browse 14KT rings](/ring?sort=price-desc&metal=Gold&purity=14KT&utm_source=internal_article&utm_medium=article&utm_campaign=14kt-vs-18kt-gold&utm_content=quick_answer_14kt)
 - [Browse 18KT rings](/ring?sort=price-desc&metal=Gold&purity=18KT&utm_source=internal_article&utm_medium=article&utm_campaign=14kt-vs-18kt-gold&utm_content=quick_answer_18kt)
-- [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=14kt-vs-18kt-gold&utm_content=quick_answer_engagement)
+- [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=14kt-vs-18kt-gold&utm_content=quick_answer_engagement)
 
 ---
 

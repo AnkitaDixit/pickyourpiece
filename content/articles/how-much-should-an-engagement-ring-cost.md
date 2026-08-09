@@ -26,7 +26,7 @@ A practical approach is:
 - Decide style priority
 - Allocate budget by visible impact
 
-Start comparing by budget: [Engagement rings by price](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=quick_answer).
+Start comparing by budget: [Engagement rings by price](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=quick_answer).
 
 [product_compare title="Engagement Cost Comparison: Practical vs Premium" caption="This cross-brand comparison shows how visual quality and pricing can differ even under the same engagement intent." occasion="Engagement" gemstone="Diamond" sort="price_asc"]
 
@@ -54,8 +54,8 @@ A ring can feel expensive yet underperform if comfort, durability, or support po
 
 Browse quickly:
 
-- [Under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=section2_50k)
-- [Under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=section2_1lakh)
+- [Under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=section2_50k)
+- [Under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=section2_1lakh)
 
 [product_compare title="Budget Band Trade-off: Under 50K vs Under 1 Lakh" caption="These examples compare two engagement options across budget bands to clarify what additional spend often changes." occasion="Engagement" gemstone="Diamond" maxPrice="100000" sort="price_desc"]
 
@@ -106,7 +106,7 @@ To understand top-end engagement pricing, review the highest-priced engagement o
 3. Compare 6-10 options in same range.
 4. Choose best visual value.
 
-Do it now: [Compare engagement rings by price](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=framework_compare).
+Do it now: [Compare engagement rings by price](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=framework_compare).
 
 ---
 
@@ -225,4 +225,4 @@ The best ring cost is the one that balances emotion, quality, and financial comf
 
 ---
 
-> Ready to decide your range? [Browse engagement rings by budget](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=final_cta).
+> Ready to decide your range? [Browse engagement rings by budget](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=how_much_should_an_engagement_ring_cost&utm_content=final_cta).

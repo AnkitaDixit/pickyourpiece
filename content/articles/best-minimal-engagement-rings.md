@@ -26,7 +26,7 @@ Best minimal engagement rings usually have:
 - Balanced band width
 - One strong visual focus
 
-Start here: [Minimal engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=quick_answer).
+Start here: [Minimal engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=quick_answer).
 
 ---
 
@@ -50,7 +50,7 @@ Look for:
 | Bezel Minimal | Sleek and protective | Daily wear |
 | Slim Band + Accent | Subtle sparkle | Understated elegance |
 
-Browse filtered picks: [Best minimal styles](/ring?sort=price-desc&occasion=Engagement&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=section2_styles).
+Browse filtered picks: [Best minimal styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=section2_styles).
 
 ---
 
@@ -78,7 +78,7 @@ Reference guide: [gold vs platinum](/articles/gold-vs-platinum?utm_source=intern
 3. Compare 5 rings at same budget.
 4. Select best finish and comfort.
 
-Compare now: [Shop minimal engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=framework_compare).
+Compare now: [Shop minimal engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=framework_compare).
 
 ---
 
@@ -98,7 +98,7 @@ Often yes. See [best solitaire rings](/articles/best-solitaire-engagement-rings?
 
 ### Can I get minimal rings under ₹50,000?
 
-Yes. Browse [under ₹50,000 options](/ring?sort=price-desc&occasion=Engagement&style=Minimal&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=faq_budget).
+Yes. Browse [under ₹50,000 options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=faq_budget).
 
 ---
 
@@ -229,4 +229,4 @@ Minimal rings are perfect when you want elegance that lasts beyond trends.
 
 ---
 
-> Ready to shortlist? [Explore minimal engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=final_cta).
+> Ready to shortlist? [Explore minimal engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_minimal_engagement_rings&utm_content=final_cta).

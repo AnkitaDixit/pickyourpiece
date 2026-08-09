@@ -53,8 +53,8 @@ But value still depends on disciplined filtering.
 
 Filtered routes:
 
-- [Premium solitaire under ₹75,000](/ring?sort=price-desc&gemstone=Diamond&style=Solitaire&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=section2_solitaire)
-- [Halo diamond rings under ₹75,000](/ring?sort=price-desc&gemstone=Diamond&style=Halo&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=section2_halo)
+- [Premium solitaire under ₹75,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=section2_solitaire)
+- [Halo diamond rings under ₹75,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=section2_halo)
 
 ---
 
@@ -108,7 +108,7 @@ It depends on preference. Halo gives visual spread, solitaire gives timeless sim
 
 ### Can I focus only on engagement-use styles?
 
-Yes: [Engagement diamond rings under ₹75,000](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=faq_engagement).
+Yes: [Engagement diamond rings under ₹75,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=75000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_75000&utm_content=faq_engagement).
 
 ---
 

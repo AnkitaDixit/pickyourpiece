@@ -22,7 +22,7 @@ This guide helps you pick flattering proportions with real buying confidence.
 
 Oval, pear, and marquise often create elongation, while round and cushion provide classic balance.
 
-Try shape-led filters: [Diamond engagement rings by style](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=quick_answer).
+Try shape-led filters: [Diamond engagement rings by style](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=quick_answer).
 
 If you want the safest first shortlist for small hands:
 
@@ -101,7 +101,7 @@ At equal spend:
 - Review comfort for typing and daily tasks
 - Validate whether ring still looks balanced with other jewelry
 
-Shortlist options: [Engagement rings by diamond style](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=section5_shortlist).
+Shortlist options: [Engagement rings by diamond style](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=section5_shortlist).
 
 ---
 
@@ -121,7 +121,7 @@ Shortlist options: [Engagement rings by diamond style](/ring?sort=price-desc&occ
 3. Check band thickness and profile.
 4. Pick best face-up harmony.
 
-Shortlist now: [Diamond engagement ring options](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=framework_compare).
+Shortlist now: [Diamond engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=framework_compare).
 
 ---
 
@@ -236,4 +236,4 @@ The best shape for small hands is the one that balances elongation, comfort, and
 
 ---
 
-> Ready to compare? [Browse diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=final_cta).
+> Ready to compare? [Browse diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_shape_for_small_hands&utm_content=final_cta).

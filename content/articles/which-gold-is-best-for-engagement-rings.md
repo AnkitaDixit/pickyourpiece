@@ -22,9 +22,9 @@ The best gold for an engagement ring is not just about purity. You need the righ
 
 Quick links:
 
-- [Browse 14KT engagement rings](/ring?sort=price-desc&metal=Gold&purity=14KT&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_14kt)
-- [Browse 18KT engagement rings](/ring?sort=price-desc&metal=Gold&purity=18KT&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_18kt)
-- [Browse white gold engagement rings](/ring?sort=price-desc&metal=Gold&metalColor=White%20Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_white)
+- [Browse 14KT engagement rings](/ring?sort=price-desc&metal=Gold&purity=14KT&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_14kt)
+- [Browse 18KT engagement rings](/ring?sort=price-desc&metal=Gold&purity=18KT&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_18kt)
+- [Browse white gold engagement rings](/ring?sort=price-desc&metal=Gold&metalColor=White%20Gold&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=quick_answer_white)
 
 ---
 
@@ -221,4 +221,4 @@ For most people, that answer starts with 14KT.
 
 ---
 
-> Ready to shortlist? [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=final_cta).
+> Ready to shortlist? [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-engagement-rings&utm_content=final_cta).

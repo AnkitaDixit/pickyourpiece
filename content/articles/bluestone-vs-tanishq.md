@@ -27,8 +27,8 @@ Set your budget anchor first with [engagement ring budget guide](/articles/engag
 
 Quick browse links:
 
-- [Engagement ring comparison options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=quick_answer_engagement)
-- [Everyday ring comparison options](/ring?sort=price-desc&occasion=Everyday&style=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=quick_answer_everyday)
+- [Engagement ring comparison options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=quick_answer_engagement)
+- [Everyday ring comparison options](/ring?sort=price-desc&styleOccasion=Daily%20Wear&styleOccasion=Daily%20Wear&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=quick_answer_everyday)
 
 ---
 
@@ -50,9 +50,9 @@ Price differences should be assessed against equivalent style and quality specs.
 
 Useful filter links:
 
-- [Engagement rings under Rs 50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_under_50k)
-- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&occasion=Engagement&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_50k_150k)
-- [Premium engagement ring options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_premium_compare)
+- [Engagement rings under Rs 50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_under_50k)
+- [Engagement rings Rs 50,000 to Rs 1,50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&minPrice=50000&maxPrice=150000&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_50k_150k)
+- [Premium engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=budget_premium_compare)
 
 ---
 
@@ -65,8 +65,8 @@ Make style the first filter before comparing micro-differences.
 
 Style links:
 
-- [Solitaire engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=design_solitaire)
-- [Halo engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=design_halo)
+- [Solitaire engagement styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=design_solitaire)
+- [Halo engagement styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=design_halo)
 
 Read [solitaire vs halo](/articles/solitaire-vs-halo?utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=design_solitaire_vs_halo) for setting clarity.
 
@@ -220,4 +220,4 @@ A structured framework helps you choose the right brand for your exact intent.
 
 ---
 
-> Compare now with filters: [Browse engagement options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=final_cta).
+> Compare now with filters: [Browse engagement options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=bluestone_vs_tanishq&utm_content=final_cta).

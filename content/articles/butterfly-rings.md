@@ -32,7 +32,7 @@ A good butterfly ring usually has:
 - Comfortable profile height
 - Balanced sparkle vs durability
 
-Start browsing: [Butterfly ring options](/ring?sort=price-desc&style=Butterfly&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=quick_answer).
+Start browsing: [Butterfly ring options](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=quick_answer).
 
 [product_grid style="Butterfly" limit="8"]
 
@@ -67,7 +67,7 @@ If your intent is fashion styling, prioritize proportion, finish quality, and st
 | Twin Butterfly Design | Romantic and playful | Gifting, younger styling |
 | Open-Band Butterfly | Contemporary silhouette | Trend-focused buyers |
 
-Compare current listings: [Explore butterfly ring styles](/ring?sort=price-desc&style=Butterfly&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=section2_styles).
+Compare current listings: [Explore butterfly ring styles](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=section2_styles).
 
 [product_compare title="Butterfly Style Comparison: Value Pick vs Premium Pick" caption="Left and right examples show how butterfly ring architecture changes visual impact and pricing across brands." style="Butterfly" sort="price_asc"]
 
@@ -171,7 +171,7 @@ Always compare at least one lower-priced and one higher-priced option with simil
 
 This reveals whether the premium is for true craftsmanship or only branding.
 
-Find options by budget: [Rings under 50k](/ring?sort=price-desc&style=Butterfly&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=section5_budget).
+Find options by budget: [Rings under 50k](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=section5_budget).
 
 [product_compare title="Budget Comparison Under INR 50,000" caption="These examples compare two different brand options under INR 50,000 to highlight practical value differences." style="Butterfly" maxPrice="50000" sort="price_desc"]
 
@@ -202,7 +202,7 @@ If you are exploring premium butterfly designs, these are the highest-priced rin
 4. Compare at least 5 similar options.
 5. Buy only when finish quality and fit both feel right.
 
-Compare now: [Shortlist butterfly rings](/ring?sort=price-desc&style=Butterfly&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=framework_compare).
+Compare now: [Shortlist butterfly rings](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=framework_compare).
 
 ---
 
@@ -222,7 +222,7 @@ Diamond and CZ styles are common for sparkle; plain metal versions are easier fo
 
 ### Can I find good butterfly rings under INR 25,000?
 
-Yes. Start with filtered value options: [Butterfly rings under 25k](/ring?sort=price-desc&style=Butterfly&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=faq_budget).
+Yes. Start with filtered value options: [Butterfly rings under 25k](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=faq_budget).
 
 ---
 
@@ -252,4 +252,4 @@ The best butterfly ring is one that balances emotional meaning, clean craftsmans
 
 ---
 
-> Ready to compare? [Explore butterfly rings on PickYourPiece](/ring?sort=price-desc&style=Butterfly&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=final_cta).
+> Ready to compare? [Explore butterfly rings on PickYourPiece](/ring?sort=price-desc&styleOccasion=Nature%20%26%20Artistic&utm_source=internal_article&utm_medium=article&utm_campaign=butterfly_rings&utm_content=final_cta).

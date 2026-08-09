@@ -23,8 +23,8 @@ The best silver ring is not just about how it looks on day one. A great pick com
 Quick links:
 
 - [Browse best-selling silver rings](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-rings&utm_content=quick_answer_best_sellers)
-- [Browse minimal silver rings](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-rings&utm_content=quick_answer_minimal)
-- [Browse silver engagement-style rings](/ring?sort=price-desc&metal=Silver&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-rings&utm_content=quick_answer_engagement)
+- [Browse minimal silver rings](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-rings&utm_content=quick_answer_minimal)
+- [Browse silver engagement-style rings](/ring?sort=price-desc&metal=Silver&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-rings&utm_content=quick_answer_engagement)
 
 ---
 

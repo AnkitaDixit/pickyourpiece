@@ -27,7 +27,7 @@ Top 2026 engagement ring trends:
 - Vintage-inspired detail work
 - Warm gold tones and mixed-metal play
 
-Explore trend-led picks: [Trending engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=quick_answer).
+Explore trend-led picks: [Trending engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=quick_answer).
 
 ---
 
@@ -78,7 +78,7 @@ Comparison read: [solitaire vs halo](/articles/solitaire-vs-halo?utm_source=inte
 3. Compare 6 filtered options.
 4. Select balance of style + practicality.
 
-Shortlist now: [Shop 2026 engagement trend styles](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=framework_compare).
+Shortlist now: [Shop 2026 engagement trend styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=framework_compare).
 
 ---
 
@@ -214,4 +214,4 @@ The best 2026 trend choice is one that feels current now and right years later.
 
 ---
 
-> Ready to explore? [Browse engagement ring trends](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=final_cta).
+> Ready to explore? [Browse engagement ring trends](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_trends_2026&utm_content=final_cta).

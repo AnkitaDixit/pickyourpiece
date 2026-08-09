@@ -27,7 +27,7 @@ Most costly mistakes are:
 - Choosing trend over long-term wearability
 - Skipping policy and size checks
 
-Start smart: [Compare engagement rings with filters](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=quick_answer).
+Start smart: [Compare engagement rings with filters](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=quick_answer).
 
 ---
 
@@ -81,7 +81,7 @@ Never skip return window, resize support, and maintenance guidance.
 3. Compare 6-10 filtered products.
 4. Validate fit + policy before paying.
 
-Compare now: [Engagement ring shortlist](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=framework_compare).
+Compare now: [Engagement ring shortlist](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=framework_compare).
 
 ---
 
@@ -217,4 +217,4 @@ Avoiding a few common mistakes can dramatically improve your final ring choice.
 
 ---
 
-> Ready to buy with confidence? [Browse engagement rings now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=final_cta).
+> Ready to buy with confidence? [Browse engagement rings now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=mistakes_buying_engagement_ring&utm_content=final_cta).

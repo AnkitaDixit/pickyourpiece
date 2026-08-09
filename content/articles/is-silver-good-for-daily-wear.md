@@ -22,7 +22,7 @@ Silver can be a good daily-wear metal if you choose the right design and follow 
 
 Quick links:
 
-- [Browse daily silver ring styles](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-good-for-daily-wear&utm_content=quick_answer_daily_styles)
+- [Browse daily silver ring styles](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-good-for-daily-wear&utm_content=quick_answer_daily_styles)
 - [Browse 925 silver options](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-good-for-daily-wear&utm_content=quick_answer_925)
 - [Browse affordable silver picks](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-good-for-daily-wear&utm_content=quick_answer_affordable)
 

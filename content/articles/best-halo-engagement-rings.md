@@ -26,7 +26,7 @@ Best halo rings usually have:
 - Clean stone alignment
 - Strong setting craftsmanship
 
-Shop now: [Best halo engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=quick_answer).
+Shop now: [Best halo engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=quick_answer).
 
 ---
 
@@ -46,7 +46,7 @@ You get sparkle density and stronger presence for the same budget.
 | Cushion Halo | Soft luxury look | Vintage-modern mix | Needs proportion control |
 | Hidden Halo | Minimal from top, sparkle from side | Modern buyers | Less obvious halo effect |
 
-Browse filtered options: [Halo rings by style](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=section2_styles).
+Browse filtered options: [Halo rings by style](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=section2_styles).
 
 ---
 
@@ -78,7 +78,7 @@ Compare core tradeoff: [solitaire vs halo](/articles/solitaire-vs-halo?utm_sourc
 3. Compare top and side profile.
 4. Pick cleanest proportioned option.
 
-Shortlist now: [Compare halo engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=framework_compare).
+Shortlist now: [Compare halo engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=framework_compare).
 
 ---
 
@@ -214,4 +214,4 @@ Halo rings are one of the smartest style choices if your goal is visual impact p
 
 ---
 
-> Ready to choose? [Explore top halo engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Halo&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=final_cta).
+> Ready to choose? [Explore top halo engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=best_halo_engagement_rings&utm_content=final_cta).

@@ -22,7 +22,7 @@ This guide explains how shape, spread, and setting combine to create face-up siz
 
 Shapes like oval, marquise, and pear often look larger face-up than round at similar carat.
 
-Compare now: [Diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=quick_answer).
+Compare now: [Diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=quick_answer).
 
 For the fastest "bigger look" gain, combine spread-efficient shape plus halo or slim-band setting.
 
@@ -94,7 +94,7 @@ Before you buy, verify:
 - Stone still looks lively in indoor light
 - Side profile remains practical for daily wear
 
-Try this checklist while browsing: [Diamond engagement options](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=section5_checklist).
+Try this checklist while browsing: [Diamond engagement options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=section5_checklist).
 
 ---
 
@@ -114,7 +114,7 @@ Try this checklist while browsing: [Diamond engagement options](/ring?sort=price
 3. Compare face-up dimensions and setting.
 4. Choose strongest visual size impression.
 
-Try now: [Compare diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=framework_compare).
+Try now: [Compare diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=framework_compare).
 
 ---
 
@@ -229,4 +229,4 @@ To maximize visual size, optimize spread and setting before spending more on car
 
 ---
 
-> Ready to compare for visual size? [Browse diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=final_cta).
+> Ready to compare for visual size? [Browse diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=which_diamond_looks_biggest&utm_content=final_cta).

@@ -22,7 +22,7 @@ Sterling silver and pure silver may sound similar, but they behave differently i
 Quick links:
 
 - [Browse sterling silver rings](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=sterling-silver-vs-pure-silver&utm_content=quick_answer_sterling)
-- [Browse daily silver jewellery](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=sterling-silver-vs-pure-silver&utm_content=quick_answer_daily)
+- [Browse daily silver jewellery](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=sterling-silver-vs-pure-silver&utm_content=quick_answer_daily)
 - [Browse premium silver designs](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=sterling-silver-vs-pure-silver&utm_content=quick_answer_premium)
 
 ---

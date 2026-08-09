@@ -23,7 +23,7 @@ Quick links:
 
 - [Browse silver rings](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=silver-vs-white-gold&utm_content=quick_answer_silver)
 - [Browse white gold rings](/ring?sort=price-desc&metal=Gold&metalColor=White%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=silver-vs-white-gold&utm_content=quick_answer_white_gold)
-- [Browse engagement styles](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=silver-vs-white-gold&utm_content=quick_answer_engagement)
+- [Browse engagement styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=silver-vs-white-gold&utm_content=quick_answer_engagement)
 
 ---
 

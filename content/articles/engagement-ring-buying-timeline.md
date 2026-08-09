@@ -24,7 +24,7 @@ Ideal timeline: start 6 to 10 weeks before proposal date.
 
 That gives room for comparison, resizing, and any unexpected delays.
 
-Start now: [Engagement ring options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=quick_answer).
+Start now: [Engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=quick_answer).
 
 ---
 
@@ -46,7 +46,7 @@ Budget reference: [engagement ring budget guide](/articles/engagement-ring-budge
 | Compare 6 to 10 options | Find best value |
 | Save top 3 | Prepare final decision |
 
-Shortlist quickly: [Filtered engagement ring search](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=week3_shortlist).
+Shortlist quickly: [Filtered engagement ring search](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=week3_shortlist).
 
 ---
 
@@ -84,7 +84,7 @@ Sizing support: [ring size guide](/articles/ring-size-guide?utm_source=internal_
 3. Lock budget and style in week 1.
 4. Complete purchase by week 6.
 
-Take action: [Start engagement ring shortlist](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=framework_compare).
+Take action: [Start engagement ring shortlist](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=framework_compare).
 
 ---
 
@@ -220,4 +220,4 @@ A structured timeline reduces stress and increases confidence in your final ring
 
 ---
 
-> Ready to start planning? [Browse engagement rings now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=final_cta).
+> Ready to start planning? [Browse engagement rings now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_buying_timeline&utm_content=final_cta).

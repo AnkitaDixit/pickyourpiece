@@ -22,7 +22,7 @@ This guide breaks the biggest myths and replaces them with practical decision ru
 
 Biggest truth: visible beauty comes from shape, cut, and proportion working together, not one headline metric.
 
-Start comparing smartly: [Diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=quick_answer).
+Start comparing smartly: [Diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=quick_answer).
 
 If you remember only one rule: compare complete stone performance, not isolated specs.
 
@@ -100,7 +100,7 @@ The better question is not natural vs lab in isolation. It is whether the chosen
 3. Validate certification and visual performance.
 4. Buy best total value, not best headline number.
 
-Try now: [Compare diamond ring options](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=framework_compare).
+Try now: [Compare diamond ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=framework_compare).
 
 ---
 
@@ -230,4 +230,4 @@ The best diamond decisions come from balanced evaluation, not old myths.
 
 ---
 
-> Ready to buy smarter? [Browse diamond engagement rings now](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=final_cta).
+> Ready to buy smarter? [Browse diamond engagement rings now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_myths_debunked&utm_content=final_cta).

@@ -24,7 +24,7 @@ Quick links:
 
 - [Browse affordable gold rings](/ring?sort=price-desc&metal=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=is-9kt-gold-worth-buying&utm_content=quick_answer_affordable)
 - [Browse 14KT alternatives](/ring?sort=price-desc&metal=Gold&purity=14KT&utm_source=internal_article&utm_medium=article&utm_campaign=is-9kt-gold-worth-buying&utm_content=quick_answer_14kt)
-- [Browse daily-wear styles](/ring?sort=price-desc&metal=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=is-9kt-gold-worth-buying&utm_content=quick_answer_daily)
+- [Browse daily-wear styles](/ring?sort=price-desc&metal=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=is-9kt-gold-worth-buying&utm_content=quick_answer_daily)
 
 ---
 

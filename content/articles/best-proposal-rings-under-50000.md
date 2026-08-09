@@ -1,6 +1,6 @@
-﻿---
-title: "Best Proposal Rings Under ₹50,000 (2026)"
-description: "Find the best proposal rings under ₹50,000 in 2026 with calm guidance on style, diamond presence, gold purity, sizing, and proposal-ready value."
+---
+title: "Best Proposal Rings Under ?50,000 (2026)"
+description: "Find the best proposal rings under ?50,000 in 2026 with calm guidance on style, diamond presence, gold purity, sizing, and proposal-ready value."
 keywords:
   - best proposal rings under 50000
   - proposal rings under 50000
@@ -14,15 +14,15 @@ image: "/heroImage.png"
 featured: false
 ---
 
-# Best Proposal Rings Under ₹50,000 (2026)
+# Best Proposal Rings Under ?50,000 (2026)
 
-You are right to research carefully before choosing a proposal ring under ₹50,000. The ring carries a meaningful moment, and a clear process can make the decision feel exciting rather than intimidating. This guide focuses on proportion, wearability, and confidence—not pressure to spend every rupee.
+You are right to research carefully before choosing a proposal ring under ?50,000. The ring carries a meaningful moment, and a clear process can make the decision feel exciting rather than intimidating. This guide focuses on proportion, wearability, and confidence�not pressure to spend every rupee.
 
 ---
 
 ## Quick Answer
 
-The best proposal rings under ₹50,000 are usually a well-proportioned solitaire, compact halo, or refined gold design with a secure setting and a credible size-exchange policy. Explore [proposal rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=quick_answer).
+The best proposal rings under ?50,000 are usually a well-proportioned solitaire, compact halo, or refined gold design with a secure setting and a credible size-exchange policy. Explore [proposal rings under ?50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=quick_answer).
 
 Choose a design that reflects the recipient's daily style and leaves you comfortable with the purchase.
 
@@ -48,7 +48,7 @@ Use the [proposal ring guide](/articles/proposal-ring-guide?utm_source=internal_
 | Bezel set | Secure and modern | They lead an active routine |
 | Gold-forward | Warm and personal | Metal presence matters most |
 
-Try [engagement rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=section2_catalog).
+Try [engagement rings under ?50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=section2_catalog).
 
 ## 3. Budget Allocation and Ring Confidence
 
@@ -71,13 +71,13 @@ Quietly inspect the recipient's existing rings, ask a trusted friend, or choose 
 
 1. Set the proposal budget and a small policy reserve.
 2. Identify the recipient's metal colour and style language.
-3. Compare [filtered proposal rings](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=framework_filter).
+3. Compare [filtered proposal rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=framework_filter).
 4. Verify purity, stone, size support, and delivery timing.
 5. Select the ring that feels recognisably theirs.
 
 ## Frequently Asked Questions
 
-### Is ₹50,000 enough for a proposal ring?
+### Is ?50,000 enough for a proposal ring?
 
 Yes. It can support attractive gold and diamond-led designs when you prioritise proportion and transparent specifications.
 
@@ -95,6 +95,6 @@ Gold typically gives more style flexibility at this ceiling. Compare the [gold v
 
 ## Final Thoughts
 
-The best proposal ring under ₹50,000 is the one that feels personal, secure, and realistically wearable. Thoughtful research is not overthinking the moment—it is how you honour it.
+The best proposal ring under ?50,000 is the one that feels personal, secure, and realistically wearable. Thoughtful research is not overthinking the moment�it is how you honour it.
 
-> Ready to compare: [Shop proposal rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=final_cta).
+> Ready to compare: [Shop proposal rings under ?50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_proposal_rings_under_50000&utm_content=final_cta).

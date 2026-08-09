@@ -26,7 +26,7 @@ The best solitaire engagement rings usually combine:
 - Balanced prong or bezel setting
 - Correct band width for your finger profile
 
-Start here: [Best solitaire engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=quick_answer).
+Start here: [Best solitaire engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=quick_answer).
 
 ---
 
@@ -46,7 +46,7 @@ Key advantage: timeless style with minimal visual noise.
 | Bezel | Modern clean | Better daily protection | Slightly less light entry |
 | Cathedral | Elevated profile | Premium silhouette | Can snag if too high |
 
-Explore options: [Solitaire settings in engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=section2_settings).
+Explore options: [Solitaire settings in engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=section2_settings).
 
 ---
 
@@ -64,7 +64,7 @@ Use [diamond shapes guide](/articles/diamond-shapes-guide?utm_source=internal_ar
 - ₹50,000 to ₹1,50,000: strongest value range
 - Above ₹1,50,000: premium center-stone options
 
-Value browse: [Solitaire rings by budget](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=section4_budget).
+Value browse: [Solitaire rings by budget](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=section4_budget).
 
 ---
 
@@ -86,7 +86,7 @@ Compare style tradeoffs: [solitaire vs halo](/articles/solitaire-vs-halo?utm_sou
 3. Filter by budget and compare 6 options.
 4. Pick best cut-quality and proportion.
 
-Compare now: [Shop solitaire engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=framework_compare).
+Compare now: [Shop solitaire engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=framework_compare).
 
 ---
 
@@ -106,7 +106,7 @@ Gold, platinum and silver can all work depending on budget and taste. Compare [g
 
 ### Can I buy a good solitaire under ₹50,000?
 
-Yes. Start with [solitaire rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=faq_under_50k).
+Yes. Start with [solitaire rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=faq_under_50k).
 
 ---
 
@@ -222,4 +222,4 @@ The best solitaire engagement ring is the one with strong proportions, great cut
 
 ---
 
-> Ready to shortlist your ring? [Explore top solitaire engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=final_cta).
+> Ready to shortlist your ring? [Explore top solitaire engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_solitaire_engagement_rings&utm_content=final_cta).

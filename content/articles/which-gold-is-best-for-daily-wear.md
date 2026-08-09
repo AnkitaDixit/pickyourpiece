@@ -24,7 +24,7 @@ Quick links:
 
 - [Browse 14KT daily-wear gold rings](/ring?sort=price-desc&metal=Gold&purity=14KT&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-daily-wear&utm_content=quick_answer_14kt)
 - [Browse 9KT and budget-friendly gold options](/ring?sort=price-desc&metal=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-daily-wear&utm_content=quick_answer_budget)
-- [Browse minimal daily rings](/ring?sort=price-desc&metal=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-daily-wear&utm_content=quick_answer_minimal)
+- [Browse minimal daily rings](/ring?sort=price-desc&metal=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=which-gold-is-best-for-daily-wear&utm_content=quick_answer_minimal)
 
 ---
 

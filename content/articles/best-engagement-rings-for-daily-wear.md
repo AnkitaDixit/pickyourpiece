@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Best Engagement Rings for Daily Wear (2026)"
 description: "Choose the best engagement rings for daily wear in 2026 with practical guidance on low-profile settings, durable metals, comfort, care, and style."
 keywords:
@@ -22,7 +22,7 @@ You are right to think about real life before selecting an engagement ring. The 
 
 ## Quick Answer
 
-The best engagement rings for daily wear have a low or moderate profile, a secure setting, a sturdy shank, and a metal suited to the wearer's routine. Start with [daily-wear engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=quick_answer).
+The best engagement rings for daily wear have a low or moderate profile, a secure setting, a sturdy shank, and a metal suited to the wearer's routine. Start with [daily-wear engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=quick_answer).
 
 Solitaire, bezel, and compact halo designs are usually easier to protect than tall, highly exposed settings.
 
@@ -43,7 +43,7 @@ For a broad selection guide, read [how to choose an engagement ring](/articles/h
 
 A bezel surrounds the stone and is excellent for active routines. A well-built solitaire keeps the profile simple and makes inspections straightforward. A compact halo adds spread but should remain low enough not to catch fabric.
 
-Browse [solitaire engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=section2_solitaire) and compare setting height, not only the front view.
+Browse [solitaire engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=section2_solitaire) and compare setting height, not only the front view.
 
 ## 3. Metals, Fit, and Comfort
 
@@ -66,7 +66,7 @@ Remove the ring for pool water, harsh cleaners, heavy lifting, and activities th
 
 1. Describe the recipient's actual work and hobbies.
 2. Choose bezel, solitaire, or compact halo.
-3. Filter [engagement rings for everyday wear](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=framework_filter).
+3. Filter [engagement rings for everyday wear](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=framework_filter).
 4. Check profile, shank, metal, size, and service policy.
 5. Choose beauty that remains comfortable after the proposal.
 
@@ -92,4 +92,4 @@ Yes, if delicate means refined rather than structurally thin. Avoid a fragile sh
 
 The best engagement rings for daily wear combine emotional meaning with sensible engineering. Choose a setting and fit that support the life the ring is joining, and it will feel special without feeling precious in the stressful sense.
 
-> Find a ring for every day: [Shop daily-wear engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=final_cta).
+> Find a ring for every day: [Shop daily-wear engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=best_engagement_rings_for_daily_wear&utm_content=final_cta).

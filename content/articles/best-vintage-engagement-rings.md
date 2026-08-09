@@ -26,7 +26,7 @@ The best vintage engagement rings typically feature:
 - Engraving, milgrain, or filigree details
 - Balanced profile height for comfort
 
-Explore options: [Vintage-inspired engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Vintage&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=quick_answer).
+Explore options: [Vintage-inspired engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=quick_answer).
 
 ---
 
@@ -87,7 +87,7 @@ Budget help: [engagement ring budget guide](/articles/engagement-ring-budget?utm
 3. Filter by budget + occasion.
 4. Compare at least 5 rings side by side.
 
-Start now: [Browse vintage engagement styles](/ring?sort=price-desc&occasion=Engagement&style=Vintage&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=framework_compare).
+Start now: [Browse vintage engagement styles](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=framework_compare).
 
 ---
 
@@ -107,7 +107,7 @@ Many vintage-inspired rings use halo architecture.
 
 ### Can I find vintage-style options under ₹1 lakh?
 
-Yes. Start with [engagement rings under ₹1 lakh](/ring?sort=price-desc&occasion=Engagement&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=faq_budget).
+Yes. Start with [engagement rings under ₹1 lakh](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=100000&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=faq_budget).
 
 ---
 
@@ -223,4 +223,4 @@ The best vintage engagement ring blends character, comfort, and craftsmanship de
 
 ---
 
-> Ready to shortlist? [Explore vintage engagement rings](/ring?sort=price-desc&occasion=Engagement&style=Vintage&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=final_cta).
+> Ready to shortlist? [Explore vintage engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_vintage_engagement_rings&utm_content=final_cta).

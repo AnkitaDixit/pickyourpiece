@@ -23,7 +23,7 @@ There is no single best silver jewellery brand for everyone. The best brand for 
 Quick links:
 
 - [Browse silver jewellery options](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-jewellery-brands&utm_content=quick_answer_silver)
-- [Browse top-rated ring styles](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-jewellery-brands&utm_content=quick_answer_top_styles)
+- [Browse top-rated ring styles](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-jewellery-brands&utm_content=quick_answer_top_styles)
 - [Browse gift-friendly silver picks](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=best-silver-jewellery-brands&utm_content=quick_answer_gift)
 
 ---

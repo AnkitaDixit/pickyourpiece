@@ -22,7 +22,7 @@ This guide compares GIA vs IGI in practical terms so you can buy with clarity.
 
 If your priority is stricter grading consistency and long-term market confidence, GIA is often the safer pick. If your priority is value optimization and wider stock options, IGI can still be excellent when you compare stones carefully.
 
-Use this while comparing rings: [Diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=quick_answer).
+Use this while comparing rings: [Diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=quick_answer).
 
 ---
 
@@ -122,7 +122,7 @@ Pair this with [engagement ring shopping checklist](/articles/engagement-ring-sh
 
 If both options look close, choose the one that gives better overall ring design value, not just certificate prestige.
 
-Start now: [Compare certified diamond rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=framework_compare).
+Start now: [Compare certified diamond rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=framework_compare).
 
 ---
 
@@ -208,4 +208,4 @@ Certification should guide your decision, not replace visual and value compariso
 
 ---
 
-> Ready to shortlist? [Browse certified-style diamond engagement rings](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=final_cta).
+> Ready to shortlist? [Browse certified-style diamond engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&utm_source=internal_article&utm_medium=article&utm_campaign=diamond_certification_gia_vs_igi&utm_content=final_cta).

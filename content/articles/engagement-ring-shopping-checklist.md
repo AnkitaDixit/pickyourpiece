@@ -27,7 +27,7 @@ Your minimum checklist should cover:
 - Stone and setting quality checks
 - Size and return-policy checks
 
-Begin shortlisting: [Engagement ring catalog](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=quick_answer).
+Begin shortlisting: [Engagement ring catalog](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=quick_answer).
 
 ---
 
@@ -89,7 +89,7 @@ Sizing help: [ring size guide](/articles/ring-size-guide?utm_source=internal_art
 3. Compare 6-10 filtered rings.
 4. Final check: fit, finish, policy.
 
-Do it now: [Compare engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=framework_compare).
+Do it now: [Compare engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=framework_compare).
 
 ---
 
@@ -225,4 +225,4 @@ A checklist turns emotional buying into confident buying without losing exciteme
 
 ---
 
-> Ready to start? [Shop with your checklist now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=final_cta).
+> Ready to start? [Shop with your checklist now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_ring_shopping_checklist&utm_content=final_cta).

@@ -23,7 +23,7 @@ This guide gives a clear comparison and buying framework.
 - Proposal ring: often a temporary or symbolic ring for the proposal moment.
 - Engagement ring: the final ring intended for long-term wear.
 
-Explore engagement-ready options: [Engagement ring catalog](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=quick_answer).
+Explore engagement-ready options: [Engagement ring catalog](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=quick_answer).
 
 ---
 
@@ -80,7 +80,7 @@ Use this with [engagement ring budget guide](/articles/engagement-ring-budget?ut
 3. Confirm final ring timeline.
 4. Shortlist final engagement options.
 
-Start shortlist: [Engagement ring options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=framework_compare).
+Start shortlist: [Engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=framework_compare).
 
 ---
 
@@ -228,4 +228,4 @@ The right choice depends on your confidence in style, size, and timeline.
 
 ---
 
-> Ready to pick the final ring? [Browse engagement rings now](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=final_cta).
+> Ready to pick the final ring? [Browse engagement rings now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=proposal_ring_vs_engagement_ring&utm_content=final_cta).

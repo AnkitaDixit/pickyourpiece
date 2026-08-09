@@ -23,7 +23,7 @@ This guide explains when each makes sense and how to buy smartly.
 - Promise ring: symbol of commitment without immediate marriage plan.
 - Engagement ring: formal proposal and marriage intent.
 
-Explore engagement options: [Engagement ring collection](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=quick_answer).
+Explore engagement options: [Engagement ring collection](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=quick_answer).
 
 ---
 
@@ -77,7 +77,7 @@ Reference budget planning: [how much should you spend](/articles/how-much-should
 3. Choose style aligned to intent.
 4. Create timeline for final engagement ring.
 
-When ready: [Shop engagement rings](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=framework_compare).
+When ready: [Shop engagement rings](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=framework_compare).
 
 ---
 
@@ -225,4 +225,4 @@ Choose the ring based on commitment stage, not social pressure.
 
 ---
 
-> Ready for the next step? [Explore engagement ring options](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=final_cta).
+> Ready for the next step? [Explore engagement ring options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=promise_ring_vs_engagement_ring&utm_content=final_cta).

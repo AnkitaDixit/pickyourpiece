@@ -23,7 +23,7 @@ Silver is not truly waterproof in the way many buyers imagine. It can tolerate o
 Quick links:
 
 - [Browse practical silver rings](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-waterproof&utm_content=quick_answer_practical)
-- [Browse daily silver styles](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-waterproof&utm_content=quick_answer_daily)
+- [Browse daily silver styles](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-waterproof&utm_content=quick_answer_daily)
 - [Browse care-friendly picks](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=is-silver-waterproof&utm_content=quick_answer_care)
 
 ---

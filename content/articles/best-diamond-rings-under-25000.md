@@ -52,8 +52,8 @@ If you are deciding between price bands, also compare [best diamond rings under 
 
 Try these pre-filtered paths:
 
-- [Solitaire diamond rings under ₹25,000](/ring?sort=price-desc&gemstone=Diamond&style=Solitaire&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=section2_solitaire)
-- [Halo diamond rings under ₹25,000](/ring?sort=price-desc&gemstone=Diamond&style=Halo&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=section2_halo)
+- [Solitaire diamond rings under ₹25,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=section2_solitaire)
+- [Halo diamond rings under ₹25,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=section2_halo)
 
 ---
 
@@ -107,7 +107,7 @@ Halo gives bigger visual spread, solitaire gives timeless simplicity. Use [solit
 
 ### Can I find engagement-ready options under ₹25,000?
 
-Yes. Browse [engagement-focused rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=faq_engagement).
+Yes. Browse [engagement-focused rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_25000&utm_content=faq_engagement).
 
 ---
 

@@ -24,7 +24,7 @@ Quick links:
 
 - [Browse rose gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Rose%20Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-vs-yellow-gold&utm_content=quick_answer_rose)
 - [Browse yellow gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-vs-yellow-gold&utm_content=quick_answer_yellow)
-- [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-vs-yellow-gold&utm_content=quick_answer_engagement)
+- [Browse engagement rings in gold](/ring?sort=price-desc&metal=Gold&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=rose-gold-vs-yellow-gold&utm_content=quick_answer_engagement)
 
 ---
 

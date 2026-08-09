@@ -23,7 +23,7 @@ Yes, silver can tarnish over time. Tarnish is common and usually manageable with
 Quick links:
 
 - [Browse silver jewellery](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=does-silver-tarnish&utm_content=quick_answer_silver)
-- [Browse daily-wear silver styles](/ring?sort=price-desc&metal=Silver&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=does-silver-tarnish&utm_content=quick_answer_daily)
+- [Browse daily-wear silver styles](/ring?sort=price-desc&metal=Silver&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=does-silver-tarnish&utm_content=quick_answer_daily)
 - [Browse easy-care ring options](/ring?sort=price-desc&metal=Silver&utm_source=internal_article&utm_medium=article&utm_campaign=does-silver-tarnish&utm_content=quick_answer_care)
 
 ---

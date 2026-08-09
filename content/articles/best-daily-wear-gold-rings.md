@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Best Daily Wear Gold Rings (2026)"
 description: "Find the best daily wear gold rings in 2026 with a practical checklist for durability, comfort, purity, low-maintenance design, and value."
 keywords:
@@ -22,7 +22,7 @@ You are right to think beyond the first impression when choosing a daily wear go
 
 ## Quick Answer
 
-Choose a low-profile 14KT or 18KT gold ring with a smooth shank, protected stone setting, and enough metal for your routine. Browse [daily wear gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=quick_answer).
+Choose a low-profile 14KT or 18KT gold ring with a smooth shank, protected stone setting, and enough metal for your routine. Browse [daily wear gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=quick_answer).
 
 The best daily ring is the one you will not need to remove constantly or worry about catching.
 
@@ -47,7 +47,7 @@ For a clear comparison, use the [gold purity guide](/articles/gold-purity-guide?
 
 ## 3. Styles That Survive a Busy Routine
 
-Plain bands, low-set solitaires, signet-inspired shapes, and small flush-set accents are generally easier to live with than tall, open settings. Browse [low-profile gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=section3_low_profile).
+Plain bands, low-set solitaires, signet-inspired shapes, and small flush-set accents are generally easier to live with than tall, open settings. Browse [low-profile gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=section3_low_profile).
 
 If you prefer a visible centre stone, check that the shoulders do not press into adjacent fingers and that prongs are not exposed to frequent impact.
 
@@ -66,7 +66,7 @@ Remove the ring for chlorine, harsh cleaners, heavy lifting, and activities wher
 
 1. List the situations where your ring will stay on.
 2. Select 14KT or 18KT based on purity and resilience priorities.
-3. Filter [gold rings for everyday use](/ring?sort=price-desc&metal=Gold&metalColor=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=framework_filter).
+3. Filter [gold rings for everyday use](/ring?sort=price-desc&metal=Gold&metalColor=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=framework_filter).
 4. Check height, edges, shank, and care instructions.
 5. Confirm size and service policy before paying.
 
@@ -96,4 +96,4 @@ If you are deciding between purity levels, compare [14KT vs 18KT gold](/articles
 
 The best daily wear gold ring is a quiet workhorse: comfortable, well-proportioned, and supported by clear specifications. Choose for the life you live, not an imagined perfect day.
 
-> Find a dependable everyday piece: [Shop daily wear gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&style=Minimal&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=final_cta).
+> Find a dependable everyday piece: [Shop daily wear gold rings](/ring?sort=price-desc&metal=Gold&metalColor=Gold&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=best_daily_wear_gold_rings&utm_content=final_cta).

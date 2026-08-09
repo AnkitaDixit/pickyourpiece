@@ -29,7 +29,7 @@ For most buyers in this budget, the best value usually comes from:
 - Lab-grown or small natural accent stones
 - Clean craftsmanship over complex heavy designs
 
-Start here: [Engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=quick_answer_under_25k).
+Start here: [Engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=quick_answer_under_25k).
 
 [product_compare title="Under ₹25,000: Entry vs Better Value" caption="This cross-brand comparison highlights how finish quality and price can vary inside the same ₹25,000 engagement budget." occasion="Engagement" maxPrice="25000" sort="price_asc"]
 
@@ -65,8 +65,8 @@ When buyers focus on clean structure, durable proportions, and policy clarity, t
 
 Browse by style directly:
 
-- [Solitaire engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&style=Solitaire&gemstone=Solitaire&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section2_solitaire)
-- [Cluster engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&style=Cluster&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section2_cluster)
+- [Solitaire engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section2_solitaire)
+- [Cluster engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section2_cluster)
 
 [product_compare title="₹25,000 Style Comparison: Solitaire vs Cluster Value" caption="These examples help you evaluate visual spread versus timeless simplicity at the same budget cap." occasion="Engagement" maxPrice="25000" sort="price_desc"]
 
@@ -84,8 +84,8 @@ Quick guidance:
 
 Filter by metal:
 
-- [Silver engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&metal=Silver&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section3_silver)
-- [Gold engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&metal=Gold&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section3_gold)
+- [Silver engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&metal=Silver&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section3_silver)
+- [Gold engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&metal=Gold&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section3_gold)
 
 Also read: [Gold vs platinum ring buying guide](/articles/gold-vs-platinum?utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section3_gold_vs_platinum).
 
@@ -118,7 +118,7 @@ A practical split that works for most buyers:
 
 If you are deciding between two rings, pick the one with better finish and cleaner proportion, not the one with the biggest marketing spec list.
 
-Shortlist options here: [Engagement rings by value under ₹25,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section5_value_shortlist).
+Shortlist options here: [Engagement rings by value under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section5_value_shortlist).
 
 ---
 
@@ -150,7 +150,7 @@ If you are torn between popular silhouettes, use this [solitaire vs halo compari
 4. Compare 5 to 8 rings with the same style and maxPrice filter.
 5. Select the ring with best visual balance, policy terms, and comfort.
 
-Do the comparison now: [Compare engagement rings under ₹25,000](/ring?sort=price-desc&occasion=Engagement&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section7_compare_now).
+Do the comparison now: [Compare engagement rings under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=section7_compare_now).
 
 ---
 
@@ -160,7 +160,7 @@ Do the comparison now: [Compare engagement rings under ₹25,000](/ring?sort=pri
 
 Yes. You can find meaningful, well-made engagement rings under ₹25,000, especially in silver, steel, and lightweight gold styles.
 
-[Browse current options](/ring?sort=price-desc&occasion=Engagement&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_real_ring_under_25k).
+[Browse current options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_real_ring_under_25k).
 
 ---
 
@@ -168,7 +168,7 @@ Yes. You can find meaningful, well-made engagement rings under ₹25,000, especi
 
 Cluster and halo-inspired designs often give a larger face-up look than plain minimal settings at the same price.
 
-[See cluster options](/ring?sort=price-desc&occasion=Engagement&style=Cluster&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_biggest_look_cluster).
+[See cluster options](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&styleOccasion=Modern%20%26%20Classic&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_biggest_look_cluster).
 
 ---
 
@@ -176,7 +176,7 @@ Cluster and halo-inspired designs often give a larger face-up look than plain mi
 
 Yes, but usually in lighter designs with smaller center elements. If your priority is richer detailing, silver may offer better value.
 
-[Explore gold options under ₹25,000](/ring?sort=price-desc&occasion=Engagement&metal=Gold&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_gold_under_25k).
+[Explore gold options under ₹25,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&metal=Gold&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=faq_gold_under_25k).
 
 ---
 
@@ -220,4 +220,4 @@ If you compare intentionally and stay inside clear filters, this budget can deli
 
 ---
 
-> Ready to shortlist the best engagement rings under ₹25,000? [Start comparing now](/ring?sort=price-desc&occasion=Engagement&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=final_cta).
+> Ready to shortlist the best engagement rings under ₹25,000? [Start comparing now](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&maxPrice=25000&utm_source=internal_article&utm_medium=article&utm_campaign=engagement_rings_under_25000&utm_content=final_cta).

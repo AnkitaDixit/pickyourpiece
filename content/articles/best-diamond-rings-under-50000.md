@@ -53,8 +53,8 @@ For upper-range planning, compare [best diamond rings under ₹75,000](/articles
 
 Try direct filters:
 
-- [Solitaire diamond rings under ₹50,000](/ring?sort=price-desc&gemstone=Diamond&style=Solitaire&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=section2_solitaire)
-- [Halo diamond rings under ₹50,000](/ring?sort=price-desc&gemstone=Diamond&style=Halo&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=section2_halo)
+- [Solitaire diamond rings under ₹50,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=section2_solitaire)
+- [Halo diamond rings under ₹50,000](/ring?sort=price-desc&gemstone=Diamond&styleOccasion=Engagement%20%26%20Wedding&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=section2_halo)
 
 ---
 
@@ -108,7 +108,7 @@ Solitaire and clean minimal styles are usually easiest for daily wear.
 
 ### Can I filter only engagement-intent options?
 
-Yes: [Engagement diamond rings under ₹50,000](/ring?sort=price-desc&occasion=Engagement&gemstone=Diamond&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=faq_engagement).
+Yes: [Engagement diamond rings under ₹50,000](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&gemstone=Diamond&maxPrice=50000&utm_source=internal_article&utm_medium=article&utm_campaign=best_diamond_rings_under_50000&utm_content=faq_engagement).
 
 ---
 

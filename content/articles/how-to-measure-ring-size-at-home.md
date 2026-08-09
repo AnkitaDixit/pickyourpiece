@@ -34,8 +34,8 @@ If both point to the same size, you can order with high confidence.
 
 Quick shop links to test your shortlist:
 
-- [Engagement rings by size availability](/ring?sort=price-desc&occasion=Engagement&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=quick_answer_engagement)
-- [Daily-wear rings by size](/ring?sort=price-desc&style=Everyday&occasion=Everyday&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=quick_answer_daily_wear)
+- [Engagement rings by size availability](/ring?sort=price-desc&styleOccasion=Engagement%20%26%20Wedding&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=quick_answer_engagement)
+- [Daily-wear rings by size](/ring?sort=price-desc&styleOccasion=Daily%20Wear&styleOccasion=Daily%20Wear&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=quick_answer_daily_wear)
 
 ---
 
@@ -143,8 +143,8 @@ If you are choosing a bold ring, ask for width-specific sizing guidance.
 
 Browse examples by style width:
 
-- [Slim-band rings](/ring?sort=price-desc&style=Band&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=band_width_slim)
-- [Wide-band rings](/ring?sort=price-desc&style=Band&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=band_width_wide)
+- [Slim-band rings](/ring?sort=price-desc&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=band_width_slim)
+- [Wide-band rings](/ring?sort=price-desc&styleOccasion=Modern%20%26%20Classic&utm_source=internal_article&utm_medium=article&utm_campaign=ring_size_at_home&utm_content=band_width_wide)
 
 ---
 
