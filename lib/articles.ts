@@ -18,6 +18,7 @@ export type ArticleEntry = {
   slug: string;
   title: string;
   description: string;
+  keywords: string[];
   category: string;
   topic: ArticleTopic;
   readTime: string;
@@ -30,6 +31,7 @@ export type ArticleEntry = {
 type ArticleFrontmatter = {
   title?: string;
   description?: string;
+  keywords?: string[] | string;
   category?: string;
   topic?: ArticleTopic;
   readTime?: string;
@@ -63,6 +65,49 @@ function ensureTopic(value: string): ArticleTopic {
   return "Buying Guides";
 }
 
+const KEYWORD_STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "be",
+  "better",
+  "for",
+  "from",
+  "how",
+  "in",
+  "is",
+  "of",
+  "on",
+  "or",
+  "the",
+  "to",
+  "vs",
+  "what",
+  "which",
+  "with",
+]);
+
+function buildKeywords(value: string[] | string | undefined, title: string, slug: string, topic: ArticleTopic, category: string): string[] {
+  const explicitKeywords =
+    Array.isArray(value) ? value : typeof value === "string" ? value.split(",") : [];
+  const titleKeywords = title
+    .replace(/[^\p{L}\p{N}&-]+/gu, " ")
+    .split(/\s+/)
+    .filter((word) => word.length > 2 && !KEYWORD_STOP_WORDS.has(word.toLowerCase()));
+  const slugKeywords = slug
+    .split("-")
+    .filter((word) => word.length > 2 && !KEYWORD_STOP_WORDS.has(word.toLowerCase()));
+
+  return Array.from(
+    new Set(
+      [...explicitKeywords, title, topic, category, ...titleKeywords, ...slugKeywords]
+        .map((keyword) => keyword.trim())
+        .filter(Boolean)
+    )
+  ).slice(0, 12);
+}
+
 export async function getAllArticles(): Promise<ArticleEntry[]> {
   const fileNames = await readdir(ARTICLES_DIR);
   const articleFiles = fileNames.filter((name) => name.toLowerCase().endsWith(".md"));
@@ -91,6 +136,7 @@ export async function getAllArticles(): Promise<ArticleEntry[]> {
         slug,
         title: frontmatter.title,
         description: frontmatter.description,
+        keywords: buildKeywords(frontmatter.keywords, frontmatter.title, slug, ensureTopic(frontmatter.topic), frontmatter.category),
         category: frontmatter.category,
         topic: ensureTopic(frontmatter.topic),
         readTime: frontmatter.readTime,

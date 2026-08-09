@@ -77,6 +77,7 @@ export async function generateMetadata({
   return {
     title: `${article.title} | PickYourPiece Articles`,
     description: article.description,
+    keywords: article.keywords,
     robots: {
       index: true,
       follow: true,
@@ -140,6 +141,8 @@ export default async function ArticleDetailPage({
     },
     mainEntityOfPage: `${siteUrl}/articles/${article.slug}`,
     articleSection: article.topic,
+    keywords: article.keywords,
+    dateModified: article.lastModified,
   };
 
   const relatedArticles = allArticles.filter((entry) => entry.slug !== article.slug).slice(0, 3);

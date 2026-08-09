@@ -99,7 +99,7 @@
   --color-landing-text-soft: #5a5a5a;
   --color-landing-icon: #484848;
 
-  --font-size-landing-hero-title: clamp(40px, 2.2vw + 1rem, 54px);
+  --font-size-landing-hero-title: clamp(34px, 2.2vw , 44px);
   --font-size-landing-hero-title-mobile: clamp(30px, 9vw, 44px);
 
   /* Radius */

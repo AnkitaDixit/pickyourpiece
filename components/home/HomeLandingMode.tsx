@@ -190,8 +190,8 @@ export default function HomeLandingMode({
             <span>India&apos;s smarter way to shop jewellery</span>
           </p>
           <h1 id="landing-hero-title" className="landing-hero-title">
-            One Search.
-            <span>Every jewellery brand.</span>
+            Compare across brands.
+            <span style={{ fontSize: "54px"}}>Find your Perfect Piece.</span>
           </h1>
           {/* <p className="landing-hero-subtitle">
             Explore {allCount.toLocaleString()}+ designs across brands to find your perfect piece.
