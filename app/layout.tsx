@@ -140,44 +140,50 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${siteUrl}/#website`,
-    name: "PickYourPiece",
-    alternateName: ["PYP", "Pick Your Piece", "PyP"],
-    url: siteUrl,
-    description: "PickYourPiece helps shoppers compare jewellery across top Indain brands in one place with smart filtering and price discovery.",
-    inLanguage: "en-IN",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${siteUrl}/?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  name: 'PickYourPiece',
+  alternateName: ['PYP', 'Pick Your Piece', 'PyP'],
+  url: siteUrl,
+  description:
+    'PickYourPiece helps shoppers compare jewellery across top Indian brands in one place with smart filtering and price discovery.',
+  inLanguage: 'en-IN',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}/?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: 'PickYourPiece',
+  alternateName: ['PYP', 'Pick Your Piece', 'PyP'],
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: [
+    'https://x.com/pickyourpiece',
+    'https://in.pinterest.com/pickyourpiece__official/',
+    'https://www.instagram.com/pickyourpiece__official/',
+  ],
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: 'founder@pickyourpiece.com',
+      availableLanguage: ['English'],
     },
-  };
+  ],
+};
 
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${siteUrl}/#organization`,
-    name: "PickYourPiece",
-    alternateName: ["PYP", "Pick Your Piece", "PyP"],
-    url: siteUrl,
-    logo: `${siteUrl}/favicon.ico`,
-    sameAs: ["https://x.com/pickyourpiece"],
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        email: "founder@pickyourpiece.com",
-      },
-    ],
-  };
-
-  const schemaGraph = {
-    "@context": "https://schema.org",
-    "@graph": [websiteSchema, organizationSchema],
-  };
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [websiteSchema, organizationSchema],
+};
 
   return (
     <html
