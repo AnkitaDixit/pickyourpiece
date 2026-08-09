@@ -191,7 +191,7 @@ export default function HomeLandingMode({
           </p>
           <h1 id="landing-hero-title" className="landing-hero-title">
             Compare across brands.
-            <span style={{ fontSize: "54px"}}>Find your Perfect Piece.</span>
+            <span>Find your Perfect Piece.</span>
           </h1>
           {/* <p className="landing-hero-subtitle">
             Explore {allCount.toLocaleString()}+ designs across brands to find your perfect piece.

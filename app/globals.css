@@ -99,7 +99,7 @@
   --color-landing-text-soft: #5a5a5a;
   --color-landing-icon: #484848;
 
-  --font-size-landing-hero-title: clamp(34px, 2.2vw , 44px);
+  --font-size-landing-hero-title: clamp(34px, 2.2vw + 1rem , 54px);
   --font-size-landing-hero-title-mobile: clamp(30px, 9vw, 44px);
 
   /* Radius */
@@ -2113,6 +2113,7 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   margin-top: 2px;
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-landing-hero-title);
 }
 
 .landing-hero-subtitle {
@@ -3862,13 +3863,14 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   }
 
   .landing-hero-title {
-    font-size: clamp(26px, 8.5vw, 40px);
+    font-size: 32px;
     line-height: 1.24;
     width: 90%;
   }
 
   .landing-hero-title span {
     margin-top: 2px;
+    font-size: 24px;
   }
 
   .landing-hero-subtitle {

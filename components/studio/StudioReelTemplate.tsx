@@ -11,9 +11,14 @@ export type StudioReelScene =
 export type StudioReelProduct = {
   name: string;
   brand: string;
+  logo?: string;
   price: number;
   image: string;
   imageStyle: CSSProperties;
+  metal?: string;
+  style?: string[];
+  gemstone?: string[];
+  color?: string;
 };
 
 type Props = {
@@ -49,6 +54,19 @@ function ReelProductImage({
       <div className="reel-sparkle sparkle-2" /> */}
     </div>
   );
+}
+
+function formatProductDetails(product?: StudioReelProduct) {
+  if (!product) return "Ring details unavailable";
+
+  return [
+    product.metal,
+    ...(product.style ?? []),
+    ...(product.gemstone ?? []),
+    // product.color,
+  ]
+    .filter(Boolean)
+    .join(" • ");
 }
 
 export default function StudioReelTemplate({
@@ -91,7 +109,7 @@ export default function StudioReelTemplate({
               <ReelProductImage product={product} size="80vw" />
               <div className="reel-detail-overlay">
                 <span>Ring {key}</span>
-                <strong>Sparkle • Band • Setting</strong>
+                <strong>{formatProductDetails(product)}</strong>
               </div>
             </div>
           ))}
@@ -100,15 +118,29 @@ export default function StudioReelTemplate({
 
       {scene === "reveal" && (
         <>
-          <div className="reel-reveal-badge bounce-in">REVEAL</div>
           <div className="reel-reveal-grid">
             {products.map(({ key, product }, index) => (
-              <div key={key} className={`reel-reveal-card ${index === 0 ? "slide-left" : "slide-right"}`}>
+              <div
+                key={key}
+                className={`reel-reveal-card ${
+                  index === 0 ? "slide-left delay-0" : "slide-right delay-1"
+                }`}
+              >
                 <ReelProductImage product={product} size="40vw" />
+
                 <div className="reel-price-card pop-in">
-                  <span className="reel-price-label">{key}</span>
+                  {product?.logo ? (
+                   <div><Image
+                      src={product.logo}
+                      alt={`${product.brand} logo`}
+                      width={120}
+                      height={36}
+                      unoptimized
+                      className="reel-brand-logo"
+                    /> <small> {product?.brand}</small></div>
+                  ) : null}
                   <strong>{formatPrice(product?.price ?? 0)}</strong>
-                  <small>{product?.brand}</small>
+                  {/* <small>{product?.brand}</small> */}
                 </div>
               </div>
             ))}
@@ -118,12 +150,22 @@ export default function StudioReelTemplate({
 
       {scene === "end" && (
         <div className="reel-end-screen fade-in">
-          <div className="reel-logo pulse">PickYourPiece</div>
+          <div className="reel-logo pulse">
+            <Image
+              src="/logo.png"
+              alt="PickYourPiece"
+              width={72}
+              height={72}
+              unoptimized
+              className="reel-logo-image"
+            />
+          </div>
           <strong>Compare before you buy.</strong>
-        <span>PickYourPiece - pickyourpiece.com</span>
-          <p>Compare similar rings across brands in seconds.</p>
-          <div className="reel-cta-button pulse">Compare Similar Rings</div>
-          <span className="reel-site">pickyourpiece.com</span>
+          <span>www.pickyourpiece.com</span>
+          
+          {/* <p>Compare similar rings across brands in seconds.</p> */}
+          {/* <div className="reel-cta-button pulse">Compare Similar Rings</div> */}
+          {/* <span className="reel-site">pickyourpiece.com</span> */}
         </div>
       )}
 
@@ -131,10 +173,11 @@ export default function StudioReelTemplate({
         <div className="reel-storyboard">
           <div>0-3s Hook</div>
           <div>3-8s Details</div>
-          <div>8-12s Reveal</div>
-          <div>12-15s CTA</div>
+          <div>8-13s Reveal</div>
+          <div>13-15s CTA</div>
         </div>
       )}
+      <div className="reel-film-overlay" />
     </div>
   );
 }

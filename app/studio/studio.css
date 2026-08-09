@@ -540,7 +540,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .studio-preview-overlay {
@@ -1758,7 +1758,7 @@
   background:
     radial-gradient(circle at 15% 0%, var(--color-primary-shadow-soft) 0%, transparent 35%),
     var(--color-primary-soft);
-  color: var(--color-white);
+  color: var(--color-text);
   font-family: var(--font-geist-sans), sans-serif;
 }
 
@@ -1773,6 +1773,17 @@
 .reel-shell > * {
   position: relative;
   z-index: 1;
+}
+
+.reel-film-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--color-primary-shadow-soft), transparent 30%),
+    radial-gradient(circle at center, transparent 60%, var(--color-overlay-scrim));
+  mix-blend-mode: screen;
 }
 
 .studio-reel-exporting .reel-shell *,
@@ -1812,11 +1823,24 @@
   text-transform: uppercase;
 }
 
-.reel-split,
-.reel-reveal-grid {
+.reel-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+}
+
+.reel-reveal-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 24px;
+}
+
+.reel-scene-reveal {
+  gap: 20px;
+}
+
+.reel-reveal-grid {
+  align-items: stretch;
 }
 
 .reel-side,
@@ -1828,16 +1852,22 @@
   background: var(--color-background);
 }
 
+.reel-reveal-card {
+  min-width: 0;
+  border-color: var(--color-primary-border-strong);
+  box-shadow: 0 16px 32px var(--color-primary-shadow-md);
+}
+
 .reel-image-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
+  animation: reel-slow-zoom 5s ease-in-out forwards;
 }
 
 .reel-image {
   object-fit: cover;
-  animation: reel-slow-zoom 5s ease-in-out forwards;
 }
 
 .reel-image-glow {
@@ -1911,15 +1941,27 @@
   bottom: 16px;
   left: 16px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 18px;
+  flex-direction: row-reverse;
+  gap: 5px;
+  padding: 14px 16px;
   border-radius: 24px;
-  background: color-mix(in oklab, var(--color-background-elevated) 18%, transparent);
+  color: var(--color-text);
+  background: color-mix(in oklab, var(--color-background-elevated) 92%, transparent);
   backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px var(--color-primary-shadow-md);
+}
+
+.reel-brand-logo {
+  width: auto;
+  height: 24px;
+  max-width: 120px;
+  margin-bottom: 2px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .reel-price-label {
+  color: var(--color-primary);
   font-size: var(--font-size-caption);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1941,9 +1983,18 @@
 }
 
 .reel-logo {
-  color: var(--color-primary);
-  font-size: var(--font-size-display-md);
-  font-weight: var(--font-weight-heavy);
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+}
+
+.reel-logo-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 24px var(--color-primary-shadow-lg);
 }
 .reel-end-screen h2 {
   margin: 0;
@@ -1980,8 +2031,8 @@
 }
 
 @keyframes reel-slow-zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.12); }
+  from { transform: scale(1.02) translateY(0); }
+  to { transform: scale(1.18) translateY(-8px); }
 }
 
 @keyframes reel-float-glow {
@@ -2002,6 +2053,8 @@
 .reel-shell .bounce-in { animation: reel-pop-in 0.55s ease-out both; }
 .reel-shell .zoom-card { animation: reel-pop-in 0.5s ease-out both; }
 .reel-shell .pulse { animation: reel-pulse 2s ease-in-out infinite; }
+.reel-shell .delay-0 { animation-delay: 0s; }
+.reel-shell .delay-1 { animation-delay: 0.18s; }
 
 @keyframes reel-slide-up {
   from { opacity: 0; transform: translateY(28px); }

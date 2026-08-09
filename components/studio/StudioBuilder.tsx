@@ -1177,6 +1177,8 @@ export default function StudioBuilder({
       }
 
       setReelProgress(100);
+      requestVideoFrame();
+      await new Promise<void>((resolve) => window.setTimeout(resolve, 34));
       recorder.stop();
       await recordingFinished;
       const videoBlob = new Blob(chunks, { type: mimeType });
@@ -1272,7 +1274,58 @@ export default function StudioBuilder({
           <label>Ring Catalog</label>
           <p>Showing all ring products with preview thumbnails.</p>
         </div>
-        {isCompareCardsTemplate ? (
+        {isReelTemplate ? (
+          <div className="studio-compare-picker-target" role="group" aria-label="Reel image selection">
+            <div className="studio-compare-capsules" role="tablist" aria-label="Reel side selector">
+              {COMPARE_SIDES.map((side) => (
+                <button
+                  key={`reel-capsule-${side.id}`}
+                  type="button"
+                  className={`studio-compare-capsule ${compareSelectionTarget === side.id ? "active" : ""}`}
+                  role="tab"
+                  aria-selected={compareSelectionTarget === side.id}
+                  onClick={() => {
+                    setCompareSelectionTarget(side.id);
+                    setVisiblePickerCount(INITIAL_VISIBLE_PICKER_ITEMS);
+                  }}
+                >
+                  {side.label}
+                </button>
+              ))}
+            </div>
+
+            {(() => {
+              const side = compareSelectionTarget;
+              const sideFilter = compareSideFilters[side];
+              const sideLabel = side === "left" ? "Card A" : "Card B";
+              const sideProduct = side === "left" ? comparePair.left : comparePair.right;
+              const sideFrame: SideFrameState | undefined = sideProduct
+                ? getProductImageFrame(sideProduct)
+                : undefined;
+
+              return (
+                <StudioSideControlPanel
+                  title={`${sideLabel} Reel Controls`}
+                  activeLabel={`Picking For ${sideLabel}`}
+                  sideId={`reel-${side}`}
+                  filter={sideFilter}
+                  onFilterChange={(key, value) => updateCompareSideFilter(side, key, value)}
+                  brandOptions={ringBrandOptions}
+                  gemstoneOptions={similarGemstoneOptions}
+                  styleOptions={similarStyleOptions}
+                  metalOptions={compareMetalOptions}
+                  colorOptions={compareColorOptions}
+                  frame={sideFrame}
+                  onFrameChange={sideProduct ? (key, value) => updateProductImageFrame(sideProduct.id, key, value) : undefined}
+                  onResetFrame={sideProduct ? () => resetProductImageFrame(sideProduct.id) : undefined}
+                  frameLimits={IMAGE_FRAME_LIMITS}
+                />
+              );
+            })()}
+
+            <p>Switch Card A/B to edit each Reel image and its frame.</p>
+          </div>
+        ) : isCompareCardsTemplate ? (
           <div className="studio-compare-picker-target" role="group" aria-label="Compare card image selection">
             <div className="studio-compare-capsules" role="tablist" aria-label="Compare card side selector">
               {COMPARE_SIDES.map((side) => (
@@ -1595,16 +1648,26 @@ export default function StudioBuilder({
                 leftProduct={comparePair.left ? {
                   name: comparePair.left.name,
                   brand: comparePair.left.brand,
+                  logo: BRAND_LOGOS[getBrandKey(comparePair.left.brand)],
                   price: comparePair.left.price,
                   image: getStudioImageSrc(getProductDisplayImage(comparePair.left)),
                   imageStyle: getProductImageStyle(comparePair.left),
+                  metal: comparePair.left.metal,
+                  style: comparePair.left.style,
+                  gemstone: comparePair.left.gemstone,
+                  color: comparePair.left.color,
                 } satisfies StudioReelProduct : undefined}
                 rightProduct={comparePair.right ? {
                   name: comparePair.right.name,
                   brand: comparePair.right.brand,
+                  logo: BRAND_LOGOS[getBrandKey(comparePair.right.brand)],
                   price: comparePair.right.price,
                   image: getStudioImageSrc(getProductDisplayImage(comparePair.right)),
                   imageStyle: getProductImageStyle(comparePair.right),
+                  metal: comparePair.right.metal,
+                  style: comparePair.right.style,
+                  gemstone: comparePair.right.gemstone,
+                  color: comparePair.right.color,
                 } satisfies StudioReelProduct : undefined}
                 formatPrice={toCurrency}
               />
