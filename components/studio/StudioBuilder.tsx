@@ -2,10 +2,14 @@
 
 import Image from "next/image";
 import { toPng } from "html-to-image";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { buildProductDetailPath } from "@/lib/product-seo";
 import StudioCompareCard from "@/components/studio/StudioCompareCard";
 import StudioCompareFooter from "@/components/studio/StudioCompareFooter";
+import StudioReelTemplate, {
+  type StudioReelProduct,
+  type StudioReelScene,
+} from "@/components/studio/StudioReelTemplate";
 import StudioSideControlPanel, {
   type SideFilterState,
   type SideFrameState,
@@ -44,6 +48,15 @@ type BrandOption = {
 };
 
 type InstagramPostTemplateType = "compare_cards" | "similar_pieces" | "best_under_budget";
+type InstagramReelTemplateType = "spot_expensive";
+const REEL_DURATION_MS = 10000;
+
+function getReelSceneForPosition(positionMs: number): StudioReelScene {
+  if (positionMs < 2000) return "hook";
+  if (positionMs < 6000) return "details";
+  if (positionMs < 8000) return "reveal";
+  return "end";
+}
 
 type StudioBuilderProps = {
   products: ProductOption[];
@@ -74,10 +87,7 @@ function clampFrameValue(kind: keyof ProductImageFrame, value: number) {
 
 const TEMPLATES: StudioTemplate[] = [
   { id: "instagram_post", label: "Instagram Post", description: "Instagram original portrait 4:5", width: 1080, height: 1350 },
-  { id: "instagram_carousel", label: "Instagram Carousel", description: "Portrait carousel slide", width: 1080, height: 1350 },
-  { id: "pinterest_pin", label: "Pinterest Pin", description: "Tall discovery pin", width: 1000, height: 1500 },
-  { id: "twitter", label: "Twitter", description: "Wide social card", width: 1600, height: 900 },
-  { id: "facebook", label: "Facebook", description: "Feed-friendly card", width: 1200, height: 630 },
+  { id: "instagram_reel", label: "Instagram Reel", description: "Full-screen vertical reel", width: 1080, height: 1920 },
 ];
 
 const INSTAGRAM_POST_TEMPLATE_OPTIONS: {
@@ -99,6 +109,18 @@ const INSTAGRAM_POST_TEMPLATE_OPTIONS: {
     id: "best_under_budget",
     label: "Best Under Budget",
     description: "Highlight top picks under a target budget bucket.",
+  },
+];
+
+const INSTAGRAM_REEL_TEMPLATE_OPTIONS: {
+  id: InstagramReelTemplateType;
+  label: string;
+  description: string;
+}[] = [
+  {
+    id: "spot_expensive",
+    label: "Can You Spot the Expensive One?",
+    description: "15-second split-screen price reveal with product detail beats.",
   },
 ];
 
@@ -338,11 +360,17 @@ export default function StudioBuilder({
   const PICKER_BATCH_SIZE = 120;
   const initialBudgetProducts = products.filter((product) => product.price <= 50000);
   const initialBudgetFallback = initialBudgetProducts.length > 0 ? initialBudgetProducts : products;
+  const defaultReelLeftProduct = products.find((product) => product.brand.trim().toLowerCase() === "bluestone") ?? products[0];
+  const defaultReelRightProduct =
+    products.find(
+      (product) =>
+        product.brand.trim().toLowerCase() === "caratlane" && product.id !== defaultReelLeftProduct?.id
+    ) ?? products.find((product) => product.id !== defaultReelLeftProduct?.id) ?? products[0];
 
   const previewCanvasRef = useRef<HTMLDivElement | null>(null);
   const [templateId, setTemplateId] = useState(TEMPLATES[0].id);
-  const [selectedProductId, setSelectedProductId] = useState(products[0]?.id ?? "");
-  const [compareRightProductId, setCompareRightProductId] = useState(products[1]?.id ?? products[0]?.id ?? "");
+  const [selectedProductId, setSelectedProductId] = useState(defaultReelLeftProduct?.id ?? "");
+  const [compareRightProductId, setCompareRightProductId] = useState(defaultReelRightProduct?.id ?? defaultReelLeftProduct?.id ?? "");
   const [compareSelectionTarget, setCompareSelectionTarget] = useState<CompareSideId>("left");
   const [compareSideFilters, setCompareSideFilters] = useState<Record<CompareSideId, SideFilterState>>({
     left: createDefaultSideFilter(),
@@ -377,8 +405,13 @@ export default function StudioBuilder({
   const [selectedBrandFilter, setSelectedBrandFilter] = useState("all");
   const [priceSort, setPriceSort] = useState<SortMode>("featured");
   const [instagramPostTemplate, setInstagramPostTemplate] = useState<InstagramPostTemplateType>("compare_cards");
+  const [instagramReelTemplate, setInstagramReelTemplate] = useState<InstagramReelTemplateType>("spot_expensive");
+  const [reelScene, setReelScene] = useState<StudioReelScene>("storyboard");
+  const [reelPositionMs, setReelPositionMs] = useState(0);
+  const [isReelPlaying, setIsReelPlaying] = useState(true);
   const [budgetCap, setBudgetCap] = useState(50000);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isRecordingReel, setIsRecordingReel] = useState(false);
   const [downloadError, setDownloadError] = useState("");
   const [visiblePickerCount, setVisiblePickerCount] = useState(INITIAL_VISIBLE_PICKER_ITEMS);
   const [selectedImageIndexByProductId, setSelectedImageIndexByProductId] = useState<Record<string, number>>({});
@@ -506,9 +539,30 @@ export default function StudioBuilder({
   }, [products]);
 
   const interleavedRingProducts = useMemo(() => interleaveByBrand(ringProducts), [ringProducts]);
-  const isCompareCardsTemplate = templateId === "instagram_post" && instagramPostTemplate === "compare_cards";
-  const isSimilarPiecesTemplate = templateId === "instagram_post" && instagramPostTemplate === "similar_pieces";
-  const isBestUnderBudgetTemplate = templateId === "instagram_post" && instagramPostTemplate === "best_under_budget";
+  const isInstagramTemplate = templateId === "instagram_post" || templateId === "instagram_reel";
+  const isReelTemplate = templateId === "instagram_reel";
+  const isCompareCardsTemplate = (templateId === "instagram_post" && instagramPostTemplate === "compare_cards")
+    || (isReelTemplate && instagramReelTemplate === "spot_expensive");
+  const isSimilarPiecesTemplate = isInstagramTemplate && instagramPostTemplate === "similar_pieces";
+  const isBestUnderBudgetTemplate = isInstagramTemplate && instagramPostTemplate === "best_under_budget";
+
+  useEffect(() => {
+    if (!isReelTemplate || isRecordingReel || !isReelPlaying) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setReelPositionMs((current) => {
+        const next = (current + 100) % REEL_DURATION_MS;
+        setReelScene(getReelSceneForPosition(next));
+        return next;
+      });
+    }, 100);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [isRecordingReel, isReelPlaying, isReelTemplate]);
 
   const ringBrandOptions = useMemo<BrandOption[]>(() => {
     const brandMap = new Map<string, string>();
@@ -865,7 +919,21 @@ export default function StudioBuilder({
   ]);
 
   const draft = useMemo(() => {
-    if (templateId === "instagram_post") {
+    if (isReelTemplate) {
+      const left = comparePair.left;
+      const right = comparePair.right;
+      const leftPrice = toCurrency(left?.price ?? 0);
+      const rightPrice = toCurrency(right?.price ?? 0);
+      return {
+        title: "Can you spot the expensive one?",
+        caption: `Hook (0–2 sec): One ring is ${leftPrice}. One is ${rightPrice}. Can you tell which is which?\n\nMiddle (3–8 sec): Zoom into the sparkle, band, and setting on both rings.\n\nReveal (8–12 sec): A = ${leftPrice} (${left?.brand ?? "Brand A"}); B = ${rightPrice} (${right?.brand ?? "Brand B"}).\n\nEnd (12–15 sec): Compare jewellery across brands on PickYourPiece.`,
+        hashtags: buildHashtags(["pickyourpiece", "RingComparison", "JewelleryTok", left?.brand ?? "", right?.brand ?? ""]),
+        cta: "/ring?sort=price-desc",
+        image: getProductDisplayImage(left),
+      };
+    }
+
+    if (isInstagramTemplate) {
       return {
         title: instagramPostInfo.title,
         caption: instagramPostInfo.caption,
@@ -907,7 +975,10 @@ export default function StudioBuilder({
     instagramPostInfo.title,
     getProductDisplayImage,
     selectedProduct,
-    templateId,
+    isInstagramTemplate,
+    isReelTemplate,
+    comparePair.left,
+    comparePair.right,
   ]);
 
   const previewRatio = `${template.width} / ${template.height}`;
@@ -926,8 +997,8 @@ export default function StudioBuilder({
     setIsDownloading(true);
 
     try {
-      const exportWidth = templateId === "instagram_post" ? 1080 : template.width;
-      const exportHeight = templateId === "instagram_post" ? 1350 : template.height;
+      const exportWidth = template.width;
+      const exportHeight = template.height;
       const exportPixelRatio = 2;
 
       if (document.fonts?.ready) {
@@ -978,6 +1049,119 @@ export default function StudioBuilder({
     }
   };
 
+  const downloadReelVideo = async () => {
+    if (typeof document === "undefined" || !isReelTemplate || !previewCanvasRef.current) return;
+    if (typeof MediaRecorder === "undefined") {
+      setDownloadError("Video recording is not supported in this browser. Try Chrome or Edge.");
+      return;
+    }
+
+    const previewNode = previewCanvasRef.current;
+    const videoCanvas = document.createElement("canvas");
+    videoCanvas.width = template.width;
+    videoCanvas.height = template.height;
+    const context = videoCanvas.getContext("2d");
+    if (!context || !videoCanvas.captureStream) {
+      setDownloadError("This browser cannot create a video from the Reel preview.");
+      return;
+    }
+
+    const mimeType = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"]
+      .find((candidate) => MediaRecorder.isTypeSupported(candidate));
+    if (!mimeType) {
+      setDownloadError("This browser does not support WebM video recording.");
+      return;
+    }
+
+    setDownloadError("");
+    setIsRecordingReel(true);
+
+    try {
+      const stream = videoCanvas.captureStream(30);
+      const recorder = new MediaRecorder(stream, { mimeType });
+      const chunks: Blob[] = [];
+      recorder.ondataavailable = (event) => {
+        if (event.data.size > 0) chunks.push(event.data);
+      };
+      const recordingFinished = new Promise<void>((resolve) => {
+        recorder.addEventListener("stop", () => resolve(), { once: true });
+      });
+
+      const waitForPreview = async () => {
+        await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+        if (document.fonts?.ready) await document.fonts.ready;
+      };
+
+      const drawDataUrlFor = async (dataUrl: string, durationMs: number) => {
+        const image = document.createElement("img");
+        image.src = dataUrl;
+        await new Promise<void>((resolve, reject) => {
+          image.onload = () => resolve();
+          image.onerror = () => reject(new Error("Could not load Reel frame."));
+        });
+
+        await new Promise<void>((resolve) => {
+          const startedAt = performance.now();
+          const drawFrame = (now: number) => {
+            context.drawImage(image, 0, 0, videoCanvas.width, videoCanvas.height);
+            if (now - startedAt >= durationMs) {
+              resolve();
+              return;
+            }
+            requestAnimationFrame(drawFrame);
+          };
+          requestAnimationFrame(drawFrame);
+        });
+      };
+
+      recorder.start();
+      const scenes: Array<{ scene: Exclude<StudioReelScene, "storyboard">; durationMs: number }> = [
+        { scene: "hook", durationMs: 2000 },
+        { scene: "details", durationMs: 4000 },
+        { scene: "reveal", durationMs: 2000 },
+        { scene: "end", durationMs: 2000 },
+      ];
+
+      for (const scene of scenes) {
+        setReelScene(scene.scene);
+        await waitForPreview();
+        const frame = await toPng(previewNode, {
+          cacheBust: false,
+          includeQueryParams: true,
+          pixelRatio: 1,
+          backgroundColor: "#17131f",
+          canvasWidth: template.width,
+          canvasHeight: template.height,
+        });
+        await drawDataUrlFor(frame, scene.durationMs);
+      }
+
+      recorder.stop();
+      await recordingFinished;
+      const videoBlob = new Blob(chunks, { type: mimeType });
+      const anchor = document.createElement("a");
+      anchor.href = URL.createObjectURL(videoBlob);
+      anchor.download = "instagram-reel-can-you-spot-the-expensive-one.webm";
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(anchor.href), 1000);
+    } catch {
+      setDownloadError("Could not generate the Reel video. Try replacing a product image if its source blocks capture.");
+    } finally {
+      setReelScene("storyboard");
+      setReelPositionMs(0);
+      setIsReelPlaying(true);
+      setIsRecordingReel(false);
+    }
+  };
+
+  const seekReel = (offsetMs: number) => {
+    setReelPositionMs((current) => {
+      const next = Math.min(REEL_DURATION_MS - 1, Math.max(0, current + offsetMs));
+      setReelScene(getReelSceneForPosition(next));
+      return next;
+    });
+  };
+
   return (
     <div className="studio-shell">
       <aside className="studio-controls">
@@ -991,23 +1175,40 @@ export default function StudioBuilder({
           <p>{template.description} • {template.width} x {template.height}</p>
         </div>
 
-        {templateId === "instagram_post" ? (
+        {isInstagramTemplate ? (
           <div className="studio-control-group">
             <label htmlFor="studio-instagram-template">Template Type</label>
-            <select
-              id="studio-instagram-template"
-              value={instagramPostTemplate}
-              onChange={(e) => setInstagramPostTemplate(e.target.value as InstagramPostTemplateType)}
-            >
-              {INSTAGRAM_POST_TEMPLATE_OPTIONS.map((item) => (
-                <option key={item.id} value={item.id}>{item.label}</option>
-              ))}
-            </select>
-            <p>{INSTAGRAM_POST_TEMPLATE_OPTIONS.find((item) => item.id === instagramPostTemplate)?.description}</p>
+            {isReelTemplate ? (
+              <>
+                <select
+                  id="studio-instagram-template"
+                  value={instagramReelTemplate}
+                  onChange={(e) => setInstagramReelTemplate(e.target.value as InstagramReelTemplateType)}
+                >
+                  {INSTAGRAM_REEL_TEMPLATE_OPTIONS.map((item) => (
+                    <option key={item.id} value={item.id}>{item.label}</option>
+                  ))}
+                </select>
+                <p>{INSTAGRAM_REEL_TEMPLATE_OPTIONS.find((item) => item.id === instagramReelTemplate)?.description}</p>
+              </>
+            ) : (
+              <>
+                <select
+                  id="studio-instagram-template"
+                  value={instagramPostTemplate}
+                  onChange={(e) => setInstagramPostTemplate(e.target.value as InstagramPostTemplateType)}
+                >
+                  {INSTAGRAM_POST_TEMPLATE_OPTIONS.map((item) => (
+                    <option key={item.id} value={item.id}>{item.label}</option>
+                  ))}
+                </select>
+                <p>{INSTAGRAM_POST_TEMPLATE_OPTIONS.find((item) => item.id === instagramPostTemplate)?.description}</p>
+              </>
+            )}
           </div>
         ) : null}
 
-        {templateId === "instagram_post" && instagramPostTemplate === "best_under_budget" ? (
+        {isInstagramTemplate && instagramPostTemplate === "best_under_budget" ? (
           <div className="studio-control-group">
             <label htmlFor="studio-budget-cap">Budget Cap (INR)</label>
             <input
@@ -1241,7 +1442,7 @@ export default function StudioBuilder({
                   type="button"
                   className={`studio-picker-select ${buttonClass}`.trim()}
                   onClick={() => {
-                    if (templateId === "instagram_post" && instagramPostTemplate === "similar_pieces") {
+                    if (isInstagramTemplate && instagramPostTemplate === "similar_pieces") {
                       setSimilarSlotProductIds((current) => ({
                         ...current,
                         [similarSelectionTarget]: product.id,
@@ -1249,7 +1450,7 @@ export default function StudioBuilder({
                       return;
                     }
 
-                    if (templateId === "instagram_post" && instagramPostTemplate === "best_under_budget") {
+                    if (isInstagramTemplate && instagramPostTemplate === "best_under_budget") {
                       setBudgetSlotProductIds((current) => ({
                         ...current,
                         [budgetSelectionTarget]: product.id,
@@ -1257,7 +1458,7 @@ export default function StudioBuilder({
                       return;
                     }
 
-                    if (templateId === "instagram_post" && instagramPostTemplate === "compare_cards") {
+                    if (isInstagramTemplate && instagramPostTemplate === "compare_cards") {
                       if (compareSelectionTarget === "right") {
                         if (product.id === selectedProductId) {
                           const alternateLeft = ringProducts.find((item) => item.id !== product.id && hasImage(item))
@@ -1341,8 +1542,28 @@ export default function StudioBuilder({
       <section className="studio-preview">
         <div className="studio-preview-scroll">
           <div ref={previewCanvasRef} className="studio-preview-canvas" style={{ aspectRatio: previewRatio }}>
-            {templateId === "instagram_post" ? (
-              <div className={`studio-ig-post studio-ig-post-${instagramPostTemplate}`}>
+            {isReelTemplate ? (
+              <StudioReelTemplate
+                templateId={instagramReelTemplate}
+                scene={reelScene}
+                leftProduct={comparePair.left ? {
+                  name: comparePair.left.name,
+                  brand: comparePair.left.brand,
+                  price: comparePair.left.price,
+                  image: getStudioImageSrc(getProductDisplayImage(comparePair.left)),
+                  imageStyle: getProductImageStyle(comparePair.left),
+                } satisfies StudioReelProduct : undefined}
+                rightProduct={comparePair.right ? {
+                  name: comparePair.right.name,
+                  brand: comparePair.right.brand,
+                  price: comparePair.right.price,
+                  image: getStudioImageSrc(getProductDisplayImage(comparePair.right)),
+                  imageStyle: getProductImageStyle(comparePair.right),
+                } satisfies StudioReelProduct : undefined}
+                formatPrice={toCurrency}
+              />
+            ) : isInstagramTemplate ? (
+              <div className={`studio-ig-post studio-ig-post-${templateId} studio-ig-post-${instagramPostTemplate}`}>
               {instagramPostTemplate === "compare_cards" ? (
                 <>
                   <div className="studio-ig-compare-topbar">
@@ -1536,6 +1757,38 @@ export default function StudioBuilder({
               </>
             )}
           </div>
+          {isReelTemplate ? (
+            <div className="studio-reel-controls" aria-label="Reel preview controls">
+              <button
+                type="button"
+                onClick={() => setIsReelPlaying((playing) => !playing)}
+                disabled={isRecordingReel}
+                aria-label={isReelPlaying ? "Pause Reel preview" : "Play Reel preview"}
+              >
+                {isReelPlaying ? "Pause" : "Play"}
+              </button>
+              <button type="button" onClick={() => seekReel(-2000)} disabled={isRecordingReel} aria-label="Rewind Reel preview 2 seconds">
+                Rewind 2s
+              </button>
+              <button type="button" onClick={() => seekReel(2000)} disabled={isRecordingReel} aria-label="Forward Reel preview 2 seconds">
+                Forward 2s
+              </button>
+              <input
+                type="range"
+                min="0"
+                max={REEL_DURATION_MS - 1}
+                step="100"
+                value={reelPositionMs}
+                onChange={(event) => {
+                  const next = Number(event.target.value);
+                  setReelPositionMs(next);
+                  setReelScene(getReelSceneForPosition(next));
+                }}
+                aria-label="Reel preview timeline"
+              />
+              <span>{(reelPositionMs / 1000).toFixed(1)}s / 10.0s</span>
+            </div>
+          ) : null}
         </div>
 
         <div className="studio-output">
@@ -1552,6 +1805,11 @@ export default function StudioBuilder({
             <button type="button" onClick={() => void downloadPreviewPng()} disabled={isDownloading}>
               {isDownloading ? "Generating PNG..." : "Download PNG"}
             </button>
+            {isReelTemplate ? (
+              <button type="button" onClick={() => void downloadReelVideo()} disabled={isRecordingReel}>
+                {isRecordingReel ? "Recording Reel..." : "Download Reel Video"}
+              </button>
+            ) : null}
             <a href={draft.cta} target="_blank" rel="noopener noreferrer">Open Link</a>
           </div>
           {downloadError ? <p className="studio-download-error">{downloadError}</p> : null}
