@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     template: "%s | PickYourPiece",
   },
   description:
-    "PickYourPiece (PyP), also searched as PickYourPiece, helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
+    "PickYourPiece (PyP), also searched as PickYourPiece, helps you compare jewellery across top Indain brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.",
   keywords: [
     "pyp",
     "PickYourPiece",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     "pyp jewellery",
     "pyp rings",
     "jewellery",
-    "compare jewellery across brands",
+    "compare jewellery across top Indain brands",
     "jewellery comparison site",
     "compare jewellery prices",
     "compare jewellery brands India",
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     url: "/",
     title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
-      "Compare jewellery across brands with filters for price, metal, style, purity, and category in one place.",
+      "compare jewellery across top Indain brands with filters for price, metal, style, purity, and category in one place.",
     siteName: "PickYourPiece",
     images: [
       {
@@ -113,7 +113,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "PickYourPiece (PYP) | Compare Jewellery Across Top Brands",
     description:
-      "Compare jewellery across brands with filters for price, metal, style, purity, and category.",
+      "compare jewellery across top Indain brands with filters for price, metal, style, purity, and category.",
     images: ["/heroImage.png"],
     site: "@pickyourpiece",
   },
@@ -147,7 +147,7 @@ export default function RootLayout({
     name: "PickYourPiece",
     alternateName: ["PYP", "Pick Your Piece", "PyP"],
     url: siteUrl,
-    description: "PickYourPiece helps shoppers compare jewellery across brands in one place with smart filtering and price discovery.",
+    description: "PickYourPiece helps shoppers compare jewellery across top Indain brands in one place with smart filtering and price discovery.",
     inLanguage: "en-IN",
     potentialAction: {
       "@type": "SearchAction",

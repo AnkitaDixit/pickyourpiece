@@ -31,14 +31,14 @@ function isTrackingParamKey(key: string): boolean {
 export const metadata: Metadata = {
   title: "PickYourPiece | Compare Jewellery Prices Across Top Indian Brands",
   description:
-    "PickYourPiece (PYP), also searched as PickYourPiece, lets you compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
+    "PickYourPiece (PYP), also searched as PickYourPiece, lets you compare jewellery across top Indain brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
   keywords: [
     "pyp",
     "PickYourPiece",
     "pickyourpiece",
     "PickYourPiece jewellery",
     "pyp jewellery comparison",
-    "compare jewellery across brands",
+    "compare jewellery across top Indain brands",
     "jewellery price comparison India",
     "compare jewellery online",
     "best jewellery comparison platform",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "PickYourPiece (PYP) | Compare Jewellery Prices Across top Indian Brands",
     description:
-      "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
+      "compare jewellery across top Indain brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: [
       {
         url: "/heroImage.png",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "PickYourPiece (PYP) | Compare Jewellery Prices Across top Indian Brands",
     description:
-      "Compare jewellery across brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
+      "compare jewellery across top Indain brands and discover rings, earrings, pendants, and bracelets by price, style, metal, and purity.",
     images: ["/heroImage.png"],
   },
 };
@@ -403,7 +403,7 @@ export default async function Home({
     "@type": "CollectionPage",
     name: "PickYourPiece Jewellery Comparison Catalog",
     description:
-      "Compare jewellery across brands with live filters for category, price, style, metal, and purity.",
+      "compare jewellery across top Indain brands with live filters for category, price, style, metal, and purity.",
     url: siteUrl,
     mainEntity: {
       "@type": "ItemList",

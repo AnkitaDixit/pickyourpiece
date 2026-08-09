@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About PickYourPiece (PYP)",
     description:
-      "PickYourPiece (PYP) helps shoppers compare jewellery across brands in one place so they can buy smarter and faster.",
+      "PickYourPiece (PYP) helps shoppers compare jewellery across top Indain brands in one place so they can buy smarter and faster.",
     images: ["/heroImage.png"],
   },
 };

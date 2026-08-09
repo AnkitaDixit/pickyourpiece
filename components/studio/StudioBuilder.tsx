@@ -800,7 +800,7 @@ export default function StudioBuilder({
     const compareBrands = left && right ? `${left.brand} vs ${right.brand}` : "Compare Across Brands";
     const budgetStyle = "Rings";
     const compareTemplateIntro =
-      "PickYourPiece helps you compare jewellery across brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.";
+      "PickYourPiece helps you compare jewellery across top Indain brands in one place. Explore rings, earrings, pendants, and bracelets with smart filters, price range, and live catalog updates.";
 
     if (instagramPostTemplate === "compare_cards") {
       const leftName = left?.name ?? "Product A";
