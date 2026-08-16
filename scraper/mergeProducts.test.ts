@@ -140,7 +140,7 @@ describe("normalizePurity", () => {
 
   it("normalizes all 925 silver aliases to one canonical value", () => {
     assert.equal(normalizePurity("925 Silver"), "925 Silver");
-    assert.equal(normalizePurity("925KT"), "925 Silver");
+    assert.equal(normalizePurity("9925 Silver"), "925 Silver");
     assert.equal(normalizePurity("Silver925"), "925 Silver");
   });
 

@@ -352,7 +352,7 @@ function normalizePurity(rawPurity: string): string {
     .replace(/Silver\s*925/gi, "Silver925")
     .replace(/\s*,\s*/g, ", ");
 
-  if (/^(?:925\s*Silver|925KT|Silver925)$/i.test(normalized)) {
+  if (/^(?:925\s*Silver|9925 Silver|Silver925)$/i.test(normalized)) {
     return "925 Silver";
   }
 
@@ -899,6 +899,13 @@ export function mergeProducts(): JsonRecord[] {
 
     const delistedCurrentPrice = asNumber((existing as JsonRecord).current_price ?? existing.price);
     const delistedPreviousPrice = ((existing as JsonRecord).previous_price as number | null | undefined) ?? null;
+    const delistedPurity = derivePurity(
+      asString(existing.purity),
+      asString((existing as JsonRecord).metal),
+      asString((existing as JsonRecord).metalColor),
+      asString(existing.name),
+      asString((existing as JsonRecord).description),
+    );
     const delisted: EnrichedProduct = {
       ...existing,
       availability: false,
@@ -906,13 +913,8 @@ export function mergeProducts(): JsonRecord[] {
       previous_price: delistedPreviousPrice ?? (delistedCurrentPrice > 0 ? delistedCurrentPrice : null),
       first_seen_at: asString(existing.first_seen_at),
       pyp_product_id: asString((existing as JsonRecord).pyp_product_id) || buildDeterministicProductId(asString(existing.brand), asString(existing.id), asString(existing.productUrl)),
-      purity: derivePurity(
-        asString(existing.purity),
-        asString((existing as JsonRecord).metal),
-        asString((existing as JsonRecord).metalColor),
-        asString(existing.name),
-        asString((existing as JsonRecord).description),
-      ),
+      purity: delistedPurity,
+      metal: shouldForceSilverMetal(delistedPurity) ? "Silver" : existing.metal,
     };
 
     nextCatalog.push(delisted);
