@@ -1982,6 +1982,26 @@
   text-align: center;
 }
 
+.navbar-logo-text {
+  font-size: var(--font-size-title-lg);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+  letter-spacing: -0.2px;
+  /* display: flex;
+  gap: 1px;
+  text-transform: lowercase; */
+}
+
+.navbar-logo-red {
+  color: var(--color-primary);
+  text-transform: capitalize;
+  font-weight: var(--font-weight-medium);
+  /* font-style: italic; */
+  /* background-color: var(--color-primary);
+    padding: 1px 4px;
+    border-radius: 10px; */
+}
+
 .reel-logo {
   display: grid;
   width: 72px;

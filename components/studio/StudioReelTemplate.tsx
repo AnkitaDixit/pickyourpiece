@@ -150,16 +150,9 @@ export default function StudioReelTemplate({
 
       {scene === "end" && (
         <div className="reel-end-screen fade-in">
-          <div className="reel-logo pulse">
-            <Image
-              src="/logo.png"
-              alt="PickYourPiece"
-              width={72}
-              height={72}
-              unoptimized
-              className="reel-logo-image"
-            />
-          </div>
+          <span className="navbar-logo-text">
+              Pick<span className="navbar-logo-red">Your</span>Piece
+            </span>
           <strong>Compare before you buy.</strong>
           <span>www.pickyourpiece.com</span>
           

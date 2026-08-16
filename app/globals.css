@@ -2212,6 +2212,9 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
 .landing-feature-card-budget { background: #fff0f1; }
 .landing-feature-card-gift { background: #fff7ec; }
 .landing-feature-card-personalized { background: #f5efff; }
+.landing-feature-card-hand-quiz {
+  background: #eef8f5;
+}
 
 .landing-feature-card.studio-ig-post {
   position: relative;
@@ -2609,6 +2612,43 @@ body.has-mobile-category-nav .main-layout-wrapper .site-footer {
   font: inherit;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
+}
+
+.hand-quiz-result {
+  display: grid;
+  gap: 14px;
+}
+
+.hand-quiz-result-section {
+  display: grid;
+  gap: 4px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(218, 0, 28, 0.1);
+}
+
+.hand-quiz-result-section strong {
+  color: var(--color-landing-text-strong);
+  font-size: 13px;
+}
+
+.hand-quiz-result-section span {
+  color: var(--color-landing-text-soft);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.hand-quiz-result .landing-feature-card-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.hand-quiz-retake {
+  justify-self: center;
 }
 
 .landing-hero-brand-pill {

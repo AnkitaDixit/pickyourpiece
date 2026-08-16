@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Building2, Gift, MoveRight, RefreshCw, ShieldCheck, Sparkles, Tag, WalletCards, X } from "lucide-react";
+import { ArrowLeft, Building2, Gift, Hand, MoveRight, RefreshCw, ShieldCheck, Sparkles, Tag, WalletCards, X } from "lucide-react";
 import { Suspense, useState } from "react";
 import SearchBar from "@/components/search/SearchBar";
 import ProductPreviewPanel from "@/components/catalog/ProductPreviewPanel";
@@ -108,12 +108,66 @@ const FINDER_QUESTIONS = [
   },
 ] as const;
 
+const HAND_QUIZ_QUESTIONS = [
+  {
+    title: "How would you describe your fingers?",
+    options: [
+      ["Short & petite", "short", "🤏"],
+      ["Long & slender", "long", "🤲"],
+      ["Medium / proportional", "medium", "🖐️"],
+      ["I’m not sure", "unsure", "✨"],
+    ],
+  },
+  {
+    title: "How would you describe the overall shape of your hand?",
+    options: [
+      ["Wide / broad", "wide", "🖐️"],
+      ["Narrow / slim", "narrow", "🤚"],
+      ["Long / rectangular", "rectangular", "📐"],
+      ["Rounded / soft", "rounded", "🌸"],
+    ],
+  },
+  {
+    title: "What kind of visual effect do you want from your ring?",
+    options: [
+      ["Make my fingers look longer", "longer", "↕️"],
+      ["Make my fingers look more delicate", "delicate", "✨"],
+      ["Make my hands look more balanced", "balanced", "⚖️"],
+      ["I just want the ring to look beautiful", "beautiful", "💍"],
+    ],
+  },
+  {
+    title: "What kind of ring style do you usually prefer?",
+    options: [
+      ["Minimal & delicate", "minimal", "🌿"],
+      ["Classic & elegant", "classic", "🤍"],
+      ["Bold & glamorous", "bold", "🔥"],
+      ["Unique & statement-making", "statement", "🎨"],
+    ],
+  },
+] as const;
+
 type FinderAnswers = {
   occasion?: string;
   budget?: string;
   metal?: string;
   look?: string;
   gender?: string;
+};
+
+type HandQuizAnswers = {
+  fingers?: string;
+  handShape?: string;
+  visualEffect?: string;
+  style?: string;
+};
+
+type HandQuizResult = {
+  title: string;
+  description: string;
+  bestFor: string;
+  tips: string;
+  styleOccasions: string[];
 };
 
 interface DiscoveryShelf {
@@ -139,11 +193,98 @@ export default function HomeLandingMode({
   const [finderOpen, setFinderOpen] = useState(false);
   const [finderStep, setFinderStep] = useState(0);
   const [finderAnswers, setFinderAnswers] = useState<FinderAnswers>({});
+  const [handQuizOpen, setHandQuizOpen] = useState(false);
+  const [handQuizStep, setHandQuizStep] = useState(0);
+  const [handQuizAnswers, setHandQuizAnswers] = useState<HandQuizAnswers>({});
+  const [handQuizResult, setHandQuizResult] = useState<HandQuizResult | null>(null);
 
   const closeFinder = () => {
     setFinderOpen(false);
     setFinderStep(0);
     setFinderAnswers({});
+  };
+
+  const closeHandQuiz = () => {
+    setHandQuizOpen(false);
+    setHandQuizStep(0);
+    setHandQuizAnswers({});
+    setHandQuizResult(null);
+  };
+
+  const getHandQuizResult = (answers: HandQuizAnswers): HandQuizResult => {
+    const styleOccasions = new Set<string>();
+    const addStyle = (value: string | undefined) => {
+      if (value) styleOccasions.add(value);
+    };
+
+    if (answers.fingers === "short") addStyle("Daily Wear");
+    if (answers.fingers === "long" || answers.fingers === "medium") addStyle("Modern & Classic");
+    if (answers.handShape === "narrow") addStyle("Daily Wear");
+    if (answers.handShape === "wide" || answers.handShape === "rectangular") addStyle("Modern & Classic");
+    if (answers.handShape === "rounded") addStyle("Romantic & Gifting");
+    if (answers.visualEffect === "longer" || answers.visualEffect === "balanced") addStyle("Modern & Classic");
+    if (answers.visualEffect === "delicate") addStyle("Daily Wear");
+    if (answers.style === "minimal") addStyle("Daily Wear");
+    if (answers.style === "classic") addStyle("Modern & Classic");
+    if (answers.style === "bold") addStyle("Party & Statement");
+    if (answers.style === "statement") addStyle("Nature & Artistic");
+
+    if (answers.fingers === "short" || answers.visualEffect === "longer" || answers.handShape === "rectangular") {
+      return {
+        title: "Elongated & Elegant",
+        description: "Your proportions are especially suited to oval, pear and marquise-shaped rings, which can create a longer, more elongated appearance.",
+        bestFor: "Oval • Pear • Marquise",
+        tips: "Slim bands • Elongated stones • Vertical settings",
+        styleOccasions: Array.from(styleOccasions),
+      };
+    }
+
+    if (answers.visualEffect === "delicate" || answers.style === "minimal" || answers.handShape === "narrow") {
+      return {
+        title: "Delicate & Refined",
+        description: "Your style shines with graceful silhouettes and lighter details that keep your hands looking effortlessly elegant.",
+        bestFor: "Round • Cushion • Petite cluster",
+        tips: "Slim bands • Fine pavé • Low-profile settings",
+        styleOccasions: Array.from(styleOccasions),
+      };
+    }
+
+    if (answers.visualEffect === "balanced" || answers.style === "bold" || answers.handShape === "wide") {
+      return {
+        title: "Balanced & Beautiful",
+        description: "Proportional designs and confident details can bring beautiful balance to your hand shape.",
+        bestFor: "Cushion • Emerald • Oval",
+        tips: "Medium-width bands • Halo settings • Symmetrical designs",
+        styleOccasions: Array.from(styleOccasions),
+      };
+    }
+
+    return {
+      title: "Effortlessly Beautiful",
+      description: "You have the freedom to explore a wide range of silhouettes. Start with the shapes and details that make you feel most like yourself.",
+      bestFor: "Oval • Round • Cushion",
+      tips: "Try different proportions • Mix textures • Choose what feels like you",
+      styleOccasions: Array.from(styleOccasions),
+    };
+  };
+
+  const completeHandQuiz = (result: HandQuizResult) => {
+    const params = new URLSearchParams({ sort: "relevant" });
+    for (const styleOccasion of result.styleOccasions) {
+      params.append("styleOccasion", styleOccasion);
+    }
+    window.location.assign(`/ring?${params.toString()}`);
+  };
+
+  const selectHandQuizOption = (value: string) => {
+    const keys: (keyof HandQuizAnswers)[] = ["fingers", "handShape", "visualEffect", "style"];
+    const nextAnswers = { ...handQuizAnswers, [keys[handQuizStep]]: value };
+    setHandQuizAnswers(nextAnswers);
+    if (handQuizStep === HAND_QUIZ_QUESTIONS.length - 1) {
+      setHandQuizResult(getHandQuizResult(nextAnswers));
+      return;
+    }
+    setHandQuizStep((step) => step + 1);
   };
 
   const completeFinder = (answers: FinderAnswers) => {
@@ -283,6 +424,25 @@ export default function HomeLandingMode({
                 Find My Perfect Piece
               </button>
               <small>◷ Takes 30 seconds</small>
+            </article>
+
+            <article className="landing-feature-card landing-feature-card-hand-quiz">
+              <Hand className="landing-feature-card-icon" size={27} strokeWidth={1.8} aria-hidden="true" />
+              <h2>Free Hand Type Quiz</h2>
+              <p>Find the perfect ring for your hand type with 4 quick questions.</p>
+              <button
+                className="landing-feature-card-primary-cta"
+                type="button"
+                onClick={() => setHandQuizOpen(true)}
+                data-analytics-event="home_feature_card_hand_quiz_click"
+                data-analytics-section="home_feature_cards"
+                data-analytics-type="feature_card_cta"
+                data-analytics-label="free_ring_fit_quiz"
+                data-analytics-destination="/ring"
+              >
+                Take the free quiz
+              </button>
+              <small>No sign-up required</small>
             </article>
 {/* 
             <article className="landing-feature-card studio-ig-post studio-ig-post-compare_cards landing-feature-card-compare">
@@ -641,6 +801,124 @@ export default function HomeLandingMode({
               ) : <span />}
               <span>Choose one to continue</span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {handQuizOpen && (
+        <div
+          className="finder-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="hand-quiz-title"
+          data-analytics-event="home_hand_quiz_open"
+          data-analytics-section="home_feature_cards"
+          data-analytics-type="hand_quiz"
+          data-analytics-label="free_ring_fit_quiz"
+        >
+          <div className="finder-modal">
+            <button
+              className="finder-close"
+              type="button"
+              onClick={closeHandQuiz}
+              aria-label="Close ring fit quiz"
+              data-analytics-event="home_hand_quiz_close"
+              data-analytics-section="home_feature_cards"
+              data-analytics-type="hand_quiz_control"
+              data-analytics-label="close"
+            >
+              <X size={20} aria-hidden="true" />
+            </button>
+            <div className="finder-progress" aria-label={`Question ${handQuizStep + 1} of ${HAND_QUIZ_QUESTIONS.length}`}>
+              <span style={{ width: `${((handQuizStep + 1) / HAND_QUIZ_QUESTIONS.length) * 100}%` }} />
+            </div>
+            <div className="finder-heading">
+              {handQuizResult ? (
+                <>
+                  <span className="finder-step">Your result</span>
+                  <h2 id="hand-quiz-title">Your best match: {handQuizResult.title}</h2>
+                  <p>{handQuizResult.description}</p>
+                </>
+              ) : (
+                <>
+                  <span className="finder-step">Question {handQuizStep + 1} of {HAND_QUIZ_QUESTIONS.length}</span>
+                  <h2 id="hand-quiz-title">{HAND_QUIZ_QUESTIONS[handQuizStep].title}</h2>
+                  <p>Your answers help us surface ring styles that suit your proportions.</p>
+                </>
+              )}
+            </div>
+            {handQuizResult ? (
+              <div className="hand-quiz-result">
+                <div className="hand-quiz-result-section">
+                  <strong>Best for you</strong>
+                  <span>{handQuizResult.bestFor}</span>
+                </div>
+                <div className="hand-quiz-result-section">
+                  <strong>Try</strong>
+                  <span>{handQuizResult.tips}</span>
+                </div>
+                <button
+                  type="button"
+                  className="landing-feature-card-primary-cta"
+                  onClick={() => completeHandQuiz(handQuizResult)}
+                  data-analytics-event="home_hand_quiz_results_click"
+                  data-analytics-section="home_feature_cards"
+                  data-analytics-type="hand_quiz_cta"
+                  data-analytics-label="see_rings_picked_for_hand"
+                  data-analytics-destination="/ring"
+                >
+                  See rings picked for your hand <MoveRight size={16} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  className="finder-back hand-quiz-retake"
+                  onClick={() => {
+                    setHandQuizStep(0);
+                    setHandQuizAnswers({});
+                    setHandQuizResult(null);
+                  }}
+                >
+                  Retake quiz
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="finder-options">
+                  {HAND_QUIZ_QUESTIONS[handQuizStep].options.map(([label, value, visual]) => (
+                    <button
+                      key={label}
+                      type="button"
+                      className="finder-option"
+                      onClick={() => selectHandQuizOption(value)}
+                      data-analytics-event="home_hand_quiz_answered"
+                      data-analytics-section="home_feature_cards"
+                      data-analytics-type="hand_quiz_question"
+                      data-analytics-label={`question_${handQuizStep + 1}`}
+                      data-analytics-value={value}
+                    >
+                      <span className="finder-option-emoji" aria-hidden="true">{visual}</span>
+                      <span>{label}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="finder-footer">
+                  {handQuizStep > 0 ? (
+                    <button
+                      type="button"
+                      className="finder-back"
+                      onClick={() => setHandQuizStep((step) => step - 1)}
+                      data-analytics-event="home_hand_quiz_back"
+                      data-analytics-section="home_feature_cards"
+                      data-analytics-type="hand_quiz_control"
+                      data-analytics-label={`question_${handQuizStep + 1}`}
+                    >
+                      <ArrowLeft size={15} aria-hidden="true" /> Back
+                    </button>
+                  ) : <span />}
+                  <span>Choose one to continue</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -345,12 +345,18 @@ function normalizeBrand(rawBrand: string): string {
 function normalizePurity(rawPurity: string): string {
   if (!rawPurity) return "";
 
-  return normalizeMalformedSilverPurity(rawPurity)
+  const normalized = normalizeMalformedSilverPurity(rawPurity)
     .replace(/(\d+)\s*K\b/gi, "$1KT")
     .replace(/(\d+)\s*KT/gi, "$1KT")
     .replace(/Platinum\s*950/gi, "Platinum950")
     .replace(/Silver\s*925/gi, "Silver925")
     .replace(/\s*,\s*/g, ", ");
+
+  if (/^(?:925\s*Silver|925KT|Silver925)$/i.test(normalized)) {
+    return "925 Silver";
+  }
+
+  return normalized;
 }
 
 function isPlated(...values: string[]): boolean {
@@ -424,6 +430,11 @@ function derivePurity(rawPurity: string, rawMetal: string, rawMetalColor: string
   if (isPlated(rawPurity, rawMetal, rawMetalColor, rawName, rawDescription)) return "";
 
   const normalizedExisting = normalizePurity(rawPurity);
+  if (/^stainless steel$/i.test(normalizedExisting)) {
+    if (/silver/i.test(rawMetal)) return "925 Silver";
+    if (/gold/i.test(rawMetal)) return "9KT";
+    return "";
+  }
   if (normalizedExisting) return normalizedExisting;
 
   const matches = rawMetal.match(/(\d+\s*KT|Platinum\s*950|Silver\s*925)/gi) ?? [];
@@ -895,6 +906,13 @@ export function mergeProducts(): JsonRecord[] {
       previous_price: delistedPreviousPrice ?? (delistedCurrentPrice > 0 ? delistedCurrentPrice : null),
       first_seen_at: asString(existing.first_seen_at),
       pyp_product_id: asString((existing as JsonRecord).pyp_product_id) || buildDeterministicProductId(asString(existing.brand), asString(existing.id), asString(existing.productUrl)),
+      purity: derivePurity(
+        asString(existing.purity),
+        asString((existing as JsonRecord).metal),
+        asString((existing as JsonRecord).metalColor),
+        asString(existing.name),
+        asString((existing as JsonRecord).description),
+      ),
     };
 
     nextCatalog.push(delisted);

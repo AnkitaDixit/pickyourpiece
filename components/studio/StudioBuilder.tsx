@@ -1067,10 +1067,16 @@ export default function StudioBuilder({
       return;
     }
 
-    const mimeType = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"]
-      .find((candidate) => MediaRecorder.isTypeSupported(candidate));
-    if (!mimeType) {
-      setDownloadError("This browser does not support WebM video recording.");
+    const recordingFormat = [
+      "video/mp4;codecs=avc1.42E01E,mp4a.40.2",
+      "video/mp4;codecs=avc1",
+      "video/mp4",
+    ]
+      .filter((candidate) => MediaRecorder.isTypeSupported(candidate))
+      .map((mimeType) => ({ mimeType, extension: "mp4" }))
+      .at(0);
+    if (!recordingFormat) {
+      setDownloadError("This browser cannot export Instagram-compatible MP4 video. Try Safari or another browser with H.264 MediaRecorder support.");
       return;
     }
 
@@ -1091,7 +1097,7 @@ export default function StudioBuilder({
         (videoTrack as CanvasCaptureMediaStreamTrack).requestFrame();
       };
       const recorder = new MediaRecorder(recordingStream, {
-        mimeType,
+        mimeType: recordingFormat.mimeType,
         videoBitsPerSecond: 8_000_000,
       });
       const chunks: Blob[] = [];
@@ -1181,10 +1187,10 @@ export default function StudioBuilder({
       await new Promise<void>((resolve) => window.setTimeout(resolve, 34));
       recorder.stop();
       await recordingFinished;
-      const videoBlob = new Blob(chunks, { type: mimeType });
+      const videoBlob = new Blob(chunks, { type: recordingFormat.mimeType });
       const anchor = document.createElement("a");
       anchor.href = URL.createObjectURL(videoBlob);
-      anchor.download = `${comparePair.left?.brand ?? "brandA"}-vs-${comparePair.right?.brand ?? "brandB"}-instagram-reel.webm`
+      anchor.download = `${comparePair.left?.brand ?? "brandA"}-vs-${comparePair.right?.brand ?? "brandB"}-instagram-reel.${recordingFormat.extension}`
         .toLowerCase()
         .replace(/\s+/g, "-");
       anchor.click();

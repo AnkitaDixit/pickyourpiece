@@ -135,11 +135,17 @@ describe("normalizePurity", () => {
   });
 
   it("normalizes Silver 925", () => {
-    assert.equal(normalizePurity("Silver 925"), "Silver925");
+    assert.equal(normalizePurity("Silver 925"), "925 Silver");
+  });
+
+  it("normalizes all 925 silver aliases to one canonical value", () => {
+    assert.equal(normalizePurity("925 Silver"), "925 Silver");
+    assert.equal(normalizePurity("925KT"), "925 Silver");
+    assert.equal(normalizePurity("Silver925"), "925 Silver");
   });
 
   it("normalizes malformed 93 KT to Silver925", () => {
-    assert.equal(normalizePurity("93 KT"), "Silver925");
+    assert.equal(normalizePurity("93 KT"), "925 Silver");
   });
 });
 
@@ -166,6 +172,12 @@ describe("derivePurity", () => {
 
   it("returns empty when no purity info available", () => {
     assert.equal(derivePurity("", "", "", "", ""), "");
+  });
+
+  it("replaces stainless steel purity based on the metal", () => {
+    assert.equal(derivePurity("Stainless Steel", "Gold", "", "", ""), "9KT");
+    assert.equal(derivePurity("Stainless Steel", "Silver", "", "", ""), "925 Silver");
+    assert.equal(derivePurity("Stainless Steel", "Stainless Steel", "", "", ""), "");
   });
 });
 
